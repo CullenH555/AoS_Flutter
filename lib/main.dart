@@ -18,3 +18,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+// TODO Next step is to add Bloc.
