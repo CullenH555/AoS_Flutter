@@ -41,7 +41,7 @@ AoS Playmat Builder in Flutter
     2. An API to connect the database to the business logic.
    
     3. Business logic:
-      - Display initial factions.
+      - Generate initial factions.
       - Based on user choices (via toggle buttons), generate the next group of choices.
           - The order of choices is based on the hierarchy of the game. 
               - Faction -> Subfaction -> Command Trait -> Artifacts -> Warscrolls -> Battalions
