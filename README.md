@@ -4,8 +4,10 @@ AoS Playmat Builder in Flutter
 
   Background:
   
-      Age of Sigmar (AoS) is a popular tabletop miniatures game where players build and paint models to represent them and their faction on the     gameboard. There are many rules associated with different parts of the game, and players must follow step by step turns and remember all of     their various rules.
-      The sheer number of rules, and the numerous sources of information (sometimes flipping between multiple parts of multiple rulebooks) make     the game daunting to most, and inaccessible so some.
+      Age of Sigmar (AoS) is a popular tabletop miniatures game.
+      Players build and paint models to represent them and their faction on the gameboard. 
+      There are many rules and players must follow step by step turns and remember all of their specfic rules.
+      The sheer amount and numerous sources of information make the game daunting to most, and inaccessible so some.
   
   In order to tackle one of the game's most awkward elements, the current project proposes an assistive tool for new players.
   
@@ -29,6 +31,8 @@ AoS Playmat Builder in Flutter
    The ability to save a completed rules list.
    
    The ability to retrieve and display a saved rules list.
+  
+  Feature Organization:
   
     1. A database (Firebase?).
       - For storing and retrieving player-specific rules.
