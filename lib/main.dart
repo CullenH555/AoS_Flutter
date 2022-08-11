@@ -1,4 +1,7 @@
+import 'package:aos/blocs/selections/selections_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'blocs/save/save_bloc.dart';
 import 'presentation/pages/home_page.dart';
 
 void main() {
@@ -8,13 +11,23 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'AOS Flutter',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        backgroundColor: Colors.white,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => SelectionsBloc(),
+        ),
+        BlocProvider(
+          create: (context) => SaveBloc(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'AOS Flutter',
+        theme: ThemeData(
+          primarySwatch: Colors.red,
+          backgroundColor: Colors.white,
+        ),
+        home: AOSHomePage(),
       ),
-      home: AOSHomePage(),
     );
   }
 }
