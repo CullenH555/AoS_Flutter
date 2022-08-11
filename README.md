@@ -19,19 +19,19 @@ Background:
           
   To achieve the goals of the tool, the following features are proposed:
       
-      Buttons which display options based on previous choices and which follow a logical order.
-      Buttons can be toggled: when "on" these buttons add to a running list of rules, when "off" they remove from the list.
-      A display of the final list of rules, ordered by game "phase".
-      The ability to save a completed rules list.
-      The ability to retrieve and display a saved rules list.
+   Buttons which display options based on previous choices and which follow a logical order.
+   Buttons can be toggled: when "on" these buttons add to a running list of rules, when "off" they remove from the list.
+   A display of the final list of rules, ordered by game "phase".
+   The ability to save a completed rules list.
+   The ability to retrieve and display a saved rules list.
   
     1. A database (Firebase?).
       - For storing and retrieving player-specific rules.
       - For storing and retrieving user's saved rule lists.
       
-   2. An API to connect the database to the business logic.
+    2. An API to connect the database to the business logic.
    
-   3. Business logic:
+    3. Business logic:
       - Display initial factions.
       - Based on user choices (via toggle buttons), generate the next group of choices.
           - The order of choices is based on the hierarchy of the game. 
