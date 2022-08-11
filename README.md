@@ -22,15 +22,15 @@ AoS Playmat Builder in Flutter
           
   To achieve the goals of the tool, the following features are proposed:
       
-   Buttons which display options based on previous choices and which follow a logical order.
+    Buttons which display options based on previous choices and which follow a logical order.
    
-   Buttons can be toggled: when "on" these buttons add to a running list of rules, when "off" they remove from the list.
+    Buttons can be toggled: when "on" these buttons add to a running list of rules, when "off" they remove from the list.
    
-   A display of the final list of rules, ordered by game "phase".
+    A display of the final list of rules, ordered by game "phase".
    
-   The ability to save a completed rules list.
+    The ability to save a completed rules list.
    
-   The ability to retrieve and display a saved rules list.
+    The ability to retrieve and display a saved rules list.
   
   Feature Organization:
   
