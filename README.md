@@ -1,4 +1,4 @@
-# aos_flutter
+# AoS_Flutter
 
 AoS Playmat Builder in Flutter
 
