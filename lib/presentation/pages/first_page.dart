@@ -1,4 +1,5 @@
 import 'package:aos/blocs/selections/selections_bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../blocs/save/save_bloc.dart';
@@ -6,7 +7,9 @@ import '../../domain/entities/source.dart';
 import '../../domain/generate_next_page.dart';
 import 'next_page.dart';
 
-class AOSHomePage extends StatelessWidget {
+class AOSFirstPage extends StatelessWidget {
+  static const String id = 'first_page';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
