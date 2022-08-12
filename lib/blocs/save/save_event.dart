@@ -4,6 +4,14 @@ abstract class SaveEvent extends Equatable {
   const SaveEvent();
 }
 
+class SaveToDb extends SaveEvent {
+  const SaveToDb(this.currentSource);
+  final Source currentSource;
+
+  @override
+  List<Object?> get props => [currentSource];
+}
+
 class SaveToLocal extends SaveEvent {
   const SaveToLocal(this.currentSource);
   final Source currentSource;

@@ -26,3 +26,12 @@ class Saved extends SaveState {
   @override
   List<Object> get props => [savedData];
 }
+
+class SavedToDb extends SaveState {
+  const SavedToDb({this.savedData = const <Source>[]});
+
+  final List<Source> savedData;
+
+  @override
+  List<Object> get props => [savedData];
+}

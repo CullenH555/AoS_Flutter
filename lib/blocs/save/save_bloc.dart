@@ -11,8 +11,9 @@ part 'save_state.dart';
 
 class SaveBloc extends Bloc<SaveEvent, SaveState> {
   SaveBloc() : super(SavedInitial()) {
-    on<SaveToLocal>(_onSaveToLocal);
+    //  on<SaveToLocal>(_onSaveToDb);
     //   on<DeleteFromLocal>(_onDeleteFromLocal);
+    on<SaveToDb>(_onSaveToDb);
   }
   void _onSaveToLocal(SaveToLocal event, Emitter<SaveState> emit) async {
     var save = GenerateNextSave();
@@ -26,6 +27,18 @@ class SaveBloc extends Bloc<SaveEvent, SaveState> {
       // Emit the new state: save event --> saved state.
       Saved(savedData: []),
     );
+  }
+}
+
+void _onSaveToDb(SaveToDb event, Emitter<SaveState> emit) {
+  try {
+    var saver = GenerateNextSave();
+    var saveIt = saver.generateNextSave(event.currentSource);
+    emit(
+      SavedToDb(savedData: saveIt),
+    );
+  } catch (e) {
+    print(e);
   }
 }
 

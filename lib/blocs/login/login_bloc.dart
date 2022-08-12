@@ -11,14 +11,30 @@ part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(LoginInitial()) {
+    on<Register>(_onRegister);
     on<Login>(_onLogin);
+    on<Logout>(_onLogout);
   }
 
-  void _onLogin(Login event, Emitter<LoginState> emit) async {
-    var makeUser = GenerateLoggedInUser();
-    var user = await makeUser.generateLoggedInUser(event.email, event.password);
+  void _onRegister(Register event, Emitter<LoginState> emit) async {
+    var makeUser = GenerateRegisteredUser();
+    var user =
+        await makeUser.generateRegisteredUser(event.email, event.password);
     emit(
       UserLoggedIn(user: user),
     );
+  }
+
+  void _onLogin(Login event, Emitter<LoginState> emit) async {
+    var getUser = GenerateRegisteredUser();
+    var user = await getUser.generateLoggedInUser(event.email, event.password);
+    emit(
+      UserLoggedIn(user: user),
+    );
+  }
+
+  void _onLogout(Logout event, Emitter<LoginState> emit) async {
+    var genLogout = GenerateRegisteredUser();
+    await genLogout.generateLoggedOutUser();
   }
 }

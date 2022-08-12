@@ -2,6 +2,8 @@ import 'package:aos/blocs/selections/selections_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../blocs/login/login_bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../blocs/save/save_bloc.dart';
 import '../../domain/entities/source.dart';
 import '../../domain/generate_next_page.dart';
@@ -14,6 +16,16 @@ class AOSFirstPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: null,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.close),
+            onPressed: () {
+              context.read<LoginBloc>().add(Logout());
+              Navigator.pop(context);
+            },
+          ),
+        ],
         title: Text('AoS Playmat Builder'),
       ),
       body: BlocBuilder<SelectionsBloc, SelectionsState>(
@@ -38,6 +50,10 @@ class AOSFirstPage extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
+                          context
+                              .read<SaveBloc>()
+                              .add(SaveToDb(state.initSources[index]));
+
                           //  context
                           //     .read<SaveBloc>()
                           //     .add(SaveToLocal(state.initSources[index]));

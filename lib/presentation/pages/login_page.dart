@@ -2,8 +2,13 @@ import 'package:aos/presentation/pages/first_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../blocs/login/login_bloc.dart';
 
 class AOSLoginPage extends StatelessWidget {
+  String email = '';
+  String password = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +30,7 @@ class AOSLoginPage extends StatelessWidget {
             keyboardType: TextInputType.emailAddress,
             textAlign: TextAlign.center,
             onChanged: (value) {
-              var email = value;
+              email = value;
             },
             decoration: InputDecoration(
               border: OutlineInputBorder(),
@@ -39,7 +44,7 @@ class AOSLoginPage extends StatelessWidget {
             obscureText: true,
             textAlign: TextAlign.center,
             onChanged: (value) {
-              var password = value;
+              password = value;
             },
             decoration: InputDecoration(
               border: OutlineInputBorder(),
@@ -49,9 +54,12 @@ class AOSLoginPage extends StatelessWidget {
           Container(
             child: ElevatedButton(
               child: Text('login'),
-              onPressed: () {
+              onPressed: () async {
+                context
+                    .read<LoginBloc>()
+                    .add(Login(email: email, password: password));
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AOSLoginPage()));
+                    MaterialPageRoute(builder: (context) => AOSFirstPage()));
               },
             ),
           ),
