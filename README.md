@@ -1,6 +1,7 @@
 # AoS_Flutter
 
 AoS Playmat Builder in Flutter
+by Cullen H.
 
   Background:
   
@@ -38,7 +39,7 @@ AoS Playmat Builder in Flutter
       - For storing and retrieving player-specific rules.
       - For storing and retrieving user's saved rule lists.
       
-    2. An API to connect the database to the business logic.
+    2. A Data Layer to connect the database to the business logic.
    
     3. Business logic:
       - Generate initial factions.
