@@ -1,6 +1,11 @@
 import 'dart:async';
+// A little hack:
+// To import/initialize the firestore database, comment out generate_next_save.dart
+// and uncmment generate_initial_ruleData.
 
 import 'package:aos/domain/generate_next_save.dart';
+// import 'package:aos/domain/generate_initial_ruleData.dart';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 

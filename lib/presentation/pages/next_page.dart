@@ -42,7 +42,7 @@ class NextPage extends StatelessWidget {
                         onPressed: () {
                           context
                               .read<SaveBloc>()
-                              .add(SaveToLocal(currentSources[index]));
+                              .add(SaveToDb(currentSources[index]));
                           context.read<SelectionsBloc>().add(LoadNextSelections(
                               currentSources: [currentSources[index]]));
                           // generateNextPage(buttonsList[index].sourceFaction,

@@ -15,9 +15,8 @@ class GenerateNextSave extends Equatable {
   generateNextSave(currentSource) async {
     try {
       final _firestore = FirebaseFirestore.instance;
-      await _firestore.collection('source').add({
+      await _firestore.collection('saveTest1').add({
         'sourceName': currentSource.sourceName,
-        'sourceText': currentSource.sourceType
       });
       return 'Saved!';
     } catch (e) {
