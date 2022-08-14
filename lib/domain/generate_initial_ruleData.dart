@@ -12,7 +12,7 @@ class GenerateNextSave extends Equatable {
   List<Object?> get props => [];
 
   //  Generating the next page takes in the current list of sources and generates the next.
-  generateNextSave(currentSource) async {
+  generateNextInit(currentSource) async {
     /*
     try {
       final _firestore = FirebaseFirestore.instance;

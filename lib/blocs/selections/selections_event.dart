@@ -1,8 +1,6 @@
 part of 'selections_bloc.dart';
 
 abstract class SelectionsEvent extends Equatable {
-  const SelectionsEvent();
-
   @override
   List<Object> get props => [];
 }
@@ -12,9 +10,39 @@ abstract class SelectionsEvent extends Equatable {
 // It passes the current sources to the bloc for logic.
 class LoadNextSelections extends SelectionsEvent {
   final List<Source> currentSources;
-
-  const LoadNextSelections({this.currentSources = const <Source>[]});
+  final List<bool> active;
+  @override
+  LoadNextSelections(
+      {this.currentSources = const <Source>[], this.active = const <bool>[]});
 
   @override
-  List<Object> get props => [currentSources];
+  List<Object> get props => [currentSources, active];
+}
+
+class ActivateSelection extends SelectionsEvent {
+  final Source currentSource;
+  final List<Source> currentSources;
+  final List<bool> active;
+  @override
+  ActivateSelection(
+      {this.currentSource = const Source(),
+      this.currentSources = const <Source>[],
+      this.active = const <bool>[]});
+
+  @override
+  List<Object> get props => [currentSource, currentSources, active];
+}
+
+class DeactivateSelection extends SelectionsEvent {
+  final Source currentSource;
+  final List<Source> currentSources;
+  final List<bool> active;
+  @override
+  DeactivateSelection(
+      {this.currentSource = const Source(),
+      this.currentSources = const <Source>[],
+      this.active = const <bool>[]});
+
+  @override
+  List<Object> get props => [currentSource, currentSources, active];
 }

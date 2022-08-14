@@ -23,4 +23,17 @@ class GenerateNextSave extends Equatable {
       print(e);
     }
   }
+
+  generateNextDelete(currentSource) async {
+    try {
+      final _firestore = FirebaseFirestore.instance;
+      await _firestore
+          .collection('saveTest1')
+          .doc(currentSource.sourceName)
+          .delete();
+      return 'Saved!';
+    } catch (e) {
+      print(e);
+    }
+  }
 }

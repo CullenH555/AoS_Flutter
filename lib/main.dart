@@ -34,7 +34,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.red,
           backgroundColor: Colors.white,
         ),
-        home: AOSWelcomePage(),
+        home:
+            AOSFirstPage(), // working on firstPage -- should be: AOSWelcomePage(),
       ),
     );
   }
