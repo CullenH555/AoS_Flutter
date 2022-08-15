@@ -21,8 +21,6 @@ class GenerateButtonStyler extends Equatable {
         }
       }
     }
-    print("inside styleButton after activating/deactivating: ");
-    print(active);
     return active;
   }
 

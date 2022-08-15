@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../blocs/login/login_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../blocs/save/save_bloc.dart';
 import '../../domain/entities/source.dart';
 import '../../domain/generate_next_page.dart';
 import 'next_page.dart';
@@ -57,9 +56,10 @@ class AOSFirstPage extends StatelessWidget {
                         //  context
                         //     .read<SaveBloc>()
                         //     .add(SaveToLocal(state.initSources[index]));
-                        context.read<SelectionsBloc>().add(DeactivateSelection(
+                        context.read<SelectionsBloc>().add(ActivateSelection(
                             currentSource: state.initSources[index],
                             currentSources: state.initSources,
+                            currentSourceId: state.initSourceId,
                             active: state.initActive));
                         //  generateNextPage(buttonsList[index].sourceFaction,
                         //  buttonsList[index].nextSourceType, context);
@@ -73,9 +73,6 @@ class AOSFirstPage extends StatelessWidget {
         }
         if (state is SelectionActivated) {
           print("we got inside state SelectionActivated");
-          print(state.currentSource);
-          print(state.currentSources);
-          print(state.active);
           return Column(children: [
             Expanded(
               child: SizedBox.expand(
@@ -88,8 +85,6 @@ class AOSFirstPage extends StatelessWidget {
                         scrollDirection: Axis.vertical,
                         itemCount: state.currentSources.length,
                         itemBuilder: (context, index) {
-                          print("just before buttonrender: ");
-                          print(state.active[index]);
                           return TextButton(
                             child: Text(
                               state.currentSources[index].sourceName,
@@ -108,6 +103,7 @@ class AOSFirstPage extends StatelessWidget {
                                       currentSource:
                                           state.currentSources[index],
                                       currentSources: state.currentSources,
+                                      currentSourceId: state.currentSourceId,
                                       active: state.active));
                             },
                           );

@@ -12,25 +12,31 @@ class GenerateNextSave extends Equatable {
   List<Object?> get props => [];
 
   //  Generating the next page takes in the current list of sources and generates the next.
-  generateNextSave(currentSource) async {
+  generateNextSave(currentSource, currentSourceId) async {
     try {
       final _firestore = FirebaseFirestore.instance;
-      await _firestore.collection('saveTest1').add({
+      return _firestore.collection('saveTest1').add({
         'sourceName': currentSource.sourceName,
+      }).then((value) {
+        var recordId = value.id;
+        print('we to stringed it');
+        print(recordId);
+        return recordId;
       });
-      return 'Saved!';
     } catch (e) {
       print(e);
     }
   }
 
-  generateNextDelete(currentSource) async {
+  generateNextDelete(currentSource, currentSourceId) async {
     try {
+      print("currentSourceId before trying to delete: ");
+      print(currentSourceId);
       final _firestore = FirebaseFirestore.instance;
-      await _firestore
-          .collection('saveTest1')
-          .doc(currentSource.sourceName)
-          .delete();
+      await _firestore.collection('saveTest1').doc(currentSourceId).delete();
+      print('inside Delete function, deleted: ');
+      print(currentSourceId);
+      print(_firestore.collection('saveTest1').doc(currentSource.sourceName));
       return 'Saved!';
     } catch (e) {
       print(e);

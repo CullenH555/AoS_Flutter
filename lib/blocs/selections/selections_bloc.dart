@@ -45,12 +45,16 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
         event.currentSource, event.currentSources, event.active);
     var sourcesPassed = await styleButton.passSources(event.currentSources);
     var save = GenerateNextSave();
-    save.generateNextSave(event.currentSource);
+    var recordId =
+        await save.generateNextSave(event.currentSource, event.currentSourceId);
+    print('we just made recordId');
+    print(recordId);
     emit(
       // Emit the new state: load event --> loaded state.
       SelectionActivated(
           currentSource: event.currentSource,
           currentSources: sourcesPassed,
+          currentSourceId: recordId,
           active: buttonStyled),
     );
   }
@@ -63,13 +67,14 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
     var buttonStyled = await styleButton.styleButton(
         event.currentSource, event.currentSources, event.active);
     var sourcesPassed = await styleButton.passSources(event.currentSources);
-    //   var save = GenerateNextSave();
-    //   save.generateNextSave(event.currentSource);
+    var delete = GenerateNextSave();
+    delete.generateNextDelete(event.currentSource, event.currentSourceId);
     emit(
       // Emit the new state: load event --> loaded state.
       SelectionDeactivated(
           currentSource: event.currentSource,
           currentSources: sourcesPassed,
+          currentSourceId: event.currentSourceId,
           active: buttonStyled),
     );
   }

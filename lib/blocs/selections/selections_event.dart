@@ -22,27 +22,33 @@ class LoadNextSelections extends SelectionsEvent {
 class ActivateSelection extends SelectionsEvent {
   final Source currentSource;
   final List<Source> currentSources;
+  final currentSourceId;
   final List<bool> active;
   @override
   ActivateSelection(
       {this.currentSource = const Source(),
       this.currentSources = const <Source>[],
+      this.currentSourceId = '',
       this.active = const <bool>[]});
 
   @override
-  List<Object> get props => [currentSource, currentSources, active];
+  List<Object> get props =>
+      [currentSource, currentSources, currentSourceId, active];
 }
 
 class DeactivateSelection extends SelectionsEvent {
   final Source currentSource;
   final List<Source> currentSources;
+  final currentSourceId;
   final List<bool> active;
   @override
   DeactivateSelection(
       {this.currentSource = const Source(),
       this.currentSources = const <Source>[],
+      this.currentSourceId = '',
       this.active = const <bool>[]});
 
   @override
-  List<Object> get props => [currentSource, currentSources, active];
+  List<Object> get props =>
+      [currentSource, currentSources, currentSourceId, active];
 }
