@@ -10,45 +10,37 @@ abstract class SelectionsEvent extends Equatable {
 // It passes the current sources to the bloc for logic.
 class LoadNextSelections extends SelectionsEvent {
   final List<Source> currentSources;
-  final List<bool> active;
   @override
-  LoadNextSelections(
-      {this.currentSources = const <Source>[], this.active = const <bool>[]});
+  LoadNextSelections({
+    this.currentSources = const <Source>[],
+  });
 
   @override
-  List<Object> get props => [currentSources, active];
+  List<Object> get props => [currentSources];
 }
 
 class ActivateSelection extends SelectionsEvent {
-  final Source currentSource;
+  final currentSource;
   final List<Source> currentSources;
-  final currentSourceId;
-  final List<bool> active;
   @override
-  ActivateSelection(
-      {this.currentSource = const Source(),
-      this.currentSources = const <Source>[],
-      this.currentSourceId = '',
-      this.active = const <bool>[]});
+  ActivateSelection({
+    this.currentSource,
+    this.currentSources = const <Source>[],
+  });
 
   @override
-  List<Object> get props =>
-      [currentSource, currentSources, currentSourceId, active];
+  List<Object> get props => [currentSource, currentSources];
 }
 
 class DeactivateSelection extends SelectionsEvent {
-  final Source currentSource;
-  final List<Source> currentSources;
-  final currentSourceId;
-  final List<bool> active;
+  var currentSource;
+  List<Source> currentSources = [];
   @override
   DeactivateSelection(
-      {this.currentSource = const Source(),
-      this.currentSources = const <Source>[],
-      this.currentSourceId = '',
-      this.active = const <bool>[]});
+    this.currentSource,
+    this.currentSources,
+  );
 
   @override
-  List<Object> get props =>
-      [currentSource, currentSources, currentSourceId, active];
+  List<Object> get props => [currentSource, currentSources];
 }

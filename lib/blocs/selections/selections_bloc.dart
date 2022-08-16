@@ -21,7 +21,26 @@ part 'selections_state.dart';
 // The Bloc receives the next sources from the domain logic.
 // The Bloc passes/emits the nextSources to the state.
 class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
-  SelectionsBloc() : super(SelectionsInitial()) {
+  SelectionsBloc()
+      : super(SelectionsInitial([
+          Source(
+              sourceName: 'Sylvaneth',
+              sourceFaction: 'sylvaneth',
+              sourceType: 'faction',
+              nextSourceType: 'subfaction',
+              sourceActive: false,
+              sourceId: '',
+              rulesList: []),
+          Source(
+            sourceName: 'Kharadron',
+            sourceFaction: 'kharadron',
+            sourceType: 'faction',
+            nextSourceType: 'subfaction',
+            sourceActive: false,
+            sourceId: '',
+            rulesList: [],
+          ),
+        ])) {
     on<LoadNextSelections>(_onLoadNextSelections);
     on<ActivateSelection>(_onActivateSelection);
     on<DeactivateSelection>(_onDeactivateSelection);
@@ -29,7 +48,10 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
   void _onLoadNextSelections(
       LoadNextSelections event, Emitter<SelectionsState> emit) async {
     var nextPage = GenerateNextPage();
-    var sources = await nextPage.generateNextPage(event.currentSources);
+    var sourcesAndActive =
+        await nextPage.generateNextPage(event.currentSources);
+    var sources = sourcesAndActive[0];
+    List<bool> active = sourcesAndActive[1];
     emit(
       // Emit the new state: load event --> loaded state.
       NextSelectionsLoaded(nextSources: sources),
@@ -38,44 +60,29 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
 
   void _onActivateSelection(
       ActivateSelection event, Emitter<SelectionsState> emit) async {
-    var styleButton = GenerateButtonStyler(active: event.active);
-    print("inside activate before we style the button active is: ");
-    print(event.active);
+    var styleButton = GenerateButtonStyler();
     var buttonStyled = await styleButton.styleButton(
-        event.currentSource, event.currentSources, event.active);
-    var sourcesPassed = await styleButton.passSources(event.currentSources);
+        event.currentSource, event.currentSources);
     var save = GenerateNextSave();
     var recordId =
-        await save.generateNextSave(event.currentSource, event.currentSourceId);
-    print('we just made recordId');
-    print(recordId);
+        await save.generateNextSave(event.currentSource, buttonStyled);
     emit(
       // Emit the new state: load event --> loaded state.
-      SelectionActivated(
-          currentSource: event.currentSource,
-          currentSources: sourcesPassed,
-          currentSourceId: recordId,
-          active: buttonStyled),
+      SelectionActivated(event.currentSource, recordId),
     );
   }
 
   void _onDeactivateSelection(
       DeactivateSelection event, Emitter<SelectionsState> emit) async {
-    var styleButton = GenerateButtonStyler(active: event.active);
-    print("inside activate before we style the button active is: ");
-    print(event.active);
+    var styleButton = GenerateButtonStyler();
     var buttonStyled = await styleButton.styleButton(
-        event.currentSource, event.currentSources, event.active);
-    var sourcesPassed = await styleButton.passSources(event.currentSources);
+        event.currentSource, event.currentSources);
     var delete = GenerateNextSave();
-    delete.generateNextDelete(event.currentSource, event.currentSourceId);
+    var editedSources =
+        await delete.generateNextDelete(event.currentSource, buttonStyled);
     emit(
       // Emit the new state: load event --> loaded state.
-      SelectionDeactivated(
-          currentSource: event.currentSource,
-          currentSources: sourcesPassed,
-          currentSourceId: event.currentSourceId,
-          active: buttonStyled),
+      SelectionDeactivated(event.currentSource, editedSources),
     );
   }
 }

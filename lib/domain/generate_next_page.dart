@@ -22,6 +22,6 @@ class GenerateNextPage extends Equatable {
         nextSources.add(data[i]);
       }
     }
-    return nextSources;
+    return [nextSources];
   }
 }

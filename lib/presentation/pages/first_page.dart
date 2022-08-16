@@ -57,10 +57,9 @@ class AOSFirstPage extends StatelessWidget {
                         //     .read<SaveBloc>()
                         //     .add(SaveToLocal(state.initSources[index]));
                         context.read<SelectionsBloc>().add(ActivateSelection(
-                            currentSource: state.initSources[index],
-                            currentSources: state.initSources,
-                            currentSourceId: state.initSourceId,
-                            active: state.initActive));
+                              currentSource: state.initSources[index],
+                              currentSources: state.initSources,
+                            ));
                         //  generateNextPage(buttonsList[index].sourceFaction,
                         //  buttonsList[index].nextSourceType, context);
                       },
@@ -89,22 +88,23 @@ class AOSFirstPage extends StatelessWidget {
                             child: Text(
                               state.currentSources[index].sourceName,
                               style: TextStyle(
-                                color: state.active[index] == true
-                                    ? Colors.blue
-                                    : Colors.red,
+                                color:
+                                    state.currentSources[index].sourceActive ==
+                                            true
+                                        ? Colors.blue
+                                        : Colors.red,
                                 fontSize: 40.0,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             onPressed: () {
                               print('we pressed the button');
-                              context.read<SelectionsBloc>().add(
-                                  DeactivateSelection(
-                                      currentSource:
-                                          state.currentSources[index],
-                                      currentSources: state.currentSources,
-                                      currentSourceId: state.currentSourceId,
-                                      active: state.active));
+                              context
+                                  .read<SelectionsBloc>()
+                                  .add(DeactivateSelection(
+                                    state.currentSources[index],
+                                    state.currentSources,
+                                  ));
                             },
                           );
                         }),
@@ -123,9 +123,6 @@ class AOSFirstPage extends StatelessWidget {
         }
         if (state is SelectionDeactivated) {
           print("we got inside state SelectionDeactivated");
-          print(state.currentSource);
-          print(state.currentSources);
-          print(state.active);
           return Column(children: [
             Expanded(
               child: SizedBox.expand(
@@ -138,27 +135,27 @@ class AOSFirstPage extends StatelessWidget {
                         scrollDirection: Axis.vertical,
                         itemCount: state.currentSources.length,
                         itemBuilder: (context, index) {
-                          print("just before buttonrender: ");
-                          print(state.active[index]);
                           return TextButton(
                             child: Text(
                               state.currentSources[index].sourceName,
                               style: TextStyle(
-                                color: state.active[index] == true
-                                    ? Colors.blue
-                                    : Colors.red,
+                                color:
+                                    state.currentSources[index].sourceActive ==
+                                            true
+                                        ? Colors.blue
+                                        : Colors.red,
                                 fontSize: 40.0,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             onPressed: () {
                               print('we pressed the button');
-                              context.read<SelectionsBloc>().add(
-                                  ActivateSelection(
-                                      currentSource:
-                                          state.currentSources[index],
-                                      currentSources: state.currentSources,
-                                      active: state.active));
+                              context
+                                  .read<SelectionsBloc>()
+                                  .add(ActivateSelection(
+                                    currentSource: state.currentSources[index],
+                                    currentSources: state.currentSources,
+                                  ));
                             },
                           );
                         }),

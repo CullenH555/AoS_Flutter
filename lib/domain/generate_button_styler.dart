@@ -3,25 +3,15 @@ import 'package:equatable/equatable.dart';
 import 'entities/source.dart';
 
 class GenerateButtonStyler extends Equatable {
-  GenerateButtonStyler(
-      {this.currentSource = const Source(),
-      this.currentSources = const <Source>[],
-      this.active = const <bool>[]});
-  final currentSource;
-  List<Source> currentSources;
-  List<bool> active;
-
-  styleButton(currentSource, currentSources, active) {
+  styleButton(currentSource, currentSources) {
     for (var j = 0; j < currentSources.length; j++) {
       if (currentSources[j] == currentSource) {
-        if (active[j] == false) {
-          active[j] = true;
-        } else {
-          active[j] = false;
-        }
+        print(currentSources[j].sourceActive);
+        currentSources[j].updateActive();
+        print(currentSources[j].sourceActive);
       }
     }
-    return active;
+    return currentSources;
   }
 
   passSources(currentSources) {
@@ -29,5 +19,5 @@ class GenerateButtonStyler extends Equatable {
   }
 
   @override
-  List<Object?> get props => [currentSources, active];
+  List<Object?> get props => [];
 }

@@ -25,6 +25,7 @@ class NextPage extends StatelessWidget {
       body: BlocBuilder<SelectionsBloc, SelectionsState>(
           builder: (context, state) {
         if (state is NextSelectionsLoaded) {
+          print("state is NextSelectionsLoaded!");
           return SizedBox.expand(
             child: FractionallySizedBox(
               widthFactor: 1,
@@ -33,28 +34,41 @@ class NextPage extends StatelessWidget {
               child: Container(
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
-                  itemCount: state.nextSources.length,
+                  itemCount: currentSources.length,
                   itemBuilder: (context, index) {
                     return TextButton(
                       child: Text(
-                        state.nextSources[index].sourceName,
+                        currentSources[index].sourceName,
                         style: TextStyle(
-                          color: Colors.red,
+                          color: currentSources[index].sourceActive == true
+                              ? Colors.blue
+                              : Colors.red,
                           fontSize: 40.0,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       onPressed: () {
+                        print("we just clicked: ");
                         //     context
                         //        .read<SaveBloc>()
                         //       .add(SaveToDb(state.initSources[index]));
                         //  context
                         //     .read<SaveBloc>()
                         //     .add(SaveToLocal(state.initSources[index]));
-                        context.read<SelectionsBloc>().add(DeactivateSelection(
-                            currentSource: state.nextSources[index],
-                            currentSources: state.nextSources,
-                            active: state.active));
+                        if (currentSources[index].sourceActive == false) {
+                          print("we got inside add event to bloc");
+                          context.read<SelectionsBloc>().add(ActivateSelection(
+                                currentSource: currentSources[index],
+                                currentSources: currentSources,
+                              ));
+                        } else if (currentSources[index].sourceActive == true) {
+                          context
+                              .read<SelectionsBloc>()
+                              .add(DeactivateSelection(
+                                currentSources[index],
+                                currentSources,
+                              ));
+                        }
                         //  generateNextPage(buttonsList[index].sourceFaction,
                         //  buttonsList[index].nextSourceType, context);
                       },
@@ -77,27 +91,38 @@ class NextPage extends StatelessWidget {
                   child: Container(
                     child: ListView.builder(
                         scrollDirection: Axis.vertical,
-                        itemCount: state.currentSources.length,
+                        itemCount: currentSources.length,
                         itemBuilder: (context, index) {
                           return TextButton(
                             child: Text(
-                              state.currentSources[index].sourceName,
+                              currentSources[index].sourceName,
                               style: TextStyle(
-                                color: state.active[index] == true
-                                    ? Colors.blue
-                                    : Colors.red,
+                                color:
+                                    currentSources[index].sourceActive == true
+                                        ? Colors.blue
+                                        : Colors.red,
                                 fontSize: 40.0,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             onPressed: () {
                               print('we pressed the button');
-                              context.read<SelectionsBloc>().add(
-                                  DeactivateSelection(
-                                      currentSource:
-                                          state.currentSources[index],
-                                      currentSources: state.currentSources,
-                                      active: state.active));
+                              if (currentSources[index].sourceActive == false) {
+                                context
+                                    .read<SelectionsBloc>()
+                                    .add(ActivateSelection(
+                                      currentSource: currentSources[index],
+                                      currentSources: currentSources,
+                                    ));
+                              } else if (currentSources[index].sourceActive ==
+                                  true) {
+                                context
+                                    .read<SelectionsBloc>()
+                                    .add(DeactivateSelection(
+                                      currentSources[index],
+                                      currentSources,
+                                    ));
+                              }
                             },
                           );
                         }),
@@ -108,8 +133,9 @@ class NextPage extends StatelessWidget {
             FloatingActionButton(
               child: Icon(Icons.add),
               onPressed: () {
-                context.read<SelectionsBloc>().add(
-                    LoadNextSelections(currentSources: state.currentSources));
+                context
+                    .read<SelectionsBloc>()
+                    .add(LoadNextSelections(currentSources: currentSources));
               },
             ),
           ]);
@@ -126,29 +152,39 @@ class NextPage extends StatelessWidget {
                   child: Container(
                     child: ListView.builder(
                         scrollDirection: Axis.vertical,
-                        itemCount: state.currentSources.length,
+                        itemCount: currentSources.length,
                         itemBuilder: (context, index) {
                           print("just before buttonrender: ");
-                          print(state.active[index]);
                           return TextButton(
                             child: Text(
-                              state.currentSources[index].sourceName,
+                              currentSources[index].sourceName,
                               style: TextStyle(
-                                color: state.active[index] == true
-                                    ? Colors.blue
-                                    : Colors.red,
+                                color:
+                                    currentSources[index].sourceActive == true
+                                        ? Colors.blue
+                                        : Colors.red,
                                 fontSize: 40.0,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             onPressed: () {
                               print('we pressed the button');
-                              context.read<SelectionsBloc>().add(
-                                  ActivateSelection(
-                                      currentSource:
-                                          state.currentSources[index],
-                                      currentSources: state.currentSources,
-                                      active: state.active));
+                              if (currentSources[index].sourceActive == false) {
+                                context
+                                    .read<SelectionsBloc>()
+                                    .add(ActivateSelection(
+                                      currentSource: currentSources[index],
+                                      currentSources: currentSources,
+                                    ));
+                              } else if (currentSources[index].sourceActive ==
+                                  true) {
+                                context
+                                    .read<SelectionsBloc>()
+                                    .add(DeactivateSelection(
+                                      currentSources[index],
+                                      currentSources,
+                                    ));
+                              }
                             },
                           );
                         }),
@@ -159,8 +195,9 @@ class NextPage extends StatelessWidget {
             FloatingActionButton(
               child: Icon(Icons.add),
               onPressed: () {
-                context.read<SelectionsBloc>().add(
-                    LoadNextSelections(currentSources: state.currentSources));
+                context
+                    .read<SelectionsBloc>()
+                    .add(LoadNextSelections(currentSources: currentSources));
               },
             ),
           ]);

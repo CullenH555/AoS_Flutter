@@ -12,7 +12,7 @@ class GenerateNextSave extends Equatable {
   List<Object?> get props => [];
 
   //  Generating the next page takes in the current list of sources and generates the next.
-  generateNextSave(currentSource, currentSourceId) async {
+  generateNextSave(currentSource, currentSources) async {
     try {
       final _firestore = FirebaseFirestore.instance;
       return _firestore.collection('saveTest1').add({
@@ -21,23 +21,38 @@ class GenerateNextSave extends Equatable {
         var recordId = value.id;
         print('we to stringed it');
         print(recordId);
-        return recordId;
+        for (var i = 0; i < currentSources.length; i++) {
+          if (currentSources[i] == currentSource) {
+            currentSources[i].setSourceId(recordId);
+          }
+          print(currentSources[i]);
+        }
+        return currentSources;
       });
     } catch (e) {
       print(e);
     }
   }
 
-  generateNextDelete(currentSource, currentSourceId) async {
+  generateNextDelete(currentSource, currentSources) async {
+    var currentSourceId;
     try {
       print("currentSourceId before trying to delete: ");
-      print(currentSourceId);
-      final _firestore = FirebaseFirestore.instance;
-      await _firestore.collection('saveTest1').doc(currentSourceId).delete();
-      print('inside Delete function, deleted: ');
-      print(currentSourceId);
-      print(_firestore.collection('saveTest1').doc(currentSource.sourceName));
-      return 'Saved!';
+      for (var j = 0; j < currentSources.length; j++) {
+        if (currentSources[j] == currentSource) {
+          currentSourceId = currentSources[j].sourceId;
+          print(currentSources[j]);
+          print(currentSourceId);
+          final _firestore = FirebaseFirestore.instance;
+          await _firestore
+              .collection('saveTest1')
+              .doc(currentSourceId)
+              .delete();
+          print('inside Delete function, deleted: ');
+          print(currentSourceId);
+          return currentSources;
+        }
+      }
     } catch (e) {
       print(e);
     }
