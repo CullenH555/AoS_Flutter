@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../../domain/entities/source.dart';
 import '../../domain/generate_button_styler.dart';
+import '../../domain/generate_display.dart';
 import '../../domain/generate_next_save.dart';
 // uncomment below to init....
 // import '../../domain/generate_initial_ruleData.dart';
@@ -44,14 +45,12 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
     on<LoadNextSelections>(_onLoadNextSelections);
     on<ActivateSelection>(_onActivateSelection);
     on<DeactivateSelection>(_onDeactivateSelection);
+    on<DisplayOutput>(_onDisplayOutput);
   }
   void _onLoadNextSelections(
       LoadNextSelections event, Emitter<SelectionsState> emit) async {
     var nextPage = GenerateNextPage();
-    var sourcesAndActive =
-        await nextPage.generateNextPage(event.currentSources);
-    var sources = sourcesAndActive[0];
-    List<bool> active = sourcesAndActive[1];
+    var sources = await nextPage.generateNextPage(event.currentSources);
     emit(
       // Emit the new state: load event --> loaded state.
       NextSelectionsLoaded(nextSources: sources),
@@ -83,6 +82,15 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
     emit(
       // Emit the new state: load event --> loaded state.
       SelectionDeactivated(event.currentSource, editedSources),
+    );
+  }
+
+  void _onDisplayOutput(
+      DisplayOutput event, Emitter<SelectionsState> emit) async {
+    var displayer = GenerateDisplay();
+    displayer.generateDisplay(event.currentSources);
+    emit(
+      OutPutDisplay(event.currentSources),
     );
   }
 }

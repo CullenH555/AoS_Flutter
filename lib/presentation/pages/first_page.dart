@@ -30,147 +30,231 @@ class AOSFirstPage extends StatelessWidget {
       body: BlocBuilder<SelectionsBloc, SelectionsState>(
           builder: (context, state) {
         if (state is SelectionsInitial) {
-          return SizedBox.expand(
-            child: FractionallySizedBox(
-              widthFactor: 1,
-              heightFactor: 0.5,
-              alignment: FractionalOffset.center,
-              child: Container(
-                child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  itemCount: state.initSources.length,
-                  itemBuilder: (context, index) {
-                    return TextButton(
-                      child: Text(
-                        state.initSources[index].sourceName,
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 40.0,
-                          fontWeight: FontWeight.bold,
+          return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  child: Text(
+                    'Choose faction',
+                    style: TextStyle(
+                      fontSize: 40.0,
+                      backgroundColor: Colors.redAccent,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: SizedBox.expand(
+                    child: FractionallySizedBox(
+                      widthFactor: 1,
+                      heightFactor: 0.5,
+                      alignment: FractionalOffset.center,
+                      child: Container(
+                        child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          itemCount: state.initSources.length,
+                          itemBuilder: (context, index) {
+                            return TextButton(
+                              child: Text(
+                                state.initSources[index].sourceName,
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 40.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              onPressed: () {
+                                //     context
+                                //        .read<SaveBloc>()
+                                //       .add(SaveToDb(state.initSources[index]));
+                                //  context
+                                //     .read<SaveBloc>()
+                                //     .add(SaveToLocal(state.initSources[index]));
+                                context
+                                    .read<SelectionsBloc>()
+                                    .add(ActivateSelection(
+                                      currentSource: state.initSources[index],
+                                      currentSources: state.initSources,
+                                    ));
+                                //  generateNextPage(buttonsList[index].sourceFaction,
+                                //  buttonsList[index].nextSourceType, context);
+                              },
+                            );
+                          },
                         ),
                       ),
-                      onPressed: () {
-                        //     context
-                        //        .read<SaveBloc>()
-                        //       .add(SaveToDb(state.initSources[index]));
-                        //  context
-                        //     .read<SaveBloc>()
-                        //     .add(SaveToLocal(state.initSources[index]));
-                        context.read<SelectionsBloc>().add(ActivateSelection(
-                              currentSource: state.initSources[index],
-                              currentSources: state.initSources,
-                            ));
-                        //  generateNextPage(buttonsList[index].sourceFaction,
-                        //  buttonsList[index].nextSourceType, context);
-                      },
-                    );
-                  },
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          );
+              ]);
         }
         if (state is SelectionActivated) {
-          print("we got inside state SelectionActivated");
-          return Column(children: [
-            Expanded(
-              child: SizedBox.expand(
-                child: FractionallySizedBox(
-                  widthFactor: 1,
-                  heightFactor: 0.5,
-                  alignment: FractionalOffset.center,
-                  child: Container(
-                    child: ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        itemCount: state.currentSources.length,
-                        itemBuilder: (context, index) {
-                          return TextButton(
-                            child: Text(
-                              state.currentSources[index].sourceName,
-                              style: TextStyle(
-                                color:
-                                    state.currentSources[index].sourceActive ==
+          var category = state.currentSources[0].sourceType;
+          print("we got inside state SelectionActivated in first page");
+          return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  child: Text(
+                    'Choose $category',
+                    style: TextStyle(
+                      fontSize: 40.0,
+                      backgroundColor: Colors.redAccent,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: SizedBox.expand(
+                    child: FractionallySizedBox(
+                      widthFactor: 1,
+                      heightFactor: 0.5,
+                      alignment: FractionalOffset.center,
+                      child: Container(
+                        child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: state.currentSources.length,
+                            itemBuilder: (context, index) {
+                              return TextButton(
+                                child: Text(
+                                  state.currentSources[index].sourceName,
+                                  style: TextStyle(
+                                    color: state.currentSources[index]
+                                                .sourceActive ==
                                             true
                                         ? Colors.blue
                                         : Colors.red,
-                                fontSize: 40.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            onPressed: () {
-                              print('we pressed the button');
-                              context
-                                  .read<SelectionsBloc>()
-                                  .add(DeactivateSelection(
-                                    state.currentSources[index],
-                                    state.currentSources,
-                                  ));
-                            },
-                          );
-                        }),
+                                    fontSize: 40.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  print('we pressed the button');
+                                  print(
+                                      state.currentSources[index].sourceActive);
+                                  if (state
+                                          .currentSources[index].sourceActive ==
+                                      true) {
+                                    context
+                                        .read<SelectionsBloc>()
+                                        .add(DeactivateSelection(
+                                          state.currentSources[index],
+                                          state.currentSources,
+                                        ));
+                                  } else {
+                                    context
+                                        .read<SelectionsBloc>()
+                                        .add(ActivateSelection(
+                                          currentSource:
+                                              state.currentSources[index],
+                                          currentSources: state.currentSources,
+                                        ));
+                                  }
+                                },
+                              );
+                            }),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () {
-                context.read<SelectionsBloc>().add(
-                    LoadNextSelections(currentSources: state.currentSources));
-              },
-            ),
-          ]);
+                FloatingActionButton(
+                  child: Icon(Icons.add),
+                  onPressed: () {
+                    print("we used this");
+                    if (state.currentSources[0].sourceType == 'artifact') {
+                      context
+                          .read<SelectionsBloc>()
+                          .add(DisplayOutput(state.currentSources));
+                    }
+                    context.read<SelectionsBloc>().add(LoadNextSelections(
+                        currentSources: state.currentSources));
+                  },
+                ),
+              ]);
         }
         if (state is SelectionDeactivated) {
+          var category = state.currentSources[0].sourceType;
           print("we got inside state SelectionDeactivated");
-          return Column(children: [
-            Expanded(
-              child: SizedBox.expand(
-                child: FractionallySizedBox(
-                  widthFactor: 1,
-                  heightFactor: 0.5,
-                  alignment: FractionalOffset.center,
-                  child: Container(
-                    child: ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        itemCount: state.currentSources.length,
-                        itemBuilder: (context, index) {
-                          return TextButton(
-                            child: Text(
-                              state.currentSources[index].sourceName,
-                              style: TextStyle(
-                                color:
-                                    state.currentSources[index].sourceActive ==
+          return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  child: Text(
+                    'Choose $category',
+                    style: TextStyle(
+                      fontSize: 40.0,
+                      backgroundColor: Colors.redAccent,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: SizedBox.expand(
+                    child: FractionallySizedBox(
+                      widthFactor: 1,
+                      heightFactor: 0.5,
+                      alignment: FractionalOffset.center,
+                      child: Container(
+                        child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: state.currentSources.length,
+                            itemBuilder: (context, index) {
+                              return TextButton(
+                                child: Text(
+                                  state.currentSources[index].sourceName,
+                                  style: TextStyle(
+                                    color: state.currentSources[index]
+                                                .sourceActive ==
                                             true
                                         ? Colors.blue
                                         : Colors.red,
-                                fontSize: 40.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            onPressed: () {
-                              print('we pressed the button');
-                              context
-                                  .read<SelectionsBloc>()
-                                  .add(ActivateSelection(
-                                    currentSource: state.currentSources[index],
-                                    currentSources: state.currentSources,
-                                  ));
-                            },
-                          );
-                        }),
+                                    fontSize: 40.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  print('we pressed the button');
+                                  print(
+                                      state.currentSources[index].sourceActive);
+                                  if (state
+                                          .currentSources[index].sourceActive ==
+                                      true) {
+                                    context
+                                        .read<SelectionsBloc>()
+                                        .add(DeactivateSelection(
+                                          state.currentSources[index],
+                                          state.currentSources,
+                                        ));
+                                  } else {
+                                    context
+                                        .read<SelectionsBloc>()
+                                        .add(ActivateSelection(
+                                          currentSource:
+                                              state.currentSources[index],
+                                          currentSources: state.currentSources,
+                                        ));
+                                  }
+                                },
+                              );
+                            }),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () {
-                context.read<SelectionsBloc>().add(
-                    LoadNextSelections(currentSources: state.currentSources));
-              },
-            ),
-          ]);
+                FloatingActionButton(
+                  child: Icon(Icons.add),
+                  onPressed: () {
+                    print("we used this");
+                    if (state.currentSources[0].sourceType == 'artifact') {
+                      context
+                          .read<SelectionsBloc>()
+                          .add(DisplayOutput(state.currentSources));
+                    }
+                    context.read<SelectionsBloc>().add(LoadNextSelections(
+                        currentSources: state.currentSources));
+                  },
+                ),
+              ]);
         }
         if (state is NextSelectionsLoaded) {
           return NextPage(state.nextSources);
@@ -178,21 +262,9 @@ class AOSFirstPage extends StatelessWidget {
           return Text('Error');
         }
       }),
-      //    floatingActionButton: BlocBuilder<SelectionsBloc, SelectionsState>(
-      //       builder: (context, state) {
-      //     return FloatingActionButton(
-      //       child: Icon(Icons.add),
-      //       onPressed: () {
-      //   context
-      //      .read<SelectionsBloc>()
-      //     .add(LoadNextSelections(currentSources: state.nextSources));
-      //    },
-      //   );
-      //   }),
     );
   }
 }
-
-// TODO separate out the navigation from the toggle.
+// TODO finish view generator.
 // TODO pass same buttonList around while toggling.
 // TODO only update to generateNextPage nextSources when hitting navigate button.

@@ -58,3 +58,10 @@ class SelectionDeactivated extends SelectionsState {
   @override
   List<Object> get props => [currentSource, currentSources];
 }
+
+class OutPutDisplay extends SelectionsState {
+  List<Source> currentSources;
+  OutPutDisplay(this.currentSources);
+  @override
+  List<Object> get props => [currentSources];
+}
