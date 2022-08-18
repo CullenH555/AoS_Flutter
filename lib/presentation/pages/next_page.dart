@@ -1,3 +1,10 @@
+// This page remains as a reminder of the intermediate format
+// of the main functionality before serious refactoring.
+// The refactoring took reused code and made it into reusable widget
+// Furthermore, state management was streamlined.
+
+/*
+
 import 'dart:ffi';
 
 import 'package:aos/blocs/selections/selections_bloc.dart';
@@ -244,3 +251,5 @@ class NextPage extends StatelessWidget {
     //   }),
   }
 }
+
+ */

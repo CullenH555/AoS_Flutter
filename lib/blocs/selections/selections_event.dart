@@ -46,8 +46,6 @@ class DeactivateSelection extends SelectionsEvent {
 }
 
 class DisplayOutput extends SelectionsEvent {
-  List<Source> currentSources = [];
-  DisplayOutput(this.currentSources);
   @override
-  List<Object> get props => [currentSources];
+  List<Object> get props => [];
 }

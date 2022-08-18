@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:aos/presentation/pages/first_page.dart';
+import 'package:aos/presentation/pages/selections_page.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 

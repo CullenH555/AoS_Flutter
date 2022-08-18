@@ -1,4 +1,4 @@
-import 'package:aos/presentation/pages/first_page.dart';
+import 'package:aos/presentation/pages/selections_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -61,8 +61,10 @@ class AOSRegistrationPage extends StatelessWidget {
                 context
                     .read<LoginBloc>()
                     .add(Register(email: email, password: password));
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AOSFirstPage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SelectionsPage([])));
               },
             ),
           ),

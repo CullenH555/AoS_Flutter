@@ -1,4 +1,4 @@
-import 'package:aos/presentation/pages/first_page.dart';
+import 'package:aos/presentation/pages/selections_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -58,8 +58,10 @@ class AOSLoginPage extends StatelessWidget {
                 context
                     .read<LoginBloc>()
                     .add(Login(email: email, password: password));
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AOSFirstPage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SelectionsPage([])));
               },
             ),
           ),

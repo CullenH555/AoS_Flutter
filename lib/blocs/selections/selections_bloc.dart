@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
+import '../../domain/entities/rule.dart';
 import '../../domain/entities/source.dart';
 import '../../domain/generate_button_styler.dart';
 import '../../domain/generate_display.dart';
@@ -78,7 +79,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
         event.currentSource, event.currentSources);
     var delete = GenerateNextSave();
     var editedSources =
-        await delete.generateNextDelete(event.currentSource, buttonStyled);
+        await delete.generateNextSave(event.currentSource, buttonStyled);
     emit(
       // Emit the new state: load event --> loaded state.
       SelectionDeactivated(event.currentSource, editedSources),
@@ -88,9 +89,11 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
   void _onDisplayOutput(
       DisplayOutput event, Emitter<SelectionsState> emit) async {
     var displayer = GenerateDisplay();
-    displayer.generateDisplay(event.currentSources);
+    var theRules = await displayer.generateDisplay();
+    print('coming back from generateDisplay: ');
+    print(theRules);
     emit(
-      OutPutDisplay(event.currentSources),
+      OutPutDisplay(theRules),
     );
   }
 }

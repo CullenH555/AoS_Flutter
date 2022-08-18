@@ -8,7 +8,7 @@ abstract class SelectionsState extends Equatable {
 // The state receives the next sources from the Bloc.
 // The state is used by the BlocBuilder.
 class SelectionsInitial extends SelectionsState {
-  var initSources = [
+  var sources = [
     Source(
         sourceName: 'Sylvaneth',
         sourceFaction: 'sylvaneth',
@@ -27,10 +27,10 @@ class SelectionsInitial extends SelectionsState {
       rulesList: [],
     ),
   ];
-  SelectionsInitial(this.initSources);
+  SelectionsInitial(this.sources);
 
   @override
-  List<Object> get props => [initSources];
+  List<Object> get props => [sources];
 }
 
 class NextSelectionsLoaded extends SelectionsState {
@@ -60,8 +60,8 @@ class SelectionDeactivated extends SelectionsState {
 }
 
 class OutPutDisplay extends SelectionsState {
-  List<Source> currentSources;
-  OutPutDisplay(this.currentSources);
+  var rules;
+  OutPutDisplay(this.rules);
   @override
-  List<Object> get props => [currentSources];
+  List<Object> get props => [rules];
 }

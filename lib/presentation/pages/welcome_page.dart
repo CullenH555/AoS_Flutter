@@ -1,4 +1,4 @@
-import 'package:aos/presentation/pages/first_page.dart';
+import 'package:aos/presentation/pages/selections_page.dart';
 import 'package:aos/presentation/pages/registration_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -4,7 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'blocs/login/login_bloc.dart';
-import 'presentation/pages/first_page.dart';
+import 'presentation/pages/selections_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,8 +30,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.red,
           backgroundColor: Colors.white,
         ),
-        home:
-            AOSFirstPage(), // working on firstPage -- should be: AOSWelcomePage(),
+        home: SelectionsPage(
+            []), // working on firstPage -- should be: AOSWelcomePage(),
       ),
     );
   }
