@@ -27,10 +27,16 @@ class DisplayPage extends StatelessWidget {
           if (state is NextSelectionsLoaded) {
             return ListView.builder(
               scrollDirection: Axis.vertical,
-              itemCount: 2,
+              // How to unpack [{rule: rulesList[]}]
+              // Maybe use firestore query to return a list of all rulesLists.
+              // Then use "consolidated rulesList" to populate.
+              itemCount: 2, // "consolidated rulesList".length
               itemBuilder: (context, index) {
+                // At this point items should be:
+                // [{sourceName: 'WoodAelves'}, {sourceName: 'Sylvaneth'}]
+                // Or work with "consolidated rulesList"
                 return Text(
-                  'Boop',
+                  '',
                 );
               },
             );

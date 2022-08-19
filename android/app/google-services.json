@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "79543107333",
-    "project_id": "aos-flutter-efe06",
-    "storage_bucket": "aos-flutter-efe06.appspot.com"
+    "project_number": "826309270409",
+    "project_id": "aos-2c4ef",
+    "storage_bucket": "aos-2c4ef.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:79543107333:android:c70094f7fa8037160a016c",
+        "mobilesdk_app_id": "1:826309270409:android:3dfc86eae21cda1116df58",
         "android_client_info": {
           "package_name": "cullenhallinan.com.aos_flutter"
         }
       },
       "oauth_client": [
         {
-          "client_id": "79543107333-vp6ja9bu61e2lrp65o37ch44ieo00o60.apps.googleusercontent.com",
+          "client_id": "826309270409-30ulpi6bt7r9pgqqbrvdm12rs3amff96.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA6qI3TaXn07Davl7n9MLMZZfe8022DJ8M"
+          "current_key": "AIzaSyCj1WNtEeNDlz9Piwb0Z9lExkPQXoifZPY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "79543107333-vp6ja9bu61e2lrp65o37ch44ieo00o60.apps.googleusercontent.com",
+              "client_id": "826309270409-30ulpi6bt7r9pgqqbrvdm12rs3amff96.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

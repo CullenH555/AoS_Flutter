@@ -32,11 +32,6 @@ class SelectionsPage extends StatelessWidget {
       ),
       body: BlocBuilder<SelectionsBloc, SelectionsState>(
           builder: (context, state) {
-        if (state is SelectionsInitial) {
-          print('state is SelectionsInitial and we try component');
-          var initSources = state.sources;
-          return Selections(initSources);
-        }
         if (state is SelectionActivated) {
           print("we got inside state SelectionActivated in first page");
           return Selections(state.currentSources);
@@ -51,6 +46,10 @@ class SelectionsPage extends StatelessWidget {
         }
         if (state is DisplayOutput) {
           return DisplayPage();
+        } else if (state is SelectionsInitial) {
+          print('state is SelectionsInitial and we try component');
+          var initSources = state.sources;
+          return Selections(initSources);
         } else {
           return Text('Error');
         }

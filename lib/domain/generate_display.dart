@@ -9,7 +9,7 @@ class GenerateDisplay extends Equatable {
   @override
   List<Object?> get props => [];
 
-  //  Generating the next page takes in the current list of sources and generates the next.
+  //  Generating the display retrieves the data from the db and returns a list of rules.
   generateDisplay() async {
     var items = <dynamic>[];
     final _firestore = FirebaseFirestore.instance;
@@ -18,10 +18,12 @@ class GenerateDisplay extends Equatable {
         .get()
         .then((QuerySnapshot snapshot) {
       snapshot.docs.forEach(
-        // add data to your list
+        // add data to the list
         (f) => items.add(f.data()),
       );
     });
+    // At this point items should be:
+    // [{sourceName: 'WoodAelves'}, {sourceName: 'Sylvaneth'}]
     print(items);
     return items;
   }
