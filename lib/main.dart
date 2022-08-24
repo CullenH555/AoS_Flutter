@@ -30,8 +30,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.red,
           backgroundColor: Colors.white,
         ),
-        home:
-            AOSWelcomePage(), // working on firstPage -- should be: AOSWelcomePage(),
+        home: SelectionsPage(
+            []), // working on firstPage -- should be: AOSWelcomePage(),
       ),
     );
   }

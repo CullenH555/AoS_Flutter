@@ -11,7 +11,7 @@ class Selections extends StatelessWidget {
   Widget build(BuildContext context) {
     print('we got inside the component');
     print(sources);
-    var category = sources[0].sourceType;
+    String category = sources[0].sourceType;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -74,13 +74,18 @@ class Selections extends StatelessWidget {
         FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
-            print(sources[0].sourceType);
+            //  print(sources[0].sourceType);
             if (sources[0].sourceType == 'artifact') {
               context.read<SelectionsBloc>().add(DisplayOutput());
             } else {
+              // Comment out below for initRulesToDb
               context
                   .read<SelectionsBloc>()
                   .add(LoadNextSelections(currentSources: sources));
+              // Uncomment below for initRulesToDb
+              //   context
+              //      .read<SelectionsBloc>()
+              //      .add(ActivateSelection(currentSources: sources));
             }
           },
         ),

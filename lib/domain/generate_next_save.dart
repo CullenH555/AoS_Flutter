@@ -11,32 +11,6 @@ class GenerateNextSave extends Equatable {
   @override
   List<Object?> get props => [];
 
-  /*
-  // This is the "older" version of the save functionality.
-  //  Generating the next page takes in the current list of sources and generates the next.
-  generateNextSave(currentSource, currentSources) async {
-    try {
-      final _firestore = FirebaseFirestore.instance;
-      return _firestore.collection('saveTest1').add({
-        'sourceName': currentSource.sourceName,
-      }).then((value) {
-        var recordId = value.id;
-        print('we to stringed it');
-        print(recordId);
-        for (var i = 0; i < currentSources.length; i++) {
-          if (currentSources[i] == currentSource) {
-            currentSources[i].setSourceId(recordId);
-          }
-          print(currentSources[i]);
-        }
-        return currentSources;
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
-  */
-
   generateNextSave(currentSource, currentSources) async {
     for (var j = 0; j < currentSources.length; j++) {
       if (currentSources[j] == currentSource) {
@@ -45,6 +19,11 @@ class GenerateNextSave extends Equatable {
             final _firestore = FirebaseFirestore.instance;
             return _firestore.collection('saveTest1').add({
               'sourceName': currentSource.sourceName,
+              'sourceFaction': currentSource.sourceFaction,
+              'sourceType': currentSource.sourceType,
+              'nextSourceType': currentSource.nextSourceType,
+              'sourceActive': currentSource.sourceActive,
+              'sourceId': currentSource.sourceId,
             }).then((value) {
               var recordId = value.id;
               print('we to stringed it');

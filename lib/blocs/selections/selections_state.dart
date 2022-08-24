@@ -10,13 +10,13 @@ abstract class SelectionsState extends Equatable {
 class SelectionsInitial extends SelectionsState {
   var sources = [
     Source(
-        sourceName: 'Sylvaneth',
-        sourceFaction: 'sylvaneth',
-        sourceType: 'faction',
-        nextSourceType: 'subfaction',
-        sourceActive: false,
-        sourceId: '',
-        rulesList: []),
+      sourceName: 'Sylvaneth',
+      sourceFaction: 'sylvaneth',
+      sourceType: 'faction',
+      nextSourceType: 'subfaction',
+      sourceActive: false,
+      sourceId: '',
+    ),
     Source(
       sourceName: 'Kharadron',
       sourceFaction: 'kharadron',
@@ -24,7 +24,6 @@ class SelectionsInitial extends SelectionsState {
       nextSourceType: 'subfaction',
       sourceActive: false,
       sourceId: '',
-      rulesList: [],
     ),
   ];
   SelectionsInitial(this.sources);
@@ -59,9 +58,9 @@ class SelectionDeactivated extends SelectionsState {
   List<Object> get props => [currentSource, currentSources];
 }
 
-class OutPutDisplay extends SelectionsState {
+class OutputDisplayed extends SelectionsState {
   var rules;
-  OutPutDisplay(this.rules);
+  OutputDisplayed(this.rules);
   @override
   List<Object> get props => [rules];
 }

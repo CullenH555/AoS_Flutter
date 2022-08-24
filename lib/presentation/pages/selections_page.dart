@@ -44,8 +44,9 @@ class SelectionsPage extends StatelessWidget {
           print("we got inside state NextSelectionsLoaded");
           return Selections(state.nextSources);
         }
-        if (state is DisplayOutput) {
-          return DisplayPage();
+        if (state is OutputDisplayed) {
+          print('state is OutputDisplayed');
+          return DisplayPage(state.rules);
         } else if (state is SelectionsInitial) {
           print('state is SelectionsInitial and we try component');
           var initSources = state.sources;

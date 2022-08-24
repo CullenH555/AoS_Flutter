@@ -10,15 +10,14 @@ class Source extends Equatable {
   String nextSourceType;
   bool sourceActive;
   String sourceId;
-  List rulesList;
-  Source(
-      {this.sourceName = '',
-      this.sourceFaction = '',
-      this.sourceType = '',
-      this.nextSourceType = '',
-      this.sourceActive = false,
-      this.sourceId = '',
-      this.rulesList = const <Rule>[]});
+  Source({
+    this.sourceName = '',
+    this.sourceFaction = '',
+    this.sourceType = '',
+    this.nextSourceType = '',
+    this.sourceActive = false,
+    this.sourceId = '',
+  });
 
   updateActive() {
     if (sourceActive == false) {
@@ -40,6 +39,5 @@ class Source extends Equatable {
         nextSourceType,
         sourceActive,
         sourceId,
-        rulesList
       ];
 }

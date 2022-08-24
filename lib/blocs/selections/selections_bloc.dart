@@ -26,21 +26,20 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
   SelectionsBloc()
       : super(SelectionsInitial([
           Source(
-              sourceName: 'Sylvaneth',
-              sourceFaction: 'sylvaneth',
-              sourceType: 'faction',
-              nextSourceType: 'subfaction',
-              sourceActive: false,
-              sourceId: '',
-              rulesList: []),
-          Source(
-            sourceName: 'Kharadron',
-            sourceFaction: 'kharadron',
+            sourceName: 'Sylvaneth',
+            sourceFaction: 'Sylvaneth',
             sourceType: 'faction',
             nextSourceType: 'subfaction',
             sourceActive: false,
             sourceId: '',
-            rulesList: [],
+          ),
+          Source(
+            sourceName: 'Kharadron Overlords',
+            sourceFaction: 'Kharadron Overlords',
+            sourceType: 'faction',
+            nextSourceType: 'subfaction',
+            sourceActive: false,
+            sourceId: '',
           ),
         ])) {
     on<LoadNextSelections>(_onLoadNextSelections);
@@ -66,8 +65,13 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
     var save = GenerateNextSave();
     var recordId =
         await save.generateNextSave(event.currentSource, buttonStyled);
+    // To init rules database...
+    //  var initDb = GenerateNextSave();
+    //  var enterAllRecords = initDb.generateNextInit(event.currentSource);
     emit(
       // Emit the new state: load event --> loaded state.
+      // To init rules database swap below 2 lines.
+      // SelectionActivated(event.currentSource, enterAllRecords),
       SelectionActivated(event.currentSource, recordId),
     );
   }
@@ -93,7 +97,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
     print('coming back from generateDisplay: ');
     print(theRules);
     emit(
-      OutPutDisplay(theRules),
+      OutputDisplayed(theRules),
     );
   }
 }
