@@ -42,6 +42,22 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
             sourceActive: false,
             sourceId: '',
           ),
+          RuleSource(
+            sourceName: 'Wood Aelves',
+            sourceFaction: 'Wood Aelves',
+            sourceType: 'faction',
+            nextSourceType: 'subfaction',
+            sourceActive: false,
+            sourceId: '',
+          ),
+          RuleSource(
+            sourceName: 'Blades of Khorne',
+            sourceFaction: 'Blades of Khorne',
+            sourceType: 'faction',
+            nextSourceType: 'subfaction',
+            sourceActive: false,
+            sourceId: '',
+          ),
         ])) {
     on<LoadNextSelections>(_onLoadNextSelections);
     on<ActivateSelection>(_onActivateSelection);

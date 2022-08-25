@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +23,22 @@ class GenerateRegisteredUser extends Equatable {
       }
     } catch (e) {
       print(e);
+    }
+  }
+
+  generateUserCollection(email) async {
+    try {
+      final _firestore = FirebaseFirestore.instance;
+      _firestore.collection(email).add({
+        'sourceName': 'name',
+        'sourceFaction': 'faction',
+        'sourceType': 'type',
+        'nextSourceType': 'nextType',
+        'sourceActive': 'active',
+        'sourceId': 'id',
+      });
+    } catch (e) {
+      return 'Error';
     }
   }
 
