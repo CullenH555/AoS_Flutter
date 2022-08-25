@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import 'entities/source.dart';
+import 'entities/ruleSource.dart';
 
 class GenerateButtonStyler extends Equatable {
   styleButton(currentSource, currentSources) {

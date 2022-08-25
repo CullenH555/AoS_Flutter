@@ -1,17 +1,17 @@
 import 'package:aos/data/get_rules_from_db.dart';
 
 import '../domain/entities/rule.dart';
-import 'package:aos/domain/entities/source.dart';
+import 'package:aos/domain/entities/ruleSource.dart';
 // The Repo organizes data from data sources for eventual use by the UI
 
 abstract class Repo {
-  Future<List<Source>> getOrganizedDataFromRepo();
+  Future<List<RuleSource>> getOrganizedDataFromRepo();
 }
 
 class RepoImp implements Repo {
   @override
-  Future<List<Source>> getOrganizedDataFromRepo() async {
-    List<Source> newSourceList = [];
+  Future<List<RuleSource>> getOrganizedDataFromRepo() async {
+    List<RuleSource> newSourceList = [];
     var getRules = GetRulesFromDb();
     var dbData = await getRules.getRulesFromDb();
     String sourceType = '';
@@ -45,7 +45,7 @@ class RepoImp implements Repo {
       }
       String sourceName = dbData[i]['ruleSource'].toString();
       String sourceFaction = dbData[i]['ruleFaction'].toString();
-      Source newSource = Source(
+      RuleSource newSource = RuleSource(
         sourceName: sourceName,
         sourceFaction: sourceFaction,
         sourceType: sourceType,

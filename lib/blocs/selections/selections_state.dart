@@ -9,7 +9,7 @@ abstract class SelectionsState extends Equatable {
 // The state is used by the BlocBuilder.
 class SelectionsInitial extends SelectionsState {
   var sources = [
-    Source(
+    RuleSource(
       sourceName: 'Sylvaneth',
       sourceFaction: 'sylvaneth',
       sourceType: 'faction',
@@ -17,7 +17,7 @@ class SelectionsInitial extends SelectionsState {
       sourceActive: false,
       sourceId: '',
     ),
-    Source(
+    RuleSource(
       sourceName: 'Kharadron',
       sourceFaction: 'kharadron',
       sourceType: 'faction',
@@ -33,16 +33,23 @@ class SelectionsInitial extends SelectionsState {
 }
 
 class NextSelectionsLoaded extends SelectionsState {
-  const NextSelectionsLoaded({this.nextSources = const <Source>[]});
-  final List<Source> nextSources;
+  const NextSelectionsLoaded({this.nextSources = const <RuleSource>[]});
+  final List<RuleSource> nextSources;
 
   @override
   List<Object> get props => [nextSources];
 }
 
+class PreviousSelectionsLoaded extends SelectionsState {
+  const PreviousSelectionsLoaded({this.previousSources = const <RuleSource>[]});
+  final List<RuleSource> previousSources;
+  @override
+  List<Object> get props => [previousSources];
+}
+
 class SelectionActivated extends SelectionsState {
   var currentSource;
-  List<Source> currentSources;
+  List<RuleSource> currentSources;
   SelectionActivated(this.currentSource, this.currentSources);
 
   @override
@@ -51,7 +58,7 @@ class SelectionActivated extends SelectionsState {
 
 class SelectionDeactivated extends SelectionsState {
   var currentSource;
-  List<Source> currentSources;
+  List<RuleSource> currentSources;
   SelectionDeactivated(this.currentSource, this.currentSources);
 
   @override

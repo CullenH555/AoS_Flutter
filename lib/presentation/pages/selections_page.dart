@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../blocs/login/login_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../domain/entities/source.dart';
+import '../../domain/entities/ruleSource.dart';
 import '../../domain/generate_next_page.dart';
 import '../widgets/selections.dart';
 import 'display_page.dart';
@@ -12,8 +12,8 @@ import 'next_page.dart';
 
 class SelectionsPage extends StatelessWidget {
   static const String id = 'first_page';
-  var currentSources;
   SelectionsPage(this.currentSources);
+  List<RuleSource> currentSources;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +43,10 @@ class SelectionsPage extends StatelessWidget {
         if (state is NextSelectionsLoaded) {
           print("we got inside state NextSelectionsLoaded");
           return Selections(state.nextSources);
+        }
+        if (state is PreviousSelectionsLoaded) {
+          print('we got inside PreviousSelectionsLoaded');
+          return Selections(state.previousSources);
         }
         if (state is OutputDisplayed) {
           print('state is OutputDisplayed');

@@ -3,14 +3,14 @@ import 'package:equatable/equatable.dart';
 
 import 'rule.dart';
 
-class Source extends Equatable {
+class RuleSource extends Equatable {
   String sourceName;
   String sourceFaction;
   String sourceType;
   String nextSourceType;
   bool sourceActive;
   String sourceId;
-  Source({
+  RuleSource({
     this.sourceName = '',
     this.sourceFaction = '',
     this.sourceType = '',
@@ -29,6 +29,10 @@ class Source extends Equatable {
 
   setSourceId(sourceIdToSet) {
     sourceId = sourceIdToSet;
+  }
+
+  get ruleName {
+    return ruleName;
   }
 
   @override

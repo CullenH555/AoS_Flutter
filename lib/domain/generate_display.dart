@@ -3,7 +3,7 @@ import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
-import 'entities/source.dart';
+import 'entities/ruleSource.dart';
 
 class GenerateDisplay extends Equatable {
   @override
@@ -24,14 +24,12 @@ class GenerateDisplay extends Equatable {
     });
     // At this point items should be:
     // [{sourceName: 'WoodAelves'}, {sourceName: 'Sylvaneth'}]
-    print(sourceItems);
     var rulesItems = <dynamic>[];
     await _firestore.collection('rules').get().then((QuerySnapshot snapshot) {
       snapshot.docs.forEach(
         (g) => rulesItems.add(g.data()),
       );
     });
-    print(rulesItems);
     var rulesMatchTurn = <dynamic>[];
     var rulesMatchHero = <dynamic>[];
     var rulesMatchMove = <dynamic>[];
@@ -60,15 +58,18 @@ class GenerateDisplay extends Equatable {
         }
       }
     }
-    var rulesList = rulesMatchTurn +
+    var rulesListOrdered = rulesMatchTurn +
         rulesMatchHero +
         rulesMatchMove +
         rulesMatchShoot +
         rulesMatchCharge +
         rulesMatchCombat +
         rulesMatchBattleshock;
-    print('rulesList is: ');
-    print(rulesList);
+    var seen = Set<String>();
+    Iterable rulesList =
+        rulesListOrdered.where((rule) => seen.add(rule['ruleName'])).toList();
+    //   var rulesList = rulesListOrdered.toSet().toList();
+    //   print(rulesList.length);
     return rulesList;
   }
 }

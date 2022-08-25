@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/selections/selections_bloc.dart';
-import '../../domain/entities/source.dart';
+import '../../domain/entities/ruleSource.dart';
 
 class Selections extends StatelessWidget {
   Selections(this.sources);
-  List<Source> sources;
+  List<RuleSource> sources;
   @override
   Widget build(BuildContext context) {
-    print('we got inside the component');
-    print(sources);
     String category = sources[0].sourceType;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -75,7 +73,7 @@ class Selections extends StatelessWidget {
           child: Icon(Icons.add),
           onPressed: () {
             //  print(sources[0].sourceType);
-            if (sources[0].sourceType == 'artifact') {
+            if (sources[0].sourceType == 'battalion') {
               context.read<SelectionsBloc>().add(DisplayOutput());
             } else {
               // Comment out below for initRulesToDb
@@ -87,6 +85,17 @@ class Selections extends StatelessWidget {
               //      .read<SelectionsBloc>()
               //      .add(ActivateSelection(currentSources: sources));
             }
+          },
+        ),
+        Container(
+          height: 100,
+        ),
+        IconButton(
+          icon: Icon(Icons.backspace),
+          onPressed: () {
+            context
+                .read<SelectionsBloc>()
+                .add(LoadPreviousSelections(currentSources: sources));
           },
         ),
       ],

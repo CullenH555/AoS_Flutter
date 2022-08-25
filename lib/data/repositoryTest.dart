@@ -1,23 +1,23 @@
 import '../domain/entities/rule.dart';
-import '../domain/entities/source.dart';
+import '../domain/entities/ruleSource.dart';
 
 // The Repo organizes data from data sources for eventual use by the UI
 
 abstract class Repo {
-  List<Source> getOrganizedDataFromRepo();
+  List<RuleSource> getOrganizedDataFromRepo();
 }
 
 class RepoImp implements Repo {
   @override
-  List<Source> getOrganizedDataFromRepo() {
-    List<Source> newSourceList = [];
+  List<RuleSource> getOrganizedDataFromRepo() {
+    List<RuleSource> newSourceList = [];
     for (var i = 0; i < dbData.length; i++) {
       String sourceName = dbData[i]['SourceName'].toString();
       String sourceFaction = dbData[i]['SourceFaction'].toString();
       String sourceType = dbData[i]['SourceType'].toString();
       String nextSourceType = dbData[i]['NextSourceType'].toString();
       List sourceRules = dbData[i]['SourceRules'] as List;
-      Source newSource = Source(
+      RuleSource newSource = RuleSource(
         sourceName: sourceName,
         sourceFaction: sourceFaction,
         sourceType: sourceType,
@@ -29,7 +29,7 @@ class RepoImp implements Repo {
   }
 
   @override
-  List<Source> oldSave = [];
+  List<RuleSource> oldSave = [];
 }
 
 // Pretend this came from a db.
