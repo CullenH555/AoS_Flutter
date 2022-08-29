@@ -28,6 +28,7 @@ class GenerateRegisteredUser extends Equatable {
 
   generateUserCollection(email) async {
     try {
+      print('We got inside generateUserCollection');
       final _firestore = FirebaseFirestore.instance;
       _firestore.collection(email).add({
         'sourceName': 'name',

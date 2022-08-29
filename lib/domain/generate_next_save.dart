@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:aos/domain/generate_current_user.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'entities/ruleSource.dart';
@@ -12,12 +13,14 @@ class GenerateNextSave extends Equatable {
   List<Object?> get props => [];
 
   generateNextSave(currentSource, currentSources) async {
+    var getUser = GenerateCurrentUser();
+    var user = await getUser.getCurrentUser();
     for (var j = 0; j < currentSources.length; j++) {
       if (currentSources[j] == currentSource) {
         if (currentSources[j].sourceActive == true) {
           try {
             final _firestore = FirebaseFirestore.instance;
-            return _firestore.collection('saveTest1').add({
+            return _firestore.collection(user).add({
               'sourceName': currentSource.sourceName,
               'sourceFaction': currentSource.sourceFaction,
               'sourceType': currentSource.sourceType,
@@ -34,6 +37,10 @@ class GenerateNextSave extends Equatable {
                 }
                 print(currentSources[i]);
               }
+              _firestore
+                  .collection(user)
+                  .doc(recordId)
+                  .update({'sourceId': recordId});
               return currentSources;
             });
           } catch (e) {
@@ -49,10 +56,7 @@ class GenerateNextSave extends Equatable {
                 print(currentSources[j]);
                 print(currentSourceId);
                 final _firestore = FirebaseFirestore.instance;
-                await _firestore
-                    .collection('saveTest1')
-                    .doc(currentSourceId)
-                    .delete();
+                await _firestore.collection(user).doc(currentSourceId).delete();
                 print('inside Delete function, deleted: ');
                 print(currentSourceId);
                 return currentSources;
@@ -67,6 +71,8 @@ class GenerateNextSave extends Equatable {
   }
 
   generateNextDelete(currentSource, currentSources) async {
+    var getUser = GenerateCurrentUser();
+    var user = await getUser.getCurrentUser();
     var currentSourceId;
     try {
       print("currentSourceId before trying to delete: ");
@@ -76,10 +82,7 @@ class GenerateNextSave extends Equatable {
           print(currentSources[j]);
           print(currentSourceId);
           final _firestore = FirebaseFirestore.instance;
-          await _firestore
-              .collection('saveTest1')
-              .doc(currentSourceId)
-              .delete();
+          await _firestore.collection(user).doc(currentSourceId).delete();
           print('inside Delete function, deleted: ');
           print(currentSourceId);
           return currentSources;

@@ -30,18 +30,27 @@ class GeneratePreviousPage extends Equatable {
         //    print(currentFaction);
       }
     }
+    var repoImp = RepoImp();
+    var ruleSources = await repoImp.getRuleSourcesFromDb();
     // Using the sourceType and the faction, generate previousSources list.
-    for (var i = 0; i < data.length; i++) {
-      if (data[i].nextSourceType == currentSources[0].sourceType &&
-          data[i].sourceFaction == currentFaction) {
-        previousSources.add(data[i]);
+    for (var source in ruleSources) {
+      if (source.nextSourceType == currentSources[0].sourceType &&
+          source.sourceFaction == currentFaction) {
+        previousSources.add(source);
       }
     }
+    for (var rule in data) {
+      if (rule.nextSourceType == currentSources[0].sourceType &&
+          rule.sourceFaction == currentFaction) {
+        previousSources.add(rule);
+      }
+    }
+    // Make sure only one instance of each Source is added.
     var seen = Set<String>();
     previousSources =
         previousSources.where((source) => seen.add(source.sourceName)).toList();
     //  print('previousSources after generatePreviousPage returns...');
-    //  print(previousSources);
+    print(previousSources);
     return previousSources;
   }
 }

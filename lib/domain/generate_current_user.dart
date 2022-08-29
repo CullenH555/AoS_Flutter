@@ -11,9 +11,9 @@ class GenerateCurrentUser extends Equatable {
   getCurrentUser() async {
     try {
       final user = await _auth.currentUser!;
-      loggedInUser = user;
-      print(loggedInUser.email);
-      return user;
+      loggedInUser = user.email.toString();
+      print(loggedInUser.runtimeType);
+      return loggedInUser;
     } catch (e) {
       print(e);
     }
