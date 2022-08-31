@@ -16,10 +16,6 @@ class GenerateButtonStyler extends Equatable {
     return currentSources;
   }
 
-  passSources(currentSources) {
-    return currentSources;
-  }
-
   @override
   List<Object?> get props => [];
 }

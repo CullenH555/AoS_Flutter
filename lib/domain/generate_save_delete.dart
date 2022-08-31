@@ -1,11 +1,12 @@
 import 'dart:ffi';
 
-import 'package:aos/domain/generate_current_user.dart';
+import 'package:aos/domain/generate_user_actions.dart';
+import 'package:aos/old_files/generate_current_user.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'entities/ruleSource.dart';
 import '../data/repository.dart';
-import '../presentation/pages/next_page.dart';
+import '../old_files/next_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GenerateNextSave extends Equatable {
@@ -13,7 +14,7 @@ class GenerateNextSave extends Equatable {
   List<Object?> get props => [];
 
   generateNextSave(currentSource, currentSources) async {
-    var getUser = GenerateCurrentUser();
+    var getUser = GenerateUserActions();
     var user = await getUser.getCurrentUser();
     for (var j = 0; j < currentSources.length; j++) {
       if (currentSources[j] == currentSource) {
@@ -71,7 +72,7 @@ class GenerateNextSave extends Equatable {
   }
 
   generateNextDelete(currentSource, currentSources) async {
-    var getUser = GenerateCurrentUser();
+    var getUser = GenerateUserActions();
     var user = await getUser.getCurrentUser();
     var currentSourceId;
     try {

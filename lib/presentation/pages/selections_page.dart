@@ -8,7 +8,7 @@ import '../../domain/entities/ruleSource.dart';
 import '../../domain/generate_next_page.dart';
 import '../widgets/selections.dart';
 import 'display_page.dart';
-import 'next_page.dart';
+import '../../old_files/next_page.dart';
 
 class SelectionsPage extends StatelessWidget {
   static const String id = 'first_page';

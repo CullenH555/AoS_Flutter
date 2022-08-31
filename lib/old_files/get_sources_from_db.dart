@@ -1,7 +1,8 @@
+/*
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
-import 'generate_current_user.dart';
+import '../domain/generate_current_user.dart';
 
 class GetSourcesFromDb extends Equatable {
   GetSourcesFromDb();
@@ -22,3 +23,4 @@ class GetSourcesFromDb extends Equatable {
   @override
   List<Object?> get props => [];
 }
+*/

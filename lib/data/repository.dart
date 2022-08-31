@@ -1,14 +1,16 @@
 import 'package:aos/data/get_rules_from_db.dart';
+import 'package:aos/domain/generate_user_actions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../domain/entities/rule.dart';
 import 'package:aos/domain/entities/ruleSource.dart';
 
-import '../domain/generate_current_user.dart';
+import '../old_files/generate_current_user.dart';
 // The Repo organizes data from data sources for eventual use by the UI
 
 abstract class Repo {
   Future<List<RuleSource>> getOrganizedDataFromRepo();
+  Future<List<RuleSource>> getRuleSourcesFromDb();
 }
 
 class RepoImp implements Repo {
@@ -61,9 +63,10 @@ class RepoImp implements Repo {
     return newSourceList;
   }
 
+  @override
   Future<List<RuleSource>> getRuleSourcesFromDb() async {
     List<RuleSource> ruleSources = [];
-    var getUser = GenerateCurrentUser();
+    var getUser = GenerateUserActions();
     var user = await getUser.getCurrentUser();
     var sourceItems = <dynamic>[];
     final _firestore = FirebaseFirestore.instance;
@@ -74,12 +77,18 @@ class RepoImp implements Repo {
       );
     });
     print(sourceItems);
-    print(sourceItems.runtimeType);
+    print(sourceItems[0].runtimeType);
+    bool sourceActive;
     for (var i = 0; i < sourceItems.length; i++) {
       String sourceId = sourceItems[i]['sourceId'];
       String sourceType = sourceItems[i]['sourceType'];
       String sourceName = sourceItems[i]['sourceName'];
-      bool sourceActive = sourceItems[i]['sourceActive'];
+      print(sourceItems[i]['sourceActive']);
+      if (sourceItems[i]['sourceActive'] == true) {
+        sourceActive = true;
+      } else {
+        sourceActive = false;
+      }
       String nextSourceType = sourceItems[i]['nextSourceType'];
       String sourceFaction = sourceItems[i]['sourceFaction'];
       RuleSource newSource = RuleSource(

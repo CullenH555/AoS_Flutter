@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:equatable/equatable.dart';
 
-class GenerateRegisteredUser extends Equatable {
-  GenerateRegisteredUser({this.email = '', this.password = ''});
+class GenerateUserActions extends Equatable {
+  GenerateUserActions({this.email = '', this.password = ''});
 
   final String email;
   final String password;
@@ -60,6 +60,19 @@ class GenerateRegisteredUser extends Equatable {
     final auth = FirebaseAuth.instance;
     try {
       await auth.signOut();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  getCurrentUser() async {
+    String loggedInUser;
+    try {
+      final _auth = FirebaseAuth.instance;
+      final user = await _auth.currentUser!;
+      loggedInUser = user.email.toString();
+      print(loggedInUser.runtimeType);
+      return loggedInUser;
     } catch (e) {
       print(e);
     }

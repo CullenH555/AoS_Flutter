@@ -12,9 +12,6 @@ class DisplayPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       scrollDirection: Axis.vertical,
-      // How to unpack [{rule: rulesList[]}]
-      // Maybe use firestore query to return a list of all rulesLists.
-      // Then use "consolidated rulesList" to populate.
       itemCount: rules.length, // "consolidated rulesList".length
       itemBuilder: (context, index) {
         var ruleName = rules[index]['ruleName'];

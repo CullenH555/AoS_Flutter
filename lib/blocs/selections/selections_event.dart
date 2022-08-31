@@ -10,20 +10,11 @@ abstract class SelectionsEvent extends Equatable {
 // It passes the current sources to the bloc for logic.
 class LoadNextSelections extends SelectionsEvent {
   final List<RuleSource> currentSources;
+  final String direction;
   @override
   LoadNextSelections({
     this.currentSources = const <RuleSource>[],
-  });
-
-  @override
-  List<Object> get props => [currentSources];
-}
-
-class LoadPreviousSelections extends SelectionsEvent {
-  final List<RuleSource> currentSources;
-  @override
-  LoadPreviousSelections({
-    this.currentSources = const <RuleSource>[],
+    required this.direction,
   });
 
   @override
@@ -31,23 +22,10 @@ class LoadPreviousSelections extends SelectionsEvent {
 }
 
 class ActivateSelection extends SelectionsEvent {
-  final currentSource;
-  final List<RuleSource> currentSources;
-  @override
-  ActivateSelection({
-    this.currentSource,
-    this.currentSources = const <RuleSource>[],
-  });
-
-  @override
-  List<Object> get props => [currentSource, currentSources];
-}
-
-class DeactivateSelection extends SelectionsEvent {
   var currentSource;
   List<RuleSource> currentSources = [];
   @override
-  DeactivateSelection(
+  ActivateSelection(
     this.currentSource,
     this.currentSources,
   );

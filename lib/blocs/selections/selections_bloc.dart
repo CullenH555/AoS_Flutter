@@ -1,16 +1,11 @@
-import 'dart:async';
 import 'package:aos/domain/entities/ruleSource.dart';
 import 'package:aos/domain/generate_next_page.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
-
-import '../../domain/entities/rule.dart';
 import '../../domain/entities/ruleSource.dart';
 import '../../domain/generate_button_styler.dart';
 import '../../domain/generate_display.dart';
-import '../../domain/generate_next_save.dart';
-import '../../domain/generate_previous_page.dart';
+import '../../domain/generate_save_delete.dart';
 // uncomment below to init....
 // import '../../domain/generate_initial_ruleData.dart';
 
@@ -61,29 +56,25 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
         ])) {
     on<LoadNextSelections>(_onLoadNextSelections);
     on<ActivateSelection>(_onActivateSelection);
-    on<DeactivateSelection>(_onDeactivateSelection);
     on<DisplayOutput>(_onDisplayOutput);
-    on<LoadPreviousSelections>(_onLoadPreviousSelections);
   }
   void _onLoadNextSelections(
       LoadNextSelections event, Emitter<SelectionsState> emit) async {
-    var nextPage = GenerateNextPage();
-    var sources = await nextPage.generateNextPage(event.currentSources);
-    emit(
-      // Emit the new state: load event --> loaded state.
-      NextSelectionsLoaded(nextSources: sources),
-    );
-  }
-
-  void _onLoadPreviousSelections(
-      LoadPreviousSelections event, Emitter<SelectionsState> emit) async {
-    var prevPage = GeneratePreviousPage();
-    print('event.curentSources is: ');
-    print(event.currentSources);
-    var sources = await prevPage.generatePreviousPage(event.currentSources);
-    emit(
-      PreviousSelectionsLoaded(previousSources: sources),
-    );
+    var nextPage = GenerateNextPage(direction: event.direction);
+    if (event.direction == 'next') {
+      var sources = await nextPage.generateNextPage(
+          event.currentSources, event.direction);
+      emit(
+        // Emit the new state: load event --> loaded state.
+        NextSelectionsLoaded(nextSources: sources),
+      );
+    } else if (event.direction == 'previous') {
+      var sources = await nextPage.generateNextPage(
+          event.currentSources, event.direction);
+      emit(
+        PreviousSelectionsLoaded(previousSources: sources),
+      );
+    }
   }
 
   void _onActivateSelection(
@@ -92,31 +83,26 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
     var buttonStyled = await styleButton.styleButton(
         event.currentSource, event.currentSources);
     var save = GenerateNextSave();
-    var recordId =
-        await save.generateNextSave(event.currentSource, buttonStyled);
-    // To init rules database...
-    //  var initDb = GenerateNextSave();
-    //  var enterAllRecords = initDb.generateNextInit(event.currentSource);
-    emit(
-      // Emit the new state: load event --> loaded state.
-      // To init rules database swap below 2 lines.
-      // SelectionActivated(event.currentSource, enterAllRecords),
-      SelectionActivated(event.currentSource, recordId),
-    );
-  }
-
-  void _onDeactivateSelection(
-      DeactivateSelection event, Emitter<SelectionsState> emit) async {
-    var styleButton = GenerateButtonStyler();
-    var buttonStyled = await styleButton.styleButton(
-        event.currentSource, event.currentSources);
-    var delete = GenerateNextSave();
-    var editedSources =
-        await delete.generateNextSave(event.currentSource, buttonStyled);
-    emit(
-      // Emit the new state: load event --> loaded state.
-      SelectionDeactivated(event.currentSource, editedSources),
-    );
+    if (event.currentSource.sourceActive == true) {
+      var recordId =
+          await save.generateNextSave(event.currentSource, buttonStyled);
+      // To init rules database...
+      //  var initDb = GenerateNextSave();
+      //  var enterAllRecords = initDb.generateNextInit(event.currentSource);
+      emit(
+        // Emit the new state: load event --> loaded state.
+        // To init rules database swap below 2 lines.
+        // SelectionActivated(event.currentSource, enterAllRecords),
+        SelectionActivated(event.currentSource, recordId),
+      );
+    } else if (event.currentSource.sourceActive == false) {
+      var editedSources =
+          await save.generateNextSave(event.currentSource, buttonStyled);
+      emit(
+        // Emit the new state: load event --> loaded state.
+        SelectionDeactivated(event.currentSource, editedSources),
+      );
+    }
   }
 
   void _onDisplayOutput(

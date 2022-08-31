@@ -45,22 +45,11 @@ class Selections extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      // TODO refactor the onPressed logic out of the UI and into the domain
-                      // Basically, move this activity check into a class method.
                       onPressed: () {
-                        if (sources[index].sourceActive == true) {
-                          context
-                              .read<SelectionsBloc>()
-                              .add(DeactivateSelection(
-                                sources[index],
-                                sources,
-                              ));
-                        } else {
-                          context.read<SelectionsBloc>().add(ActivateSelection(
-                                currentSource: sources[index],
-                                currentSources: sources,
-                              ));
-                        }
+                        context.read<SelectionsBloc>().add(ActivateSelection(
+                              sources[index],
+                              sources,
+                            ));
                       },
                     );
                   },
@@ -77,9 +66,8 @@ class Selections extends StatelessWidget {
               context.read<SelectionsBloc>().add(DisplayOutput());
             } else {
               // Comment out below for initRulesToDb
-              context
-                  .read<SelectionsBloc>()
-                  .add(LoadNextSelections(currentSources: sources));
+              context.read<SelectionsBloc>().add(LoadNextSelections(
+                  currentSources: sources, direction: 'next'));
               // Uncomment below for initRulesToDb
               //   context
               //      .read<SelectionsBloc>()
@@ -88,15 +76,17 @@ class Selections extends StatelessWidget {
           },
         ),
         Container(
-          height: 100,
+          height: 60.0,
         ),
-        IconButton(
-          icon: Icon(Icons.backspace),
+        FloatingActionButton(
+          child: Icon(Icons.arrow_back),
           onPressed: () {
-            context
-                .read<SelectionsBloc>()
-                .add(LoadPreviousSelections(currentSources: sources));
+            context.read<SelectionsBloc>().add(LoadNextSelections(
+                currentSources: sources, direction: 'previous'));
           },
+        ),
+        Container(
+          height: 50.0,
         ),
       ],
     );

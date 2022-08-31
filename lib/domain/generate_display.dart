@@ -1,5 +1,5 @@
-import 'dart:ffi';
-
+import 'package:aos/domain/generate_user_actions.dart';
+import 'package:aos/old_files/generate_current_user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
@@ -11,12 +11,11 @@ class GenerateDisplay extends Equatable {
 
   //  Generating the display retrieves the data from the db and returns a list of rules.
   generateDisplay() async {
+    var getUser = GenerateUserActions();
+    var user = await getUser.getCurrentUser();
     var sourceItems = <dynamic>[];
     final _firestore = FirebaseFirestore.instance;
-    await _firestore
-        .collection('saveTest1')
-        .get()
-        .then((QuerySnapshot snapshot) {
+    await _firestore.collection(user).get().then((QuerySnapshot snapshot) {
       snapshot.docs.forEach(
         // add data to the list
         (f) => sourceItems.add(f.data()),
