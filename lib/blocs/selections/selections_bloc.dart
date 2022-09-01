@@ -2,6 +2,7 @@ import 'package:aos/domain/entities/ruleSource.dart';
 import 'package:aos/domain/generate_next_page.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import '../../domain/entities/rule.dart';
 import '../../domain/entities/ruleSource.dart';
 import '../../domain/generate_button_styler.dart';
 import '../../domain/generate_display.dart';
@@ -20,6 +21,8 @@ part 'selections_state.dart';
 // The Bloc passes/emits the nextSources to the state.
 class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
   SelectionsBloc()
+      // Should SelectionsInitial be empty, have a loading animation,
+      // or actually hold the initial data?
       : super(SelectionsInitial([
           RuleSource(
             sourceName: 'Sylvaneth',
@@ -58,18 +61,25 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
     on<ActivateSelection>(_onActivateSelection);
     on<DisplayOutput>(_onDisplayOutput);
   }
+
   void _onLoadNextSelections(
       LoadNextSelections event, Emitter<SelectionsState> emit) async {
-    var nextPage = GenerateNextPage(direction: event.direction);
+    // Should this next line instantiate GNP with the direction and sources,
+    // to be passed that way into the method calls?
+    // Or should it be empty, and the direction and sources passed
+    // directly into the method calls?
+    GenerateNextPage nextPage = GenerateNextPage(direction: event.direction);
+    // Should this next line of logic go into the GenerateNextPage.generateNextPage
+    // call with event.direction passed in? Or here...
     if (event.direction == 'next') {
-      var sources = await nextPage.generateNextPage(
+      List<RuleSource> sources = await nextPage.generateNextPage(
           event.currentSources, event.direction);
       emit(
         // Emit the new state: load event --> loaded state.
         NextSelectionsLoaded(nextSources: sources),
       );
     } else if (event.direction == 'previous') {
-      var sources = await nextPage.generateNextPage(
+      List<RuleSource> sources = await nextPage.generateNextPage(
           event.currentSources, event.direction);
       emit(
         PreviousSelectionsLoaded(previousSources: sources),
@@ -79,12 +89,13 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
 
   void _onActivateSelection(
       ActivateSelection event, Emitter<SelectionsState> emit) async {
-    var styleButton = GenerateButtonStyler();
-    var buttonStyled = await styleButton.styleButton(
+    // Below the event.data is passed directly to the method.
+    GenerateButtonStyler styleButton = GenerateButtonStyler();
+    List<RuleSource> buttonStyled = await styleButton.styleButton(
         event.currentSource, event.currentSources);
-    var save = GenerateNextSave();
+    GenerateNextSave save = GenerateNextSave();
     if (event.currentSource.sourceActive == true) {
-      var recordId =
+      List<RuleSource> recordId =
           await save.generateNextSave(event.currentSource, buttonStyled);
       // To init rules database...
       //  var initDb = GenerateNextSave();
@@ -96,7 +107,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
         SelectionActivated(event.currentSource, recordId),
       );
     } else if (event.currentSource.sourceActive == false) {
-      var editedSources =
+      List<RuleSource> editedSources =
           await save.generateNextSave(event.currentSource, buttonStyled);
       emit(
         // Emit the new state: load event --> loaded state.
@@ -107,10 +118,8 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
 
   void _onDisplayOutput(
       DisplayOutput event, Emitter<SelectionsState> emit) async {
-    var displayer = GenerateDisplay();
-    var theRules = await displayer.generateDisplay();
-    print('coming back from generateDisplay: ');
-    print(theRules);
+    GenerateDisplay displayer = GenerateDisplay();
+    List<Rule> theRules = await displayer.generateDisplay();
     emit(
       OutputDisplayed(theRules),
     );

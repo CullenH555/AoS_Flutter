@@ -22,13 +22,13 @@ class LoadNextSelections extends SelectionsEvent {
 }
 
 class ActivateSelection extends SelectionsEvent {
-  var currentSource;
-  List<RuleSource> currentSources = [];
+  final RuleSource currentSource;
+  final List<RuleSource> currentSources;
   @override
-  ActivateSelection(
-    this.currentSource,
-    this.currentSources,
-  );
+  ActivateSelection({
+    required this.currentSource,
+    this.currentSources = const <RuleSource>[],
+  });
 
   @override
   List<Object> get props => [currentSource, currentSources];

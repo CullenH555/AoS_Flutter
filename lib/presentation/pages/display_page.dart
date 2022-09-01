@@ -1,21 +1,19 @@
-import 'package:aos/blocs/login/login_bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../domain/entities/rule.dart';
 
-import '../../blocs/selections/selections_bloc.dart';
-
+// Page for displaying rules list of user choices,
+// ordered by game phase.
 class DisplayPage extends StatelessWidget {
   DisplayPage(this.rules);
-  var rules;
+  List<Rule> rules;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       scrollDirection: Axis.vertical,
       itemCount: rules.length, // "consolidated rulesList".length
       itemBuilder: (context, index) {
-        var ruleName = rules[index]['ruleName'];
-        var ruleText = rules[index]['ruleText'];
+        var ruleName = rules[index].ruleName;
+        var ruleText = rules[index].ruleText;
         // At this point items should be:
         // [{sourceName: 'WoodAelves'}, {sourceName: 'Sylvaneth'}]
         // Or work with "consolidated rulesList"

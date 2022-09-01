@@ -1,55 +1,60 @@
-import 'package:aos/data/get_rules_from_db.dart';
-import 'package:aos/domain/generate_user_actions.dart';
+import 'package:aos/data/repositories/user_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../domain/entities/rule.dart';
+import '../../domain/entities/rule.dart';
 import 'package:aos/domain/entities/ruleSource.dart';
 
-import '../old_files/generate_current_user.dart';
-// The Repo organizes data from data sources for eventual use by the UI
+// The Rule Repo organizes rule data from data sources for eventual use by the UI
 
-abstract class Repo {
+abstract class RuleRepository {
   Future<List<RuleSource>> getOrganizedDataFromRepo();
   Future<List<RuleSource>> getRuleSourcesFromDb();
+  Future<List<Rule>> getRulesFromDb();
 }
 
-class RepoImp implements Repo {
+class RuleRepoImp implements RuleRepository {
   @override
   Future<List<RuleSource>> getOrganizedDataFromRepo() async {
     List<RuleSource> newSourceList = [];
-    var getRules = GetRulesFromDb();
-    var dbData = await getRules.getRulesFromDb();
+    List allRulesList = [];
+    final _firestore = FirebaseFirestore.instance;
+    await _firestore.collection('rules').get().then((QuerySnapshot snapshot) {
+      snapshot.docs.forEach((e) {
+        allRulesList.add(e.data());
+      });
+    });
     String sourceType = '';
     String nextSourceType = '';
-    for (var i = 0; i < dbData.length; i++) {
-      if (dbData[i]['ruleSourceType'].toString() == 'Unit ability') {
+    for (var i = 0; i < allRulesList.length; i++) {
+      if (allRulesList[i]['ruleSourceType'].toString() == 'Unit ability') {
         sourceType = 'warscroll';
         nextSourceType = 'battalion';
-      } else if (dbData[i]['ruleSourceType'].toString() == 'Artifact') {
+      } else if (allRulesList[i]['ruleSourceType'].toString() == 'Artifact') {
         sourceType = 'artifact';
         nextSourceType = 'warscroll';
-      } else if (dbData[i]['ruleSourceType'].toString() ==
+      } else if (allRulesList[i]['ruleSourceType'].toString() ==
               'Subfaction Ability' ||
-          dbData[i]['ruleSourceType'].toString() == 'Subfaction ability') {
+          allRulesList[i]['ruleSourceType'].toString() ==
+              'Subfaction ability') {
         sourceType = 'subfaction';
         nextSourceType = 'command';
-      } else if (dbData[i]['ruleSourceType'].toString() ==
+      } else if (allRulesList[i]['ruleSourceType'].toString() ==
           'Allegiance ability') {
         sourceType = 'faction';
         nextSourceType = 'subfaction';
-      } else if (dbData[i]['ruleSourceType'].toString() ==
+      } else if (allRulesList[i]['ruleSourceType'].toString() ==
           'Battalion ability') {
         sourceType = 'battalion';
         nextSourceType = 'end';
-      } else if (dbData[i]['ruleSourceType'].toString() == 'Command Trait') {
+      } else if (allRulesList[i]['ruleSourceType'].toString() ==
+          'Command Trait') {
         sourceType = 'command';
         nextSourceType = 'artifact';
       } else {
         sourceType = 'other';
         nextSourceType = 'other';
       }
-      String sourceName = dbData[i]['ruleSource'].toString();
-      String sourceFaction = dbData[i]['ruleFaction'].toString();
+      String sourceName = allRulesList[i]['ruleSource'].toString();
+      String sourceFaction = allRulesList[i]['ruleFaction'].toString();
       RuleSource newSource = RuleSource(
         sourceName: sourceName,
         sourceFaction: sourceFaction,
@@ -58,17 +63,16 @@ class RepoImp implements Repo {
       );
       newSourceList.add(newSource);
     }
-    //  print('newSourceList after chugging through db rules: ');
-    //  print(newSourceList);
     return newSourceList;
   }
 
   @override
   Future<List<RuleSource>> getRuleSourcesFromDb() async {
     List<RuleSource> ruleSources = [];
-    var getUser = GenerateUserActions();
-    var user = await getUser.getCurrentUser();
-    var sourceItems = <dynamic>[];
+    // Should user be generated here from separate repo?
+    UserRepoImp getUser = UserRepoImp();
+    String user = await getUser.getCurrentUser();
+    List<dynamic> sourceItems = <dynamic>[];
     final _firestore = FirebaseFirestore.instance;
     await _firestore.collection(user).get().then((QuerySnapshot snapshot) {
       snapshot.docs.forEach(
@@ -76,14 +80,11 @@ class RepoImp implements Repo {
         (f) => sourceItems.add(f.data()),
       );
     });
-    print(sourceItems);
-    print(sourceItems[0].runtimeType);
     bool sourceActive;
     for (var i = 0; i < sourceItems.length; i++) {
       String sourceId = sourceItems[i]['sourceId'];
       String sourceType = sourceItems[i]['sourceType'];
       String sourceName = sourceItems[i]['sourceName'];
-      print(sourceItems[i]['sourceActive']);
       if (sourceItems[i]['sourceActive'] == true) {
         sourceActive = true;
       } else {
@@ -101,9 +102,55 @@ class RepoImp implements Repo {
       );
       ruleSources.add(newSource);
     }
-    print(ruleSources);
-    print(ruleSources.runtimeType);
     return ruleSources;
+  }
+
+  Future<List<Rule>> getRulesFromDb() async {
+    List allRulesList = [];
+    List<Rule> rulesList = [];
+    final _firestore = FirebaseFirestore.instance;
+    await _firestore.collection('rules').get().then((QuerySnapshot snapshot) {
+      snapshot.docs.forEach((e) {
+        allRulesList.add(e.data());
+      });
+    });
+    for (var rule in allRulesList) {
+      String ruleName = rule['ruleName'];
+      String ruleText = rule['ruleText'];
+      String rulePhase = rule['rulePhase'];
+      String ruleSource = rule['ruleSource'];
+      Rule newRule = Rule(ruleName, ruleText, rulePhase, ruleSource);
+      rulesList.add(newRule);
+    }
+    return rulesList;
+  }
+
+  void fireStoreRuleSourceDelete(user, currentSourceId) async {
+    final _firestore = FirebaseFirestore.instance;
+    await _firestore.collection(user).doc(currentSourceId).delete();
+  }
+
+  // Should user be passed in to method?
+  Future<List<RuleSource>> fireStoreRuleSourceUpdate(
+      user, currentSource, currentSources) {
+    final _firestore = FirebaseFirestore.instance;
+    return _firestore.collection(user).add({
+      'sourceName': currentSource.sourceName,
+      'sourceFaction': currentSource.sourceFaction,
+      'sourceType': currentSource.sourceType,
+      'nextSourceType': currentSource.nextSourceType,
+      'sourceActive': currentSource.sourceActive,
+      'sourceId': currentSource.sourceId,
+    }).then((value) {
+      String recordId = value.id;
+      for (var i = 0; i < currentSources.length; i++) {
+        if (currentSources[i] == currentSource) {
+          currentSources[i].setSourceId(recordId);
+        }
+      }
+      _firestore.collection(user).doc(recordId).update({'sourceId': recordId});
+      return currentSources;
+    });
   }
 }
 

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'entities/ruleSource.dart';
-import '../data/repository.dart';
+import '../data/repositories/repository.dart';
 
 class GenerateNextPage extends Equatable {
   GenerateNextPage(
@@ -12,12 +12,13 @@ class GenerateNextPage extends Equatable {
   List<Object?> get props => [currentSources, direction];
 
   //  Generating the next page takes in the current list of sources and generates the next.
-  generateNextPage(currentSources, direction) async {
+  Future<List<RuleSource>> generateNextPage(currentSources, direction) async {
     print('we are inside gen next page');
     List<RuleSource> nextSources = [];
-    Repo repo = RepoImp();
+    RuleRepository repo = RuleRepoImp();
     List<RuleSource> data = await repo.getOrganizedDataFromRepo();
     List<RuleSource> ruleSources = await repo.getRuleSourcesFromDb();
+
     String currentFaction = '';
     // Go through the saved db entries and extract the faction selected.
     for (var i = 0; i < ruleSources.length; i++) {
@@ -53,7 +54,7 @@ class GenerateNextPage extends Equatable {
         }
       }
     }
-    var seen = Set<String>();
+    Set<String> seen = Set<String>();
     nextSources =
         nextSources.where((source) => seen.add(source.sourceName)).toList();
     return nextSources;

@@ -1,8 +1,5 @@
-import 'dart:async';
-import 'package:aos/presentation/pages/selections_page.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-
 import '../../domain/generate_user_actions.dart';
 
 part 'login_event.dart';
@@ -15,27 +12,29 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<Logout>(_onLogout);
   }
 
+  // Should Repo implementation go here in the bloc?
+  // Or down in the 'domain' logic?
   void _onRegister(Register event, Emitter<LoginState> emit) async {
-    var makeUser = GenerateUserActions();
+    GenerateUserActions makeUser = GenerateUserActions();
     var user =
         await makeUser.generateRegisteredUser(event.email, event.password);
     await makeUser.generateUserCollection(event.email);
     emit(
-      UserLoggedIn(user: user),
+      UserLoggedIn(),
     );
   }
 
   void _onLogin(Login event, Emitter<LoginState> emit) async {
-    var getUser = GenerateUserActions();
+    GenerateUserActions getUser = GenerateUserActions();
     var user = await getUser.generateLoggedInUser(event.email, event.password);
     await getUser.generateUserCollection(event.email);
     emit(
-      UserLoggedIn(user: user),
+      UserLoggedIn(),
     );
   }
 
   void _onLogout(Logout event, Emitter<LoginState> emit) async {
-    var genLogout = GenerateUserActions();
+    GenerateUserActions genLogout = GenerateUserActions();
     await genLogout.generateLoggedOutUser();
   }
 }

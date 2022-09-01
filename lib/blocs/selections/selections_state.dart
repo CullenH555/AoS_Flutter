@@ -8,7 +8,7 @@ abstract class SelectionsState extends Equatable {
 // The state receives the next sources from the Bloc.
 // The state is used by the BlocBuilder.
 class SelectionsInitial extends SelectionsState {
-  var sources = [
+  final List<RuleSource> sources = [
     RuleSource(
       sourceName: 'Sylvaneth',
       sourceFaction: 'sylvaneth',
@@ -26,48 +26,48 @@ class SelectionsInitial extends SelectionsState {
       sourceId: '',
     ),
   ];
-  SelectionsInitial(this.sources);
+  SelectionsInitial(sources);
 
   @override
   List<Object> get props => [sources];
 }
 
 class NextSelectionsLoaded extends SelectionsState {
-  const NextSelectionsLoaded({this.nextSources = const <RuleSource>[]});
   final List<RuleSource> nextSources;
+  const NextSelectionsLoaded({this.nextSources = const <RuleSource>[]});
 
   @override
   List<Object> get props => [nextSources];
 }
 
 class PreviousSelectionsLoaded extends SelectionsState {
-  const PreviousSelectionsLoaded({this.previousSources = const <RuleSource>[]});
   final List<RuleSource> previousSources;
+  const PreviousSelectionsLoaded({this.previousSources = const <RuleSource>[]});
   @override
   List<Object> get props => [previousSources];
 }
 
 class SelectionActivated extends SelectionsState {
-  var currentSource;
-  List<RuleSource> currentSources;
-  SelectionActivated(this.currentSource, this.currentSources);
+  final RuleSource currentSource;
+  final List<RuleSource> currentSources;
+  const SelectionActivated(this.currentSource, this.currentSources);
 
   @override
   List<Object> get props => [currentSource, currentSources];
 }
 
 class SelectionDeactivated extends SelectionsState {
-  var currentSource;
-  List<RuleSource> currentSources;
-  SelectionDeactivated(this.currentSource, this.currentSources);
+  final RuleSource currentSource;
+  final List<RuleSource> currentSources;
+  const SelectionDeactivated(this.currentSource, this.currentSources);
 
   @override
   List<Object> get props => [currentSource, currentSources];
 }
 
 class OutputDisplayed extends SelectionsState {
-  var rules;
-  OutputDisplayed(this.rules);
+  final List<Rule> rules;
+  const OutputDisplayed(this.rules);
   @override
   List<Object> get props => [rules];
 }

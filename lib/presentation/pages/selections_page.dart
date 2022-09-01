@@ -1,14 +1,10 @@
 import 'package:aos/blocs/selections/selections_bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../blocs/login/login_bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/entities/ruleSource.dart';
-import '../../domain/generate_next_page.dart';
 import '../widgets/selections.dart';
 import 'display_page.dart';
-import '../../old_files/next_page.dart';
 
 class SelectionsPage extends StatelessWidget {
   static const String id = 'first_page';
@@ -62,4 +58,3 @@ class SelectionsPage extends StatelessWidget {
     );
   }
 }
-// TODO finish view generator.

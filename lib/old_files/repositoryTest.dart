@@ -16,7 +16,6 @@ class RepoImp implements Repo {
       String sourceFaction = dbData[i]['SourceFaction'].toString();
       String sourceType = dbData[i]['SourceType'].toString();
       String nextSourceType = dbData[i]['NextSourceType'].toString();
-      List sourceRules = dbData[i]['SourceRules'] as List;
       RuleSource newSource = RuleSource(
         sourceName: sourceName,
         sourceFaction: sourceFaction,

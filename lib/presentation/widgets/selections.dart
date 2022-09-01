@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../blocs/selections/selections_bloc.dart';
 import '../../domain/entities/ruleSource.dart';
 
@@ -47,8 +46,8 @@ class Selections extends StatelessWidget {
                       ),
                       onPressed: () {
                         context.read<SelectionsBloc>().add(ActivateSelection(
-                              sources[index],
-                              sources,
+                              currentSource: sources[index],
+                              currentSources: sources,
                             ));
                       },
                     );
@@ -59,6 +58,7 @@ class Selections extends StatelessWidget {
           ),
         ),
         FloatingActionButton(
+          heroTag: null,
           child: Icon(Icons.add),
           onPressed: () {
             //  print(sources[0].sourceType);
@@ -79,6 +79,7 @@ class Selections extends StatelessWidget {
           height: 60.0,
         ),
         FloatingActionButton(
+          heroTag: null,
           child: Icon(Icons.arrow_back),
           onPressed: () {
             context.read<SelectionsBloc>().add(LoadNextSelections(

@@ -1,8 +1,7 @@
-import 'package:aos/domain/generate_user_actions.dart';
-import 'package:aos/old_files/generate_current_user.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
+import '../data/repositories/repository.dart';
+import 'entities/rule.dart';
 import 'entities/ruleSource.dart';
 
 class GenerateDisplay extends Equatable {
@@ -10,65 +9,57 @@ class GenerateDisplay extends Equatable {
   List<Object?> get props => [];
 
   //  Generating the display retrieves the data from the db and returns a list of rules.
-  generateDisplay() async {
-    var getUser = GenerateUserActions();
-    var user = await getUser.getCurrentUser();
-    var sourceItems = <dynamic>[];
-    final _firestore = FirebaseFirestore.instance;
-    await _firestore.collection(user).get().then((QuerySnapshot snapshot) {
-      snapshot.docs.forEach(
-        // add data to the list
-        (f) => sourceItems.add(f.data()),
-      );
-    });
+  Future<List<Rule>> generateDisplay() async {
+    // Get the user's ruleSources from Db with which to compare.
+    RuleRepoImp repo = RuleRepoImp();
+    List<RuleSource> sourceItems = await repo.getRuleSourcesFromDb();
     // At this point items should be:
     // [{sourceName: 'WoodAelves'}, {sourceName: 'Sylvaneth'}]
-    var rulesItems = <dynamic>[];
-    await _firestore.collection('rules').get().then((QuerySnapshot snapshot) {
-      snapshot.docs.forEach(
-        (g) => rulesItems.add(g.data()),
-      );
-    });
-    var rulesMatchTurn = <dynamic>[];
-    var rulesMatchHero = <dynamic>[];
-    var rulesMatchMove = <dynamic>[];
-    var rulesMatchShoot = <dynamic>[];
-    var rulesMatchCharge = <dynamic>[];
-    var rulesMatchCombat = <dynamic>[];
-    var rulesMatchBattleshock = <dynamic>[];
+    // Get the rules from Db to compare with user's ruleSources choices.
+    RuleRepoImp getRules = RuleRepoImp();
+    List<Rule> rulesItems = await getRules.getRulesFromDb();
+    // An list for each phase.
+    List<Rule> rulesMatchTurn = <Rule>[];
+    List<Rule> rulesMatchHero = <Rule>[];
+    List<Rule> rulesMatchMove = <Rule>[];
+    List<Rule> rulesMatchShoot = <Rule>[];
+    List<Rule> rulesMatchCharge = <Rule>[];
+    List<Rule> rulesMatchCombat = <Rule>[];
+    List<Rule> rulesMatchBattleshock = <Rule>[];
+    // Match rules based on phase, to arrange in order.
     for (var i = 0; i < sourceItems.length; i++) {
       for (var j = 0; j < rulesItems.length; j++) {
-        if (sourceItems[i]['sourceName'] == rulesItems[j]['ruleSource']) {
-          if (rulesItems[j]['rulePhase'] == 'turn') {
+        if (sourceItems[i].sourceName == rulesItems[j].ruleSource) {
+          if (rulesItems[j].rulePhase == 'turn') {
             rulesMatchTurn.add(rulesItems[j]);
-          } else if (rulesItems[j]['rulePhase'] == 'hero') {
+          } else if (rulesItems[j].rulePhase == 'hero') {
             rulesMatchHero.add(rulesItems[j]);
-          } else if (rulesItems[j]['rulePhase'] == 'move') {
+          } else if (rulesItems[j].rulePhase == 'move') {
             rulesMatchMove.add(rulesItems[j]);
-          } else if (rulesItems[j]['rulePhase'] == 'shoot') {
+          } else if (rulesItems[j].rulePhase == 'shoot') {
             rulesMatchShoot.add(rulesItems[j]);
-          } else if (rulesItems[j]['rulePhase'] == 'charge') {
+          } else if (rulesItems[j].rulePhase == 'charge') {
             rulesMatchCharge.add(rulesItems[j]);
-          } else if (rulesItems[j]['rulePhase'] == 'combat') {
+          } else if (rulesItems[j].rulePhase == 'combat') {
             rulesMatchCombat.add(rulesItems[j]);
-          } else if (rulesItems[j]['rulePhase'] == 'battleshock') {
+          } else if (rulesItems[j].rulePhase == 'battleshock') {
             rulesMatchBattleshock.add(rulesItems[j]);
           }
         }
       }
     }
-    var rulesListOrdered = rulesMatchTurn +
+    // Combine the sub lists in order of phase.
+    List<Rule> rulesListOrdered = rulesMatchTurn +
         rulesMatchHero +
         rulesMatchMove +
         rulesMatchShoot +
         rulesMatchCharge +
         rulesMatchCombat +
         rulesMatchBattleshock;
-    var seen = Set<String>();
-    Iterable rulesList =
-        rulesListOrdered.where((rule) => seen.add(rule['ruleName'])).toList();
-    //   var rulesList = rulesListOrdered.toSet().toList();
-    //   print(rulesList.length);
+    // Ensure that only one copy of each rule is added.
+    Set<String> seen = <String>{};
+    List<Rule> rulesList =
+        rulesListOrdered.where((rule) => seen.add(rule.ruleName)).toList();
     return rulesList;
   }
 }
