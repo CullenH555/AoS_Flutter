@@ -28,10 +28,6 @@ class RuleSource extends Equatable {
     sourceId = sourceIdToSet;
   }
 
-  get ruleName {
-    return ruleName;
-  }
-
   @override
   List<Object> get props => [
         sourceName,

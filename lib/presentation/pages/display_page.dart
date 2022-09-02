@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../blocs/selections/selections_bloc.dart';
 import '../../domain/entities/rule.dart';
+import '../../presentation/widgets/alert_dialogue.dart';
 
 // Page for displaying rules list of user choices,
 // ordered by game phase.
@@ -8,19 +11,47 @@ class DisplayPage extends StatelessWidget {
   List<Rule> rules;
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.vertical,
-      itemCount: rules.length, // "consolidated rulesList".length
-      itemBuilder: (context, index) {
-        var ruleName = rules[index].ruleName;
-        var ruleText = rules[index].ruleText;
-        // At this point items should be:
-        // [{sourceName: 'WoodAelves'}, {sourceName: 'Sylvaneth'}]
-        // Or work with "consolidated rulesList"
-        return Text(
-          '$ruleName: $ruleText',
-        );
-      },
+    return Column(
+      children: [
+        Text('Rules By Phase: '),
+        Expanded(
+          child: SizedBox.expand(
+              child: FractionallySizedBox(
+            widthFactor: 1,
+            heightFactor: 0.5,
+            alignment: FractionalOffset.center,
+            child: Container(
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: rules.length, // "consolidated rulesList".length
+                itemBuilder: (context, index) {
+                  var ruleName = rules[index].ruleName;
+                  var ruleText = rules[index].ruleText;
+                  // At this point items should be:
+                  // [{sourceName: 'WoodAelves'}, {sourceName: 'Sylvaneth'}]
+                  // Or work with "consolidated rulesList"
+                  return Text(
+                    '$ruleName: $ruleText',
+                  );
+                },
+              ),
+            ),
+          )),
+        ),
+        FloatingActionButton(
+          heroTag: null,
+          child: Icon(Icons.arrow_back),
+          onPressed: () {
+            AlertDialogue alertDialogue = AlertDialogue();
+            alertDialogue.showAlertDialogue(context);
+          },
+        )
+      ],
     );
   }
 }
+
+// TODO refactor back button from display page.
+// Currently it loads the hardcoded initial sources.
+// It verifies that the user wants to delete project.
+// It clears the user's collection.

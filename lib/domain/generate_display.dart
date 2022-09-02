@@ -1,8 +1,7 @@
 import 'package:equatable/equatable.dart';
-
 import '../data/repositories/repository.dart';
 import 'entities/rule.dart';
-import 'entities/ruleSource.dart';
+import 'entities/rule_source.dart';
 
 class GenerateDisplay extends Equatable {
   @override

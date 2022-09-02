@@ -32,6 +32,45 @@ class SelectionsInitial extends SelectionsState {
   List<Object> get props => [sources];
 }
 
+class InitialSelectionsLoaded extends SelectionsState {
+  final List<RuleSource> initialSources = [
+    RuleSource(
+      sourceName: 'Sylvaneth',
+      sourceFaction: 'Sylvaneth',
+      sourceType: 'faction',
+      nextSourceType: 'subfaction',
+      sourceActive: false,
+      sourceId: '',
+    ),
+    RuleSource(
+      sourceName: 'Kharadron Overlords',
+      sourceFaction: 'Kharadron Overlords',
+      sourceType: 'faction',
+      nextSourceType: 'subfaction',
+      sourceActive: false,
+      sourceId: '',
+    ),
+    RuleSource(
+      sourceName: 'Wood Aelves',
+      sourceFaction: 'Wood Aelves',
+      sourceType: 'faction',
+      nextSourceType: 'subfaction',
+      sourceActive: false,
+      sourceId: '',
+    ),
+    RuleSource(
+      sourceName: 'Blades of Khorne',
+      sourceFaction: 'Blades of Khorne',
+      sourceType: 'faction',
+      nextSourceType: 'subfaction',
+      sourceActive: false,
+      sourceId: '',
+    ),
+  ];
+  @override
+  List<Object> get props => [];
+}
+
 class NextSelectionsLoaded extends SelectionsState {
   final List<RuleSource> nextSources;
   const NextSelectionsLoaded({this.nextSources = const <RuleSource>[]});

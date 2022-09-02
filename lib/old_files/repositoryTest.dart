@@ -1,5 +1,4 @@
-import '../domain/entities/rule.dart';
-import '../domain/entities/ruleSource.dart';
+import '../domain/entities/rule_source.dart';
 
 // The Repo organizes data from data sources for eventual use by the UI
 

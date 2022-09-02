@@ -31,11 +31,9 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.white,
         ),
         home: AOSWelcomePage(),
-        //    SelectionsPage(
-        //        []), // working on firstPage -- should be: AOSWelcomePage(),
+        //   SelectionsPage(
+        //       []), // working on firstPage -- should be: AOSWelcomePage(),
       ),
     );
   }
 }
-
-// TODO Next step is to add Bloc.

@@ -2,7 +2,7 @@ import 'package:aos/blocs/selections/selections_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../blocs/login/login_bloc.dart';
-import '../../domain/entities/ruleSource.dart';
+import '../../domain/entities/rule_source.dart';
 import '../widgets/selections.dart';
 import 'display_page.dart';
 
@@ -28,6 +28,10 @@ class SelectionsPage extends StatelessWidget {
       ),
       body: BlocBuilder<SelectionsBloc, SelectionsState>(
           builder: (context, state) {
+        if (state is InitialSelectionsLoaded) {
+          print("we got inside InitialSelectionsLoaded");
+          return Selections(state.initialSources);
+        }
         if (state is SelectionActivated) {
           print("we got inside state SelectionActivated in first page");
           return Selections(state.currentSources);

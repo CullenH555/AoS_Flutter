@@ -1,9 +1,9 @@
-import 'package:aos/domain/entities/ruleSource.dart';
 import 'package:aos/domain/generate_next_page.dart';
+import 'package:aos/domain/generate_reset_to_start.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import '../../domain/entities/rule.dart';
-import '../../domain/entities/ruleSource.dart';
+import '../../domain/entities/rule_source.dart';
 import '../../domain/generate_button_styler.dart';
 import '../../domain/generate_display.dart';
 import '../../domain/generate_save_delete.dart';
@@ -57,9 +57,19 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
             sourceId: '',
           ),
         ])) {
+    on<LoadInitialSelections>(_onLoadInitialSelections);
     on<LoadNextSelections>(_onLoadNextSelections);
     on<ActivateSelection>(_onActivateSelection);
     on<DisplayOutput>(_onDisplayOutput);
+  }
+
+  void _onLoadInitialSelections(
+      LoadInitialSelections event, Emitter<SelectionsState> emit) async {
+    GenerateResetToStart generateResetToStart = GenerateResetToStart();
+    generateResetToStart.generateResetToStart();
+    emit(
+      InitialSelectionsLoaded(),
+    );
   }
 
   void _onLoadNextSelections(

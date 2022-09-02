@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../blocs/selections/selections_bloc.dart';
-import '../../domain/entities/ruleSource.dart';
+import '../../domain/entities/rule_source.dart';
+import '../pages/selections_page.dart';
 
 class Selections extends StatelessWidget {
   Selections(this.sources);
   List<RuleSource> sources;
   @override
   Widget build(BuildContext context) {
-    String category = sources[0].sourceType;
+    String category = sources.length > 0
+        ? sources[0].sourceType
+        : 'Make sure to choose a faction.';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -82,8 +85,13 @@ class Selections extends StatelessWidget {
           heroTag: null,
           child: Icon(Icons.arrow_back),
           onPressed: () {
-            context.read<SelectionsBloc>().add(LoadNextSelections(
-                currentSources: sources, direction: 'previous'));
+            if (sources.isEmpty) {
+              print('We try to go back to initial page');
+              context.read<SelectionsBloc>().add(LoadInitialSelections());
+            } else {
+              context.read<SelectionsBloc>().add(LoadNextSelections(
+                  currentSources: sources, direction: 'previous'));
+            }
           },
         ),
         Container(

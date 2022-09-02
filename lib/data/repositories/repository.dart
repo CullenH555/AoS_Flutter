@@ -1,7 +1,8 @@
 import 'package:aos/data/repositories/user_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/entities/rule.dart';
-import 'package:aos/domain/entities/ruleSource.dart';
+
+import '../../domain/entities/rule_source.dart';
 
 // The Rule Repo organizes rule data from data sources for eventual use by the UI
 
@@ -151,6 +152,16 @@ class RuleRepoImp implements RuleRepository {
       _firestore.collection(user).doc(recordId).update({'sourceId': recordId});
       return currentSources;
     });
+  }
+
+  fireStoreDeleteUserCollection() async {
+    UserRepoImp getUser = UserRepoImp();
+    String user = await getUser.getCurrentUser();
+    final _firestore = FirebaseFirestore.instance;
+    var snapshots = await _firestore.collection(user).get();
+    for (var doc in snapshots.docs) {
+      await doc.reference.delete();
+    }
   }
 }
 

@@ -8,6 +8,12 @@ abstract class SelectionsEvent extends Equatable {
 // The events come from user interaction (like clicking a button).
 // The event contains the current sources.
 // It passes the current sources to the bloc for logic.
+
+class LoadInitialSelections extends SelectionsEvent {
+  @override
+  List<Object> get props => [];
+}
+
 class LoadNextSelections extends SelectionsEvent {
   final List<RuleSource> currentSources;
   final String direction;

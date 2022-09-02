@@ -20,7 +20,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         await makeUser.generateRegisteredUser(event.email, event.password);
     await makeUser.generateUserCollection(event.email);
     emit(
-      UserLoggedIn(),
+      UserLoggedIn(user: user),
     );
   }
 
@@ -29,7 +29,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     var user = await getUser.generateLoggedInUser(event.email, event.password);
     await getUser.generateUserCollection(event.email);
     emit(
-      UserLoggedIn(),
+      UserLoggedIn(user: user),
     );
   }
 

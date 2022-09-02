@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'entities/ruleSource.dart';
 import '../data/repositories/repository.dart';
+import 'entities/rule_source.dart';
 
 class GenerateNextPage extends Equatable {
   GenerateNextPage(
@@ -18,7 +18,6 @@ class GenerateNextPage extends Equatable {
     RuleRepository repo = RuleRepoImp();
     List<RuleSource> data = await repo.getOrganizedDataFromRepo();
     List<RuleSource> ruleSources = await repo.getRuleSourcesFromDb();
-
     String currentFaction = '';
     // Go through the saved db entries and extract the faction selected.
     for (var i = 0; i < ruleSources.length; i++) {
@@ -29,34 +28,40 @@ class GenerateNextPage extends Equatable {
     // Using the nextSourceType and the faction, generate nextSources list.
     if (direction == 'next') {
       for (var source in ruleSources) {
-        if (source.sourceType == currentSources[0].nextSourceType &&
-            source.sourceFaction == currentFaction) {
-          nextSources.add(source);
+        if (!nextSources.contains(source)) {
+          if (source.sourceType == currentSources[0].nextSourceType &&
+              source.sourceFaction == currentFaction) {
+            nextSources.add(source);
+          }
         }
       }
       for (var j = 0; j < data.length; j++) {
-        if (data[j].sourceType == currentSources[0].nextSourceType &&
-            data[j].sourceFaction == currentFaction) {
-          nextSources.add(data[j]);
+        if (!nextSources.contains(data[j])) {
+          if (data[j].sourceType == currentSources[0].nextSourceType &&
+              data[j].sourceFaction == currentFaction) {
+            nextSources.add(data[j]);
+          }
         }
       }
     } else if (direction == 'previous') {
       for (var source in ruleSources) {
-        if (source.nextSourceType == currentSources[0].sourceType &&
-            source.sourceFaction == currentFaction) {
-          nextSources.add(source);
+        if (!nextSources.contains(source)) {
+          if (source.nextSourceType == currentSources[0].sourceType &&
+              source.sourceFaction == currentFaction) {
+            nextSources.add(source);
+          }
         }
       }
       for (var rule in data) {
-        if (rule.nextSourceType == currentSources[0].sourceType &&
-            rule.sourceFaction == currentFaction) {
-          nextSources.add(rule);
+        if (!nextSources.contains(rule)) {
+          if (rule.nextSourceType == currentSources[0].sourceType &&
+              rule.sourceFaction == currentFaction) {
+            nextSources.add(rule);
+          }
         }
       }
     }
-    Set<String> seen = Set<String>();
-    nextSources =
-        nextSources.where((source) => seen.add(source.sourceName)).toList();
+    print(nextSources);
     return nextSources;
   }
 }
