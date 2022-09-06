@@ -6,21 +6,22 @@ import '../../blocs/selections/selections_bloc.dart';
 class AlertDialogue {
   showAlertDialogue(BuildContext context) {
     Widget cancelButton = TextButton(
-      child: Text("Cancel"),
+      child: const Text("Cancel"),
       onPressed: () {
         Navigator.of(context).pop();
       },
     );
     Widget continueButton = TextButton(
-      child: Text("Continue"),
+      child: const Text("Continue"),
       onPressed: () {
         context.read<SelectionsBloc>().add(LoadInitialSelections());
         Navigator.of(context).pop();
       },
     );
     AlertDialog alert = AlertDialog(
-      title: Text("Are you sure?"),
-      content: Text('Your project will be deleted if you say yes.'),
+      title: const Text("Are you sure?"),
+      content:
+          const Text('Your project will be deleted if you click continue.'),
       actions: [
         cancelButton,
         continueButton,
@@ -32,6 +33,6 @@ class AlertDialogue {
         return alert;
       },
     );
-    return Text('Error');
+    return const Text('Error');
   }
 }

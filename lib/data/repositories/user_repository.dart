@@ -1,6 +1,7 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:equatable/equatable.dart';
 
 // The User Repo organizes user data for credentials, saving etc.
 
@@ -19,7 +20,9 @@ class UserRepoImp implements UserRepository {
   @override
   UserRepoImp({this.email = '', this.password = ''});
 
+  @override
   final String email;
+  @override
   final String password;
 
   @override
@@ -33,14 +36,13 @@ class UserRepoImp implements UserRepository {
     try {
       final newUser = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      if (newUser != null) {
-        return newUser;
-      }
+      return newUser;
     } catch (e) {
       print(e);
     }
   }
 
+  @override
   generateUserCollection(email) async {
     try {
       print('We got inside generateUserCollection');
@@ -58,19 +60,19 @@ class UserRepoImp implements UserRepository {
     }
   }
 
+  @override
   generateLoggedInUser(email, password) async {
     final auth = FirebaseAuth.instance;
     try {
       final user = await auth.signInWithEmailAndPassword(
           email: email, password: password);
-      if (user != null) {
-        return user;
-      }
+      return user;
     } catch (e) {
       print(e);
     }
   }
 
+  @override
   generateLoggedOutUser() async {
     final auth = FirebaseAuth.instance;
     try {
@@ -80,6 +82,7 @@ class UserRepoImp implements UserRepository {
     }
   }
 
+  @override
   Future<String> getCurrentUser() async {
     String loggedInUser;
     try {

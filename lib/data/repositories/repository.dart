@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:aos/data/repositories/user_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/entities/rule.dart';
@@ -106,6 +108,7 @@ class RuleRepoImp implements RuleRepository {
     return ruleSources;
   }
 
+  @override
   Future<List<Rule>> getRulesFromDb() async {
     List allRulesList = [];
     List<Rule> rulesList = [];
@@ -166,7 +169,7 @@ class RuleRepoImp implements RuleRepository {
 }
 
 // Pretend this came from a db.
-var MockDbData = [
+var mockDbData = [
   {
     'SourceName': 'Sylvaneth',
     'SourceFaction': 'sylvaneth',

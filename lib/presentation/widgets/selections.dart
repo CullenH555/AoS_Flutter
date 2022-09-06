@@ -2,27 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../blocs/selections/selections_bloc.dart';
 import '../../domain/entities/rule_source.dart';
-import '../pages/selections_page.dart';
 
 class Selections extends StatelessWidget {
   Selections(this.sources);
   List<RuleSource> sources;
   @override
   Widget build(BuildContext context) {
-    String category = sources.length > 0
+    String category = sources.isNotEmpty
         ? sources[0].sourceType
         : 'Make sure to choose a faction.';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          child: Text(
-            'Choose $category:',
-            style: TextStyle(
-              fontSize: 40.0,
-              backgroundColor: Colors.redAccent,
-              color: Colors.white,
-            ),
+        Text(
+          'Choose $category:',
+          style: const TextStyle(
+            fontSize: 40.0,
+            backgroundColor: Colors.redAccent,
+            color: Colors.white,
           ),
         ),
         Expanded(
@@ -31,38 +28,36 @@ class Selections extends StatelessWidget {
               widthFactor: 1,
               heightFactor: 0.5,
               alignment: FractionalOffset.center,
-              child: Container(
-                child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  itemCount: sources.length,
-                  itemBuilder: (context, index) {
-                    return TextButton(
-                      child: Text(
-                        sources[index].sourceName,
-                        style: TextStyle(
-                          color: sources[index].sourceActive == true
-                              ? Colors.blue
-                              : Colors.red,
-                          fontSize: 40.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: sources.length,
+                itemBuilder: (context, index) {
+                  return TextButton(
+                    child: Text(
+                      sources[index].sourceName,
+                      style: TextStyle(
+                        color: sources[index].sourceActive == true
+                            ? Colors.blue
+                            : Colors.red,
+                        fontSize: 40.0,
+                        fontWeight: FontWeight.bold,
                       ),
-                      onPressed: () {
-                        context.read<SelectionsBloc>().add(ActivateSelection(
-                              currentSource: sources[index],
-                              currentSources: sources,
-                            ));
-                      },
-                    );
-                  },
-                ),
+                    ),
+                    onPressed: () {
+                      context.read<SelectionsBloc>().add(ActivateSelection(
+                            currentSource: sources[index],
+                            currentSources: sources,
+                          ));
+                    },
+                  );
+                },
               ),
             ),
           ),
         ),
         FloatingActionButton(
           heroTag: null,
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
           onPressed: () {
             //  print(sources[0].sourceType);
             if (sources[0].sourceType == 'battalion') {
@@ -83,7 +78,7 @@ class Selections extends StatelessWidget {
         ),
         FloatingActionButton(
           heroTag: null,
-          child: Icon(Icons.arrow_back),
+          child: const Icon(Icons.arrow_back),
           onPressed: () {
             if (sources.isEmpty) {
               print('We try to go back to initial page');

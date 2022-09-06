@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../blocs/selections/selections_bloc.dart';
 import '../../domain/entities/rule.dart';
 import '../../presentation/widgets/alert_dialogue.dart';
 
@@ -13,34 +11,32 @@ class DisplayPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('Rules By Phase: '),
+        const Text('Rules By Phase: '),
         Expanded(
           child: SizedBox.expand(
               child: FractionallySizedBox(
             widthFactor: 1,
             heightFactor: 0.5,
             alignment: FractionalOffset.center,
-            child: Container(
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: rules.length, // "consolidated rulesList".length
-                itemBuilder: (context, index) {
-                  var ruleName = rules[index].ruleName;
-                  var ruleText = rules[index].ruleText;
-                  // At this point items should be:
-                  // [{sourceName: 'WoodAelves'}, {sourceName: 'Sylvaneth'}]
-                  // Or work with "consolidated rulesList"
-                  return Text(
-                    '$ruleName: $ruleText',
-                  );
-                },
-              ),
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: rules.length, // "consolidated rulesList".length
+              itemBuilder: (context, index) {
+                var ruleName = rules[index].ruleName;
+                var ruleText = rules[index].ruleText;
+                // At this point items should be:
+                // [{sourceName: 'WoodAelves'}, {sourceName: 'Sylvaneth'}]
+                // Or work with "consolidated rulesList"
+                return Text(
+                  '$ruleName: $ruleText',
+                );
+              },
             ),
           )),
         ),
         FloatingActionButton(
           heroTag: null,
-          child: Icon(Icons.arrow_back),
+          child: const Icon(Icons.arrow_back),
           onPressed: () {
             AlertDialogue alertDialogue = AlertDialogue();
             alertDialogue.showAlertDialogue(context);

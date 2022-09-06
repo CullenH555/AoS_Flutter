@@ -17,14 +17,14 @@ class SelectionsPage extends StatelessWidget {
         leading: null,
         actions: [
           IconButton(
-            icon: Icon(Icons.close),
+            icon: const Icon(Icons.close),
             onPressed: () {
               context.read<LoginBloc>().add(Logout());
               Navigator.pop(context);
             },
           ),
         ],
-        title: Text('AoS Playmat Builder'),
+        title: const Text('AoS Playmat Builder'),
       ),
       body: BlocBuilder<SelectionsBloc, SelectionsState>(
           builder: (context, state) {
@@ -53,10 +53,10 @@ class SelectionsPage extends StatelessWidget {
           return DisplayPage(state.rules);
         } else if (state is SelectionsInitial) {
           print('state is SelectionsInitial and we try component');
-          var initSources = state.sources;
+          List<RuleSource> initSources = state.sources;
           return Selections(initSources);
         } else {
-          return Text('Error');
+          return const Text('Error');
         }
       }),
     );

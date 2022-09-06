@@ -1,5 +1,4 @@
 import 'package:aos/data/repositories/user_repository.dart';
-import 'package:aos/old_files/generate_current_user.dart';
 import 'package:equatable/equatable.dart';
 import '../data/repositories/repository.dart';
 import 'entities/rule_source.dart';
