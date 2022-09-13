@@ -8,7 +8,7 @@ class GenNextPage {
   // For use in implementing GetIt Dependency Injection.
   /* final RuleRepository repository;
   GenNextPage({required this.repository});*/
-  Future<List<RuleSource>> execute({
+  Future<List<RuleSource>> call({
     required List<RuleSource> currentSources,
     required String direction,
     required String user,

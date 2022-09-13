@@ -66,7 +66,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
   void _onLoadInitialSelections(
       LoadInitialSelections event, Emitter<SelectionsState> emit) async {
     GenResetToStart generateResetToStart = GenResetToStart();
-    generateResetToStart.execute(user: event.user);
+    generateResetToStart(user: event.user);
     emit(
       InitialSelectionsLoaded(),
     );
@@ -82,7 +82,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
     // Should this next line of logic go into the GenerateNextPage.generateNextPage
     // call with event.direction passed in? Or here...
     if (event.direction == 'next') {
-      List<RuleSource> sources = await nextPage.execute(
+      List<RuleSource> sources = await nextPage(
           currentSources: event.currentSources,
           direction: event.direction,
           user: event.user);
@@ -91,7 +91,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
         NextSelectionsLoaded(nextSources: sources, user: event.user),
       );
     } else if (event.direction == 'previous') {
-      List<RuleSource> sources = await nextPage.execute(
+      List<RuleSource> sources = await nextPage(
           currentSources: event.currentSources,
           direction: event.direction,
           user: event.user);
@@ -137,7 +137,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
   void _onDisplayOutput(
       DisplayOutput event, Emitter<SelectionsState> emit) async {
     GenDisplay displayer = GenDisplay();
-    List<Rule> theRules = await displayer.execute(user: event.user);
+    List<Rule> theRules = await displayer(user: event.user);
     emit(
       OutputDisplayed(theRules),
     );

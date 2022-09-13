@@ -4,7 +4,7 @@ import '../entities/rule_source.dart';
 
 //  Generating the display retrieves the data from the db and returns a list of rules.
 class GenDisplay {
-  Future<List<Rule>> execute({
+  Future<List<Rule>> call({
     required String user,
   }) async {
     // Get the user's ruleSources from Db with which to compare.

@@ -2,7 +2,7 @@ import '../../data/repositories/repository.dart';
 import '../entities/rule_source.dart';
 
 class GenResetToStart {
-  execute({
+  call({
     required String user,
   }) async {
     try {
