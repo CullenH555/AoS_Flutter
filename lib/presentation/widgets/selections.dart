@@ -4,8 +4,9 @@ import '../../blocs/selections/selections_bloc.dart';
 import '../../domain/entities/rule_source.dart';
 
 class Selections extends StatelessWidget {
-  Selections(this.sources);
+  Selections(this.sources, this.user);
   List<RuleSource> sources;
+  String user;
   @override
   Widget build(BuildContext context) {
     String category = sources.isNotEmpty
@@ -47,6 +48,7 @@ class Selections extends StatelessWidget {
                       context.read<SelectionsBloc>().add(ActivateSelection(
                             currentSource: sources[index],
                             currentSources: sources,
+                            user: user,
                           ));
                     },
                   );
@@ -61,11 +63,14 @@ class Selections extends StatelessWidget {
           onPressed: () {
             //  print(sources[0].sourceType);
             if (sources[0].sourceType == 'battalion') {
-              context.read<SelectionsBloc>().add(DisplayOutput());
+              context.read<SelectionsBloc>().add(DisplayOutput(user: user));
             } else {
               // Comment out below for initRulesToDb
               context.read<SelectionsBloc>().add(LoadNextSelections(
-                  currentSources: sources, direction: 'next'));
+                    currentSources: sources,
+                    direction: 'next',
+                    user: user,
+                  ));
               // Uncomment below for initRulesToDb
               //   context
               //      .read<SelectionsBloc>()
@@ -82,10 +87,15 @@ class Selections extends StatelessWidget {
           onPressed: () {
             if (sources.isEmpty) {
               print('We try to go back to initial page');
-              context.read<SelectionsBloc>().add(LoadInitialSelections());
+              context
+                  .read<SelectionsBloc>()
+                  .add(LoadInitialSelections(user: user));
             } else {
               context.read<SelectionsBloc>().add(LoadNextSelections(
-                  currentSources: sources, direction: 'previous'));
+                    currentSources: sources,
+                    direction: 'previous',
+                    user: user,
+                  ));
             }
           },
         ),

@@ -55,8 +55,10 @@ class AOSRegistrationPage extends StatelessWidget {
               context
                   .read<LoginBloc>()
                   .add(Register(email: email, password: password));
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SelectionsPage([])));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SelectionsPage([], email)));
             },
           ),
         ],

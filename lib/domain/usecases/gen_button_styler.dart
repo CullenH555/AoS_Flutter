@@ -1,0 +1,17 @@
+import 'package:equatable/equatable.dart';
+
+import '../entities/rule_source.dart';
+
+class GenButtonStyler extends Equatable {
+  List<RuleSource> styleButton(currentSource, currentSources) {
+    for (var j = 0; j < currentSources.length; j++) {
+      if (currentSources[j] == currentSource) {
+        currentSources[j].updateActive();
+      }
+    }
+    return currentSources;
+  }
+
+  @override
+  List<Object?> get props => [];
+}

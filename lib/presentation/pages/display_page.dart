@@ -5,8 +5,9 @@ import '../../presentation/widgets/alert_dialogue.dart';
 // Page for displaying rules list of user choices,
 // ordered by game phase.
 class DisplayPage extends StatelessWidget {
-  DisplayPage(this.rules);
+  DisplayPage(this.rules, this.user);
   List<Rule> rules;
+  final String user;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -38,7 +39,7 @@ class DisplayPage extends StatelessWidget {
           heroTag: null,
           child: const Icon(Icons.arrow_back),
           onPressed: () {
-            AlertDialogue alertDialogue = AlertDialogue();
+            AlertDialogue alertDialogue = AlertDialogue(user: user);
             alertDialogue.showAlertDialogue(context);
           },
         )

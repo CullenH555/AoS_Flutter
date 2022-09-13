@@ -15,7 +15,7 @@ class GenerateNextSave extends Equatable {
         if (currentSources[j].sourceActive == true) {
           try {
             RuleRepoImp repo = RuleRepoImp();
-            List<RuleSource> repoUpdate = await repo.fireStoreRuleSourceUpdate(
+            void repoUpdate = repo.fireStoreRuleSourceUpdate(
                 user, currentSource, currentSources);
             return repoUpdate;
           } catch (e) {

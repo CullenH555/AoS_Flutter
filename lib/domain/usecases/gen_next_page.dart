@@ -1,25 +1,24 @@
-import 'package:aos/data/datasources/rule_source_remote_datasource.dart';
-import 'package:equatable/equatable.dart';
-import '../data/repositories/repository.dart';
-import 'entities/rule_source.dart';
+import 'package:aos/data/repositories/repository.dart';
 
-class GenerateNextPage extends Equatable {
-  GenerateNextPage(
-      {this.currentSources = const <RuleSource>[], required this.direction});
-  List<RuleSource> currentSources;
-  String direction;
+import '../entities/rule_source.dart';
 
-  @override
-  List<Object?> get props => [currentSources, direction];
-
-  //  Generating the next page takes in the current list of sources and generates the next.
-  Future<List<RuleSource>> generateNextPage(currentSources, direction) async {
+// GenNextPage combines the user's data with all available data in order
+// to generate the list of RuleSource for the next page.
+class GenNextPage {
+  // For use in implementing GetIt Dependency Injection.
+  /* final RuleRepository repository;
+  GenNextPage({required this.repository});*/
+  Future<List<RuleSource>> execute({
+    required List<RuleSource> currentSources,
+    required String direction,
+    required String user,
+  }) async {
     print('we are inside gen next page');
     List<RuleSource> nextSources = [];
-    RuleRepository repo = RuleRepoImp();
-    List<RuleSource> data = await repo.getOrganizedDataFromRepo();
-    List<RuleSource> ruleSources =
-        await repo.getRuleSourcesFromDb(RuleSourceRemoteDatasourceImp());
+    // Invoke repo to get all Source data and all user's Source data
+    RuleRepoImp repository = RuleRepoImp();
+    List<RuleSource> data = await repository.getOrganizedDataFromRepo();
+    List<RuleSource> ruleSources = await repository.getRuleSourcesFromDb(user);
     String currentFaction = '';
     // Go through the saved db entries and extract the faction selected.
     for (var i = 0; i < ruleSources.length; i++) {

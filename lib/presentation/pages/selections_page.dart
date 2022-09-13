@@ -8,8 +8,9 @@ import 'display_page.dart';
 
 class SelectionsPage extends StatelessWidget {
   static const String id = 'first_page';
-  SelectionsPage(this.currentSources);
+  SelectionsPage(this.currentSources, this.user);
   List<RuleSource> currentSources;
+  final String user;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,31 +31,31 @@ class SelectionsPage extends StatelessWidget {
           builder: (context, state) {
         if (state is InitialSelectionsLoaded) {
           print("we got inside InitialSelectionsLoaded");
-          return Selections(state.initialSources);
+          return Selections(state.initialSources, user);
         }
         if (state is SelectionActivated) {
           print("we got inside state SelectionActivated in first page");
-          return Selections(state.currentSources);
+          return Selections(state.currentSources, user);
         }
         if (state is SelectionDeactivated) {
           print("we got inside state SelectionDeactivated");
-          return Selections(state.currentSources);
+          return Selections(state.currentSources, user);
         }
         if (state is NextSelectionsLoaded) {
           print("we got inside state NextSelectionsLoaded");
-          return Selections(state.nextSources);
+          return Selections(state.nextSources, user);
         }
         if (state is PreviousSelectionsLoaded) {
           print('we got inside PreviousSelectionsLoaded');
-          return Selections(state.previousSources);
+          return Selections(state.previousSources, user);
         }
         if (state is OutputDisplayed) {
           print('state is OutputDisplayed');
-          return DisplayPage(state.rules);
+          return DisplayPage(state.rules, user);
         } else if (state is SelectionsInitial) {
           print('state is SelectionsInitial and we try component');
           List<RuleSource> initSources = state.sources;
-          return Selections(initSources);
+          return Selections(initSources, user);
         } else {
           return const Text('Error');
         }

@@ -1,12 +1,12 @@
-import 'package:aos/domain/generate_next_page.dart';
-import 'package:aos/domain/generate_reset_to_start.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import '../../domain/entities/rule.dart';
 import '../../domain/entities/rule_source.dart';
-import '../../domain/generate_button_styler.dart';
-import '../../domain/generate_display.dart';
-import '../../domain/generate_save_delete.dart';
+import '../../domain/usecases/gen_button_styler.dart';
+import '../../domain/usecases/gen_display.dart';
+import '../../domain/usecases/gen_next_page.dart';
+import '../../domain/usecases/gen_reset_to_start.dart';
+import '../../domain/usecases/gen_save_delete.dart';
 // uncomment below to init....
 // import '../../domain/generate_initial_ruleData.dart';
 
@@ -56,7 +56,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
             sourceActive: false,
             sourceId: '',
           ),
-        ])) {
+        ], "")) {
     on<LoadInitialSelections>(_onLoadInitialSelections);
     on<LoadNextSelections>(_onLoadNextSelections);
     on<ActivateSelection>(_onActivateSelection);
@@ -65,8 +65,8 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
 
   void _onLoadInitialSelections(
       LoadInitialSelections event, Emitter<SelectionsState> emit) async {
-    GenerateResetToStart generateResetToStart = GenerateResetToStart();
-    generateResetToStart.generateResetToStart();
+    GenResetToStart generateResetToStart = GenResetToStart();
+    generateResetToStart.execute(user: event.user);
     emit(
       InitialSelectionsLoaded(),
     );
@@ -78,21 +78,25 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
     // to be passed that way into the method calls?
     // Or should it be empty, and the direction and sources passed
     // directly into the method calls?
-    GenerateNextPage nextPage = GenerateNextPage(direction: event.direction);
+    GenNextPage nextPage = GenNextPage();
     // Should this next line of logic go into the GenerateNextPage.generateNextPage
     // call with event.direction passed in? Or here...
     if (event.direction == 'next') {
-      List<RuleSource> sources = await nextPage.generateNextPage(
-          event.currentSources, event.direction);
+      List<RuleSource> sources = await nextPage.execute(
+          currentSources: event.currentSources,
+          direction: event.direction,
+          user: event.user);
       emit(
         // Emit the new state: load event --> loaded state.
-        NextSelectionsLoaded(nextSources: sources),
+        NextSelectionsLoaded(nextSources: sources, user: event.user),
       );
     } else if (event.direction == 'previous') {
-      List<RuleSource> sources = await nextPage.generateNextPage(
-          event.currentSources, event.direction);
+      List<RuleSource> sources = await nextPage.execute(
+          currentSources: event.currentSources,
+          direction: event.direction,
+          user: event.user);
       emit(
-        PreviousSelectionsLoaded(previousSources: sources),
+        PreviousSelectionsLoaded(previousSources: sources, user: event.user),
       );
     }
   }
@@ -100,13 +104,15 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
   void _onActivateSelection(
       ActivateSelection event, Emitter<SelectionsState> emit) async {
     // Below the event.data is passed directly to the method.
-    GenerateButtonStyler styleButton = GenerateButtonStyler();
+    GenButtonStyler styleButton = GenButtonStyler();
     List<RuleSource> buttonStyled =
         styleButton.styleButton(event.currentSource, event.currentSources);
-    GenerateNextSave save = GenerateNextSave();
+    GenNextSave save = GenNextSave();
     if (event.currentSource.sourceActive == true) {
-      List<RuleSource> recordId =
-          await save.generateNextSave(event.currentSource, buttonStyled);
+      List<RuleSource> recordId = await save(
+          currentSources: event.currentSources,
+          currentSource: event.currentSource,
+          user: event.user);
       // To init rules database...
       //  var initDb = GenerateNextSave();
       //  var enterAllRecords = initDb.generateNextInit(event.currentSource);
@@ -114,22 +120,24 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
         // Emit the new state: load event --> loaded state.
         // To init rules database swap below 2 lines.
         // SelectionActivated(event.currentSource, enterAllRecords),
-        SelectionActivated(event.currentSource, recordId),
+        SelectionActivated(event.currentSource, recordId, event.user),
       );
     } else if (event.currentSource.sourceActive == false) {
-      List<RuleSource> editedSources =
-          await save.generateNextSave(event.currentSource, buttonStyled);
+      List<RuleSource> editedSources = await save(
+          user: event.user,
+          currentSource: event.currentSource,
+          currentSources: event.currentSources);
       emit(
         // Emit the new state: load event --> loaded state.
-        SelectionDeactivated(event.currentSource, editedSources),
+        SelectionDeactivated(event.currentSource, editedSources, event.user),
       );
     }
   }
 
   void _onDisplayOutput(
       DisplayOutput event, Emitter<SelectionsState> emit) async {
-    GenerateDisplay displayer = GenerateDisplay();
-    List<Rule> theRules = await displayer.generateDisplay();
+    GenDisplay displayer = GenDisplay();
+    List<Rule> theRules = await displayer.execute(user: event.user);
     emit(
       OutputDisplayed(theRules),
     );

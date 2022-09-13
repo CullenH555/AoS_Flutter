@@ -52,8 +52,10 @@ class AOSLoginPage extends StatelessWidget {
               context
                   .read<LoginBloc>()
                   .add(Login(email: email, password: password));
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SelectionsPage([])));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SelectionsPage([], email)));
             },
           ),
         ],

@@ -8,6 +8,7 @@ abstract class SelectionsState extends Equatable {
 // The state receives the next sources from the Bloc.
 // The state is used by the BlocBuilder.
 class SelectionsInitial extends SelectionsState {
+  final String user;
   final List<RuleSource> sources = [
     RuleSource(
       sourceName: 'Sylvaneth',
@@ -26,13 +27,14 @@ class SelectionsInitial extends SelectionsState {
       sourceId: '',
     ),
   ];
-  SelectionsInitial(sources);
+  SelectionsInitial(sources, this.user);
 
   @override
   List<Object> get props => [sources];
 }
 
 class InitialSelectionsLoaded extends SelectionsState {
+  late final String user;
   final List<RuleSource> initialSources = [
     RuleSource(
       sourceName: 'Sylvaneth',
@@ -73,35 +75,42 @@ class InitialSelectionsLoaded extends SelectionsState {
 
 class NextSelectionsLoaded extends SelectionsState {
   final List<RuleSource> nextSources;
-  const NextSelectionsLoaded({this.nextSources = const <RuleSource>[]});
+  final String user;
+  const NextSelectionsLoaded(
+      {this.nextSources = const <RuleSource>[], required this.user});
 
   @override
-  List<Object> get props => [nextSources];
+  List<Object> get props => [nextSources, user];
 }
 
 class PreviousSelectionsLoaded extends SelectionsState {
   final List<RuleSource> previousSources;
-  const PreviousSelectionsLoaded({this.previousSources = const <RuleSource>[]});
+  final String user;
+  const PreviousSelectionsLoaded(
+      {this.previousSources = const <RuleSource>[], required this.user});
   @override
-  List<Object> get props => [previousSources];
+  List<Object> get props => [previousSources, user];
 }
 
 class SelectionActivated extends SelectionsState {
   final RuleSource currentSource;
   final List<RuleSource> currentSources;
-  const SelectionActivated(this.currentSource, this.currentSources);
+  final String user;
+  const SelectionActivated(this.currentSource, this.currentSources, this.user);
 
   @override
-  List<Object> get props => [currentSource, currentSources];
+  List<Object> get props => [currentSource, currentSources, user];
 }
 
 class SelectionDeactivated extends SelectionsState {
   final RuleSource currentSource;
   final List<RuleSource> currentSources;
-  const SelectionDeactivated(this.currentSource, this.currentSources);
+  final String user;
+  const SelectionDeactivated(
+      this.currentSource, this.currentSources, this.user);
 
   @override
-  List<Object> get props => [currentSource, currentSources];
+  List<Object> get props => [currentSource, currentSources, user];
 }
 
 class OutputDisplayed extends SelectionsState {

@@ -1,24 +1,19 @@
-import 'package:aos/data/datasources/rule_source_remote_datasource.dart';
-import 'package:equatable/equatable.dart';
-import '../data/repositories/repository.dart';
-import 'entities/rule.dart';
-import 'entities/rule_source.dart';
+import '../../data/repositories/repository.dart';
+import '../entities/rule.dart';
+import '../entities/rule_source.dart';
 
-class GenerateDisplay extends Equatable {
-  @override
-  List<Object?> get props => [];
-
-  //  Generating the display retrieves the data from the db and returns a list of rules.
-  Future<List<Rule>> generateDisplay() async {
+//  Generating the display retrieves the data from the db and returns a list of rules.
+class GenDisplay {
+  Future<List<Rule>> execute({
+    required String user,
+  }) async {
     // Get the user's ruleSources from Db with which to compare.
-    RuleRepoImp repo = RuleRepoImp();
-    List<RuleSource> sourceItems =
-        await repo.getRuleSourcesFromDb(RuleSourceRemoteDatasourceImp());
+    RuleRepoImp repository = RuleRepoImp();
+    List<RuleSource> sourceItems = await repository.getRuleSourcesFromDb(user);
     // At this point items should be:
     // [{sourceName: 'WoodAelves'}, {sourceName: 'Sylvaneth'}]
     // Get the rules from Db to compare with user's ruleSources choices.
-    RuleRepoImp getRules = RuleRepoImp();
-    List<Rule> rulesItems = await getRules.getRulesFromDb();
+    List<Rule> rulesItems = await repository.getRulesFromDb();
     // An list for each phase.
     List<Rule> rulesMatchTurn = <Rule>[];
     List<Rule> rulesMatchHero = <Rule>[];
