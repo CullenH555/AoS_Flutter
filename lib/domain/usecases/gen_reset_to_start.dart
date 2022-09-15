@@ -1,5 +1,4 @@
 import '../../data/repositories/repository.dart';
-import '../entities/rule_source.dart';
 
 class GenResetToStart {
   call({
