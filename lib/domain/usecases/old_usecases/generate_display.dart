@@ -1,8 +1,8 @@
 import 'package:aos/data/datasources/rule_source_remote_datasource.dart';
 import 'package:equatable/equatable.dart';
-import '../data/repositories/repository.dart';
-import 'entities/rule.dart';
-import 'entities/rule_source.dart';
+import '../../../data/repositories/repository.dart';
+import '../../entities/rule.dart';
+import '../../entities/rule_source.dart';
 
 class GenerateDisplay extends Equatable {
   @override

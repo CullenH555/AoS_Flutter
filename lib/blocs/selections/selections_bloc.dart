@@ -1,3 +1,4 @@
+import 'package:aos/data/repositories/repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import '../../domain/entities/rule.dart';
@@ -16,11 +17,12 @@ part 'selections_state.dart';
 // The Bloc receives an event and emits a state.
 // The event is the click, containing the current sources.
 // The logic is done by the domain (generateNextPage)
-// The Bloc passe the event.currentSources to the domain logic.
+// The Bloc passes the event.currentSources to the domain logic.
 // The Bloc receives the next sources from the domain logic.
 // The Bloc passes/emits the nextSources to the state.
 class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
-  SelectionsBloc()
+  final RuleRepository repository;
+  SelectionsBloc({required this.repository})
       // Should SelectionsInitial be empty, have a loading animation,
       // or actually hold the initial data?
       : super(SelectionsInitial([
@@ -65,7 +67,8 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
 
   void _onLoadInitialSelections(
       LoadInitialSelections event, Emitter<SelectionsState> emit) async {
-    GenResetToStart generateResetToStart = GenResetToStart();
+    GenResetToStart generateResetToStart =
+        GenResetToStart(repository: repository);
     generateResetToStart(user: event.user);
     emit(
       InitialSelectionsLoaded(),
@@ -78,7 +81,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
     // to be passed that way into the method calls?
     // Or should it be empty, and the direction and sources passed
     // directly into the method calls?
-    GenNextPage nextPage = GenNextPage();
+    GenNextPage nextPage = GenNextPage(repository: repository);
     // Should this next line of logic go into the GenerateNextPage.generateNextPage
     // call with event.direction passed in? Or here...
     if (event.direction == 'next') {
@@ -107,7 +110,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
     GenButtonStyler styleButton = GenButtonStyler();
     List<RuleSource> buttonStyled =
         styleButton.styleButton(event.currentSource, event.currentSources);
-    GenNextSave save = GenNextSave();
+    GenNextSave save = GenNextSave(repository: repository);
     if (event.currentSource.sourceActive == true) {
       List<RuleSource> recordId = await save(
           currentSources: event.currentSources,
@@ -136,7 +139,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
 
   void _onDisplayOutput(
       DisplayOutput event, Emitter<SelectionsState> emit) async {
-    GenDisplay displayer = GenDisplay();
+    GenDisplay displayer = GenDisplay(repository: repository);
     List<Rule> theRules = await displayer(user: event.user);
     emit(
       OutputDisplayed(theRules),

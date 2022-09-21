@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'blocs/login/login_bloc.dart';
 import 'package:aos/injection_container.dart' as di;
+import 'package:aos/injection_container.dart';
 
 void main() async {
-//  di.init();
+  di.init();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => SelectionsBloc(),
+          create: (context) => sl<SelectionsBloc>(),
         ),
         BlocProvider(
           create: (context) => LoginBloc(),

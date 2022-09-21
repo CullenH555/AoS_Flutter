@@ -1,7 +1,7 @@
 import 'package:aos/data/repositories/repository.dart';
 import 'package:aos/domain/entities/rule.dart';
 import 'package:aos/domain/entities/rule_source.dart';
-import 'package:aos/domain/generate_next_page.dart';
+import 'package:aos/domain/usecases/old_usecases/generate_next_page.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 

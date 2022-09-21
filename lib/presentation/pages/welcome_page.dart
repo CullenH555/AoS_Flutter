@@ -2,6 +2,9 @@ import 'package:aos/presentation/pages/registration_page.dart';
 import 'package:flutter/material.dart';
 import 'login_page.dart';
 
+// AOSWelcomePage gives the user an option to log in if they have an account
+// or to register their credentials.
+// It navigates to the corresponding page.
 class AOSWelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

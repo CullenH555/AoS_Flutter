@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../blocs/login/login_bloc.dart';
 
+// AOSRegistrationPage allows the user to enter their email and password
+// in order to create an account.
+// It navigates to the selections page upon completion and verification.
 class AOSRegistrationPage extends StatelessWidget {
   String email = '';
   String password = '';

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../../domain/generate_user_actions.dart';
+import '../../domain/usecases/old_usecases/generate_user_actions.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';

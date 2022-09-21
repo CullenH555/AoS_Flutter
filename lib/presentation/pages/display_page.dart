@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import '../../domain/entities/rule.dart';
 import '../../presentation/widgets/alert_dialogue.dart';
 
-// Page for displaying rules list of user choices,
-// ordered by game phase.
+// Page for displaying rules list of user choices, ordered by game phase.
+// It is the "final" page, and navigating from it clears the user's save data
+// and returns the user to the first selection page to start a new list.
 class DisplayPage extends StatelessWidget {
   DisplayPage(this.rules, this.user);
   List<Rule> rules;

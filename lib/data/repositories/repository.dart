@@ -3,10 +3,13 @@ import 'package:aos/data/datasources/rule_source_remote_datasource.dart';
 import '../../domain/entities/rule.dart';
 import '../../domain/entities/rule_source.dart';
 
-// The Rule Repo organizes rule data from data sources for eventual use by the UI
-
+// The RuleRepository contains the contract and implementation
+// for the application's organized rule data from datasources for eventual
+// use by the UI.
+// Its methods return entities to the usecases.
+// See rule_source_remote_datasource as the Datasource for details on methods.
 abstract class RuleRepository {
-  Future<List<RuleSource>> getOrganizedDataFromRepo();
+  Future<List<RuleSource>> getOrganizedDataFromDb();
   Future<List<RuleSource>> getRuleSourcesFromDb(user);
   Future<List<Rule>> getRulesFromDb();
   void fireStoreRuleSourceDelete(user, currentSourceId);
@@ -15,12 +18,16 @@ abstract class RuleRepository {
 }
 
 class RuleRepoImp implements RuleRepository {
-  final RuleSourceRemoteDatasourceImp remoteDatasource =
+  // For use in implementing GetIt Dependency Injection.
+  final RuleSourceRemoteDatasource remoteDatasource;
+  RuleRepoImp({required this.remoteDatasource});
+  // For use in non GetIt implementation
+  /*final RuleSourceRemoteDatasourceImp remoteDatasource =
       RuleSourceRemoteDatasourceImp();
-  RuleRepoImp();
+  RuleRepoImp();*/
   @override
-  Future<List<RuleSource>> getOrganizedDataFromRepo() async {
-    final remoteData = await remoteDatasource.getOrganizedDataFromRepo();
+  Future<List<RuleSource>> getOrganizedDataFromDb() async {
+    final remoteData = await remoteDatasource.getOrganizedDataFromDb();
     return remoteData;
   }
 

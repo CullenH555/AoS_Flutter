@@ -2,19 +2,25 @@ import '../../data/repositories/repository.dart';
 import '../entities/rule.dart';
 import '../entities/rule_source.dart';
 
-//  Generating the display retrieves the data from the db and returns a list of rules.
+//  GenDisplay retrieves the rule data from the db based on the user's
+//  save collection and returns an ordered list of Rule entities.
+//  These will be used to display the ordered rules on the display page.
 class GenDisplay {
+  // For use in implementing GetIt Dependency Injection.
+  final RuleRepository repository;
+  GenDisplay({required this.repository});
   Future<List<Rule>> call({
     required String user,
   }) async {
     // Get the user's ruleSources from Db with which to compare.
-    RuleRepoImp repository = RuleRepoImp();
+    // For use in non GetIt implementation
+    // RuleRepoImp repository = RuleRepoImp();
     List<RuleSource> sourceItems = await repository.getRuleSourcesFromDb(user);
     // At this point items should be:
     // [{sourceName: 'WoodAelves'}, {sourceName: 'Sylvaneth'}]
     // Get the rules from Db to compare with user's ruleSources choices.
     List<Rule> rulesItems = await repository.getRulesFromDb();
-    // An list for each phase.
+    // A list for each phase.
     List<Rule> rulesMatchTurn = <Rule>[];
     List<Rule> rulesMatchHero = <Rule>[];
     List<Rule> rulesMatchMove = <Rule>[];

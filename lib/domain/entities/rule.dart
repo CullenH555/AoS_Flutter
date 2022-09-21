@@ -1,5 +1,9 @@
 import 'package:equatable/equatable.dart';
 
+// Entity of rule.
+// Contains the data needed for selecting, organizing, and displaying rules.
+// It also contains all info necessary for a RuleSource.
+// It is used to create rule sources, and to order and display final app output.
 class Rule extends Equatable {
   final String ruleName;
   final String ruleText;

@@ -1,7 +1,7 @@
-import 'package:aos/domain/entities/rule_source.dart';
-
 import '../../domain/entities/rule.dart';
 
+// RuleModel is returned by the Datasource
+// It is used by the repository to ensure rule entity
 class RuleModel extends Rule {
   RuleModel({
     required String ruleName,

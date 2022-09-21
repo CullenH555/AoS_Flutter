@@ -1,7 +1,7 @@
 import 'package:aos/data/repositories/user_repository.dart';
 import 'package:equatable/equatable.dart';
-import '../data/repositories/repository.dart';
-import 'entities/rule_source.dart';
+import '../../../data/repositories/repository.dart';
+import '../../entities/rule_source.dart';
 
 class GenerateNextSave extends Equatable {
   @override

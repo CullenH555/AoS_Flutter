@@ -1,7 +1,7 @@
 import 'package:aos/data/datasources/rule_source_remote_datasource.dart';
 import 'package:equatable/equatable.dart';
-import '../data/repositories/repository.dart';
-import 'entities/rule_source.dart';
+import '../../../data/repositories/repository.dart';
+import '../../entities/rule_source.dart';
 
 class GenerateNextPage extends Equatable {
   GenerateNextPage(
@@ -17,7 +17,7 @@ class GenerateNextPage extends Equatable {
     print('we are inside gen next page');
     List<RuleSource> nextSources = [];
     RuleRepository repo = RuleRepoImp();
-    List<RuleSource> data = await repo.getOrganizedDataFromRepo();
+    List<RuleSource> data = await repo.getOrganizedDataFromDb();
     List<RuleSource> ruleSources =
         await repo.getRuleSourcesFromDb(RuleSourceRemoteDatasourceImp());
     String currentFaction = '';

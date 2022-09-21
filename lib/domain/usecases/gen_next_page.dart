@@ -1,23 +1,24 @@
 import 'package:aos/data/repositories/repository.dart';
-
 import '../entities/rule_source.dart';
 
 // GenNextPage combines the user's data with all available data in order
-// to generate the list of RuleSource for the next page.
+// to generate the list of RuleSource for the next page's selection buttons.
+// It takes in the list of currentSources and returns a list of nextSources.
 class GenNextPage {
   // For use in implementing GetIt Dependency Injection.
-  /* final RuleRepository repository;
-  GenNextPage({required this.repository});*/
+  final RuleRepository repository;
+  GenNextPage({required this.repository});
   Future<List<RuleSource>> call({
     required List<RuleSource> currentSources,
     required String direction,
     required String user,
   }) async {
-    print('we are inside gen next page');
+    //  print('we are inside gen next page');
     List<RuleSource> nextSources = [];
-    // Invoke repo to get all Source data and all user's Source data
-    RuleRepoImp repository = RuleRepoImp();
-    List<RuleSource> data = await repository.getOrganizedDataFromRepo();
+    // Invoke repo to get all Source data and all user's Source data.
+    // For use in non GetIt implementation:
+    // RuleRepoImp repository = RuleRepoImp();
+    List<RuleSource> data = await repository.getOrganizedDataFromDb();
     List<RuleSource> ruleSources = await repository.getRuleSourcesFromDb(user);
     String currentFaction = '';
     // Go through the saved db entries and extract the faction selected.
@@ -62,7 +63,6 @@ class GenNextPage {
         }
       }
     }
-    print(nextSources);
     return nextSources;
   }
 }

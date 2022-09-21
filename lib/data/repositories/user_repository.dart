@@ -3,7 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-// The User Repo organizes user data for credentials, saving etc.
+// The UserRepository organizes user data for credentials, saving etc.
 
 abstract class UserRepository {
   final String email;

@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../blocs/login/login_bloc.dart';
 
+// AOSLoginPage takes in the user's credentials to sign in to
+// firebase firestore and the app.
+// It is displayed after the welcome page upon selection of login button.
 class AOSLoginPage extends StatelessWidget {
   String email = '';
   String password = '';

@@ -1,13 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../../domain/entities/rule.dart';
-import '../../domain/entities/rule_source.dart';
 import '../models/rule_model.dart';
 import '../models/rule_source_model.dart';
-import '../repositories/user_repository.dart';
+
+// The RuleSourceRemoteDatasource contains the contract and implementation
+// for the application's interface to the outside, ie firebase firestore db.
+// Its methods return models to the repository, to be transformed into entities
+// and implemented by usecases.
 
 abstract class RuleSourceRemoteDatasource {
-  Future<List<RuleSourceModel>> getOrganizedDataFromRepo();
+  Future<List<RuleSourceModel>> getOrganizedDataFromDb();
   Future<List<RuleSourceModel>> getRuleSourcesFromDb(user);
   Future<List<RuleModel>> getRulesFromDb();
   void fireStoreRuleSourceDelete(user, currentSourceId);
@@ -15,7 +16,11 @@ abstract class RuleSourceRemoteDatasource {
   fireStoreDeleteUserCollection(user);
 }
 
+// Should the firestore be passed in to constructor and injected later?
 class RuleSourceRemoteDatasourceImp implements RuleSourceRemoteDatasource {
+  // Delete user collection clears all user saved data from their save
+  // collection (not their credentials).
+  // It is invoked on reset app to start button.
   @override
   fireStoreDeleteUserCollection(user) async {
     final _firestore = FirebaseFirestore.instance;
@@ -25,12 +30,18 @@ class RuleSourceRemoteDatasourceImp implements RuleSourceRemoteDatasource {
     }
   }
 
+  // RuleSourceDelete removes the data associated with a user selection from
+  // the user's save collection.
+  // It is invoked when the user deactivates a selection button.
   @override
   void fireStoreRuleSourceDelete(user, currentSourceId) async {
     final _firestore = FirebaseFirestore.instance;
     await _firestore.collection(user).doc(currentSourceId).delete();
   }
 
+  // RuleSourceUpdate updates the user's save collection, adding the selected
+  // data from the activated selection button.
+  // It is invoked when the user deactivates a selection button.
   @override
   void fireStoreRuleSourceUpdate(user, currentSource, currentSources) async {
     final _firestore = FirebaseFirestore.instance;
@@ -52,8 +63,12 @@ class RuleSourceRemoteDatasourceImp implements RuleSourceRemoteDatasource {
     });
   }
 
+  // getOrganizedDataFromDb gets rule data from the db and returns a list of
+  // RuleSource models
+  // It is invoked when the user navigates in order to collect/organize
+  // the proper data for display.
   @override
-  Future<List<RuleSourceModel>> getOrganizedDataFromRepo() async {
+  Future<List<RuleSourceModel>> getOrganizedDataFromDb() async {
     List<RuleSourceModel> newSourceList = [];
     List allRulesList = [];
     final _firestore = FirebaseFirestore.instance;
@@ -108,6 +123,10 @@ class RuleSourceRemoteDatasourceImp implements RuleSourceRemoteDatasource {
     return newSourceList;
   }
 
+  // getRuleSourcesFromDb gets the data from the user's save collection for
+  // use in displaying options upon navigation.
+  // It returns a list of RuleSource models.
+  // It is invoked when a user navigates.
   @override
   Future<List<RuleSourceModel>> getRuleSourcesFromDb(user) async {
     List<dynamic> sourceItems = <dynamic>[];
@@ -144,6 +163,11 @@ class RuleSourceRemoteDatasourceImp implements RuleSourceRemoteDatasource {
     return ruleSources;
   }
 
+  // getRulesFromDb gets all of the rules data from the database for use in
+  // final output rules display.
+  // It returns a list of RuleSource models.
+  // It is invoked when a user reaches the final selection page and navigates
+  // to the display page.
   @override
   Future<List<RuleModel>> getRulesFromDb() async {
     List allRulesList = [];

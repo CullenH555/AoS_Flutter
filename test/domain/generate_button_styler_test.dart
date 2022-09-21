@@ -1,5 +1,5 @@
 import 'package:aos/domain/entities/rule_source.dart';
-import 'package:aos/domain/generate_button_styler.dart';
+import 'package:aos/domain/usecases/old_usecases/generate_button_styler.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
