@@ -11,23 +11,22 @@ class Selections extends StatelessWidget {
   Widget build(BuildContext context) {
     String category = sources.isNotEmpty
         ? sources[0].sourceType
-        : 'Make sure to choose a faction.';
+        : 'a Faction. Go back and make a selection';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
-          'Choose $category:',
-          style: const TextStyle(
-            fontSize: 40.0,
-            backgroundColor: Colors.redAccent,
-            color: Colors.white,
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 30.0, 0, 30.0),
+          child: Text(
+            'Choose $category:',
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
         ),
         Expanded(
           child: SizedBox.expand(
             child: FractionallySizedBox(
               widthFactor: 1,
-              heightFactor: 0.5,
+              heightFactor: .9,
               alignment: FractionalOffset.center,
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
@@ -38,9 +37,9 @@ class Selections extends StatelessWidget {
                       sources[index].sourceName,
                       style: TextStyle(
                         color: sources[index].sourceActive == true
-                            ? Colors.blue
-                            : Colors.red,
-                        fontSize: 40.0,
+                            ? Colors.blueGrey.shade200
+                            : Colors.blueGrey,
+                        fontSize: 35.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -57,50 +56,66 @@ class Selections extends StatelessWidget {
             ),
           ),
         ),
-        FloatingActionButton(
-          heroTag: null,
-          child: const Icon(Icons.add),
-          onPressed: () {
-            //  print(sources[0].sourceType);
-            if (sources[0].sourceType == 'battalion') {
-              context.read<SelectionsBloc>().add(DisplayOutput(user: user));
-            } else {
-              // Comment out below for initRulesToDb
-              context.read<SelectionsBloc>().add(LoadNextSelections(
-                    currentSources: sources,
-                    direction: 'next',
-                    user: user,
-                  ));
-              // Uncomment below for initRulesToDb
-              //   context
-              //      .read<SelectionsBloc>()
-              //      .add(ActivateSelection(currentSources: sources));
-            }
-          },
-        ),
-        Container(
-          height: 60.0,
-        ),
-        FloatingActionButton(
-          heroTag: null,
-          child: const Icon(Icons.arrow_back),
-          onPressed: () {
-            if (sources.isEmpty) {
-              print('We try to go back to initial page');
-              context
-                  .read<SelectionsBloc>()
-                  .add(LoadInitialSelections(user: user));
-            } else {
-              context.read<SelectionsBloc>().add(LoadNextSelections(
-                    currentSources: sources,
-                    direction: 'previous',
-                    user: user,
-                  ));
-            }
-          },
-        ),
-        Container(
-          height: 50.0,
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 40.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 0,
+                  horizontal: 40.0,
+                ),
+                child: FloatingActionButton(
+                  heroTag: null,
+                  child: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    if (sources.isEmpty) {
+                      //   print('We try to go back to initial page');
+                      context
+                          .read<SelectionsBloc>()
+                          .add(LoadInitialSelections(user: user));
+                    } else {
+                      context.read<SelectionsBloc>().add(LoadNextSelections(
+                            currentSources: sources,
+                            direction: 'previous',
+                            user: user,
+                          ));
+                    }
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 0,
+                  horizontal: 40.0,
+                ),
+                child: FloatingActionButton(
+                  heroTag: null,
+                  child: const Icon(Icons.add),
+                  onPressed: () {
+                    //  print(sources[0].sourceType);
+                    if (sources[0].sourceType == 'battalion') {
+                      context
+                          .read<SelectionsBloc>()
+                          .add(DisplayOutput(user: user));
+                    } else {
+                      // Comment out below for initRulesToDb
+                      context.read<SelectionsBloc>().add(LoadNextSelections(
+                            currentSources: sources,
+                            direction: 'next',
+                            user: user,
+                          ));
+                      // Uncomment below for initRulesToDb
+                      //   context
+                      //      .read<SelectionsBloc>()
+                      //      .add(ActivateSelection(currentSources: sources));
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

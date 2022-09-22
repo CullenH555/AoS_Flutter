@@ -13,12 +13,21 @@ class DisplayPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Text('Rules By Phase: '),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: 30.0,
+            horizontal: 0,
+          ),
+          child: Text(
+            'Rules By Phase: ',
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+        ),
         Expanded(
           child: SizedBox.expand(
               child: FractionallySizedBox(
             widthFactor: 1,
-            heightFactor: 0.5,
+            heightFactor: 1,
             alignment: FractionalOffset.center,
             child: ListView.builder(
               scrollDirection: Axis.vertical,
@@ -31,19 +40,26 @@ class DisplayPage extends StatelessWidget {
                 // Or work with "consolidated rulesList"
                 return Text(
                   '$ruleName: $ruleText',
+                  style: Theme.of(context).textTheme.bodySmall,
                 );
               },
             ),
           )),
         ),
-        FloatingActionButton(
-          heroTag: null,
-          child: const Icon(Icons.arrow_back),
-          onPressed: () {
-            AlertDialogue alertDialogue = AlertDialogue(user: user);
-            alertDialogue.showAlertDialogue(context);
-          },
-        )
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 40,
+            horizontal: 0,
+          ),
+          child: FloatingActionButton(
+            heroTag: null,
+            child: const Icon(Icons.arrow_back),
+            onPressed: () {
+              AlertDialogue alertDialogue = AlertDialogue(user: user);
+              alertDialogue.showAlertDialogue(context);
+            },
+          ),
+        ),
       ],
     );
   }

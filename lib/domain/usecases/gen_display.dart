@@ -21,13 +21,78 @@ class GenDisplay {
     // Get the rules from Db to compare with user's ruleSources choices.
     List<Rule> rulesItems = await repository.getRulesFromDb();
     // A list for each phase.
-    List<Rule> rulesMatchTurn = <Rule>[];
-    List<Rule> rulesMatchHero = <Rule>[];
-    List<Rule> rulesMatchMove = <Rule>[];
-    List<Rule> rulesMatchShoot = <Rule>[];
-    List<Rule> rulesMatchCharge = <Rule>[];
-    List<Rule> rulesMatchCombat = <Rule>[];
-    List<Rule> rulesMatchBattleshock = <Rule>[];
+    // Create and insert the phase labels at the start of each phaseList.
+    // TODO refactor the phase labels for cleaner display
+    List<Rule> rulesMatchTurn = <Rule>[
+      const Rule(
+        ruleName: 'Out of Phase',
+        ruleText: '',
+        rulePhase: '',
+        ruleSource: '',
+        ruleFaction: '',
+        ruleSourceType: '',
+      ),
+    ];
+    List<Rule> rulesMatchHero = <Rule>[
+      const Rule(
+        ruleName: 'Hero Phase',
+        ruleText: '',
+        rulePhase: '',
+        ruleSource: '',
+        ruleFaction: '',
+        ruleSourceType: '',
+      ),
+    ];
+    List<Rule> rulesMatchMove = <Rule>[
+      const Rule(
+        ruleName: 'Movement Phase',
+        ruleText: '',
+        rulePhase: '',
+        ruleSource: '',
+        ruleFaction: '',
+        ruleSourceType: '',
+      ),
+    ];
+    List<Rule> rulesMatchShoot = <Rule>[
+      const Rule(
+        ruleName: 'Shooting Phase',
+        ruleText: '',
+        rulePhase: '',
+        ruleSource: '',
+        ruleFaction: '',
+        ruleSourceType: '',
+      ),
+    ];
+    List<Rule> rulesMatchCharge = <Rule>[
+      const Rule(
+        ruleName: 'Charge Phase',
+        ruleText: '',
+        rulePhase: '',
+        ruleSource: '',
+        ruleFaction: '',
+        ruleSourceType: '',
+      ),
+    ];
+    List<Rule> rulesMatchCombat = <Rule>[
+      const Rule(
+        ruleName: 'Combat Phase',
+        ruleText: '',
+        rulePhase: '',
+        ruleSource: '',
+        ruleFaction: '',
+        ruleSourceType: '',
+      ),
+    ];
+    List<Rule> rulesMatchBattleshock = <Rule>[
+      const Rule(
+        ruleName: 'Battleshock Phase',
+        ruleText: '',
+        rulePhase: '',
+        ruleSource: '',
+        ruleFaction: '',
+        ruleSourceType: '',
+      ),
+    ];
     // Match rules based on phase, to arrange in order.
     for (var i = 0; i < sourceItems.length; i++) {
       for (var j = 0; j < rulesItems.length; j++) {

@@ -14,20 +14,34 @@ class AOSRegistrationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Welcome to AoS Playmat Builder'),
+        centerTitle: true,
+        title: Text(
+          'Welcome to AoS Playmat Builder',
+          style: Theme.of(context).textTheme.headlineSmall,
+        ),
       ),
+      backgroundColor: Colors.blueGrey.shade900,
       body: Column(
         children: [
-          const Text(
-            'Fill out the following to create an account.',
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 40.0,
+          const Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: 40,
+              horizontal: 0,
+            ),
+            child: Text(
+              'Create an account.',
+              style: TextStyle(
+                color: Colors.blueGrey,
+                fontSize: 30.0,
+                height: 1.5,
+                letterSpacing: .5,
+              ),
             ),
           ),
           TextField(
             keyboardType: TextInputType.emailAddress,
             textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.labelSmall,
             onChanged: (value) {
               email = value;
             },
@@ -42,6 +56,7 @@ class AOSRegistrationPage extends StatelessWidget {
           TextField(
             obscureText: true,
             textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.labelSmall,
             onChanged: (value) {
               password = value;
             },
@@ -50,19 +65,30 @@ class AOSRegistrationPage extends StatelessWidget {
               labelText: 'Password',
             ),
           ),
-          ElevatedButton(
-            child: const Text('create account'),
-            onPressed: () async {
-              print(email);
-              print(password);
-              context
-                  .read<LoginBloc>()
-                  .add(Register(email: email, password: password));
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SelectionsPage([], email)));
-            },
+          Container(
+            height: 50.0,
+          ),
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 240.0),
+              child: ElevatedButton(
+                child: const Text('create account'),
+                onPressed: () async {
+                  print(email);
+                  print(password);
+                  context
+                      .read<LoginBloc>()
+                      .add(Register(email: email, password: password));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SelectionsPage([], email),
+                    ),
+                  );
+                },
+              ),
+            ),
           ),
         ],
       ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../blocs/selections/selections_bloc.dart';
 
+// AlertDialogue provides a popup for the user to advise them that to restart
+// their project, they will delete the currently displayed project.
+// Confirmation upon navigating away from the final display page .
 class AlertDialogue {
   final String user;
   AlertDialogue({required this.user});

@@ -29,8 +29,41 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'AOS Flutter',
         theme: ThemeData(
-          primarySwatch: Colors.red,
+          primarySwatch: Colors.brown,
           backgroundColor: Colors.white,
+          textTheme: const TextTheme(
+            labelSmall: TextStyle(
+              color: Colors.blueGrey,
+              fontSize: 20.0,
+              letterSpacing: 1.5,
+            ),
+            headlineMedium: TextStyle(
+              color: Colors.blueGrey,
+              fontSize: 40.0,
+            ),
+            bodySmall: TextStyle(
+              color: Colors.blueGrey,
+              height: 1.5,
+              fontSize: 20.0,
+              letterSpacing: 1,
+            ),
+            headlineSmall: TextStyle(
+              color: Colors.white,
+              fontSize: 20.0,
+            ),
+          ),
+          inputDecorationTheme: const InputDecorationTheme(
+            labelStyle: TextStyle(
+              color: Colors.blueGrey,
+              fontSize: 20.0,
+              letterSpacing: 1,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.blueGrey,
+              ),
+            ),
+          ),
         ),
         home: AOSWelcomePage(),
         //   SelectionsPage(

@@ -13,20 +13,34 @@ class AOSLoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Welcome to AoS Playmat Builder'),
+        centerTitle: true,
+        title: Text(
+          'Welcome to AoS Playmat Builder',
+          style: Theme.of(context).textTheme.headlineSmall,
+        ),
       ),
+      backgroundColor: Colors.blueGrey.shade900,
       body: Column(
         children: [
-          const Text(
-            'Enter your information to log in.',
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 40.0,
+          const Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: 40,
+              horizontal: 0,
+            ),
+            child: Text(
+              'Enter your information to log in.',
+              style: TextStyle(
+                color: Colors.blueGrey,
+                fontSize: 28.0,
+                height: 1.5,
+                letterSpacing: .5,
+              ),
             ),
           ),
           TextField(
             keyboardType: TextInputType.emailAddress,
             textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.labelSmall,
             onChanged: (value) {
               email = value;
             },
@@ -41,6 +55,7 @@ class AOSLoginPage extends StatelessWidget {
           TextField(
             obscureText: true,
             textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.labelSmall,
             onChanged: (value) {
               password = value;
             },
@@ -49,17 +64,20 @@ class AOSLoginPage extends StatelessWidget {
               labelText: 'Password',
             ),
           ),
-          ElevatedButton(
-            child: const Text('login'),
-            onPressed: () async {
-              context
-                  .read<LoginBloc>()
-                  .add(Login(email: email, password: password));
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SelectionsPage([], email)));
-            },
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 15.0, 0, 0),
+            child: ElevatedButton(
+              child: const Text('login'),
+              onPressed: () async {
+                context
+                    .read<LoginBloc>()
+                    .add(Login(email: email, password: password));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SelectionsPage([], email)));
+              },
+            ),
           ),
         ],
       ),

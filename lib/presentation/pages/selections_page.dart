@@ -22,6 +22,8 @@ class SelectionsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
         leading: null,
         actions: [
           IconButton(
@@ -32,8 +34,12 @@ class SelectionsPage extends StatelessWidget {
             },
           ),
         ],
-        title: const Text('AoS Playmat Builder'),
+        title: Text(
+          'AoS Playmat Builder',
+          style: Theme.of(context).textTheme.headlineSmall,
+        ),
       ),
+      backgroundColor: Colors.blueGrey.shade900,
       body: BlocBuilder<SelectionsBloc, SelectionsState>(
           builder: (context, state) {
         if (state is InitialSelectionsLoaded) {

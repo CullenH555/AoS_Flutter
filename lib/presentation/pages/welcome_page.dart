@@ -10,23 +10,42 @@ class AOSWelcomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Welcome to AoS Playmat Builder'),
+        centerTitle: true,
+        title: Text(
+          'Welcome to AoS Playmat Builder',
+          style: Theme.of(context).textTheme.headlineSmall,
+        ),
       ),
+      backgroundColor: Colors.blueGrey.shade900,
+      // backgroundColor: Colors.grey.shade800,
+      // backgroundColor: Colors.blueGrey,
       body: Column(
         children: [
-          const Text(
-            'If you have an account, log in. Otherwise create an account.',
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 40.0,
+          const Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: 40,
+              horizontal: 0,
+            ),
+            child: Text(
+              'If you have an account, log in. Otherwise create an account.',
+              style: TextStyle(
+                //  color: Colors.orangeAccent,
+                color: Colors.blueGrey,
+                fontSize: 30.0,
+                height: 1.5,
+                letterSpacing: .5,
+              ),
             ),
           ),
-          ElevatedButton(
-            child: const Text('login'),
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AOSLoginPage()));
-            },
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 75, 0, 20),
+            child: ElevatedButton(
+              child: const Text('login'),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AOSLoginPage()));
+              },
+            ),
           ),
           ElevatedButton(
             child: const Text('create account'),
