@@ -31,18 +31,18 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.brown,
           backgroundColor: Colors.white,
-          textTheme: const TextTheme(
+          textTheme: TextTheme(
             labelSmall: TextStyle(
-              color: Colors.blueGrey,
+              color: Colors.blueGrey.shade200,
               fontSize: 20.0,
               letterSpacing: 1.5,
             ),
             headlineMedium: TextStyle(
-              color: Colors.blueGrey,
+              color: Colors.blueGrey.shade200,
               fontSize: 40.0,
             ),
             bodySmall: TextStyle(
-              color: Colors.blueGrey,
+              color: Colors.blueGrey.shade200,
               height: 1.5,
               fontSize: 20.0,
               letterSpacing: 1,
@@ -52,9 +52,9 @@ class MyApp extends StatelessWidget {
               fontSize: 20.0,
             ),
           ),
-          inputDecorationTheme: const InputDecorationTheme(
+          inputDecorationTheme: InputDecorationTheme(
             labelStyle: TextStyle(
-              color: Colors.blueGrey,
+              color: Colors.blueGrey.shade200,
               fontSize: 20.0,
               letterSpacing: 1,
             ),

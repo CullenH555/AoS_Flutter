@@ -22,46 +22,58 @@ class AOSLoginPage extends StatelessWidget {
       backgroundColor: Colors.blueGrey.shade900,
       body: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: 40,
-              horizontal: 0,
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 40.0,
+              horizontal: 15.0,
             ),
             child: Text(
               'Enter your information to log in.',
               style: TextStyle(
-                color: Colors.blueGrey,
-                fontSize: 28.0,
+                color: Colors.blueGrey.shade200,
+                fontSize: 26.0,
                 height: 1.5,
                 letterSpacing: .5,
               ),
             ),
           ),
-          TextField(
-            keyboardType: TextInputType.emailAddress,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.labelSmall,
-            onChanged: (value) {
-              email = value;
-            },
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Email',
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 0,
+              horizontal: 15.0,
+            ),
+            child: TextField(
+              keyboardType: TextInputType.emailAddress,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.labelSmall,
+              onChanged: (value) {
+                email = value;
+              },
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Email',
+              ),
             ),
           ),
           const SizedBox(
             height: 8.0,
           ),
-          TextField(
-            obscureText: true,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.labelSmall,
-            onChanged: (value) {
-              password = value;
-            },
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Password',
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 0,
+              horizontal: 15.0,
+            ),
+            child: TextField(
+              obscureText: true,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.labelSmall,
+              onChanged: (value) {
+                password = value;
+              },
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Password',
+              ),
             ),
           ),
           Padding(

@@ -26,7 +26,7 @@ class DisplayPage extends StatelessWidget {
         Expanded(
           child: SizedBox.expand(
               child: FractionallySizedBox(
-            widthFactor: 1,
+            widthFactor: .95,
             heightFactor: 1,
             alignment: FractionalOffset.center,
             child: ListView.builder(

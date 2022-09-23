@@ -21,24 +21,24 @@ class AOSWelcomePage extends StatelessWidget {
       // backgroundColor: Colors.blueGrey,
       body: Column(
         children: [
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(
               vertical: 40,
-              horizontal: 0,
+              horizontal: 15.0,
             ),
             child: Text(
               'If you have an account, log in. Otherwise create an account.',
               style: TextStyle(
                 //  color: Colors.orangeAccent,
-                color: Colors.blueGrey,
-                fontSize: 30.0,
+                color: Colors.blueGrey.shade200,
+                fontSize: 27.0,
                 height: 1.5,
                 letterSpacing: .5,
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(0, 75, 0, 20),
+            padding: const EdgeInsets.fromLTRB(0, 75, 0, 20),
             child: ElevatedButton(
               child: const Text('login'),
               onPressed: () {

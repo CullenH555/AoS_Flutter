@@ -16,10 +16,15 @@ class Selections extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(0, 30.0, 0, 30.0),
+          padding: const EdgeInsets.fromLTRB(15.0, 30.0, 15.0, 30.0),
           child: Text(
             'Choose $category:',
-            style: Theme.of(context).textTheme.headlineMedium,
+            style: TextStyle(
+              color: Colors.blueGrey.shade200,
+              fontSize: 26.0,
+              height: 1.5,
+              letterSpacing: .5,
+            ),
           ),
         ),
         Expanded(
@@ -37,8 +42,8 @@ class Selections extends StatelessWidget {
                       sources[index].sourceName,
                       style: TextStyle(
                         color: sources[index].sourceActive == true
-                            ? Colors.blueGrey.shade200
-                            : Colors.blueGrey,
+                            ? Colors.blueGrey
+                            : Colors.blueGrey.shade200,
                         fontSize: 35.0,
                         fontWeight: FontWeight.bold,
                       ),
