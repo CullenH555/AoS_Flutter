@@ -15,6 +15,7 @@ class GenNextSave {
     required RuleSource currentSource,
     required String user,
   }) async {
+    // TODO add a check to see if a faction has already been selected.
     for (var j = 0; j < currentSources.length; j++) {
       if (currentSources[j] == currentSource) {
         if (currentSources[j].sourceActive == true) {

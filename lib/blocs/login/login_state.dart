@@ -11,7 +11,7 @@ class LoginInitial extends LoginState {
 
 class UserLoggedIn extends LoginState {
   const UserLoggedIn({this.user = ''});
-  final user;
+  final String user;
 
   @override
   List<Object?> get props => [user];

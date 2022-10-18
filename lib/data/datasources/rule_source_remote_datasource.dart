@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/rule_model.dart';
 import '../models/rule_source_model.dart';
@@ -73,9 +75,9 @@ class RuleSourceRemoteDatasourceImp implements RuleSourceRemoteDatasource {
     List allRulesList = [];
     final _firestore = FirebaseFirestore.instance;
     await _firestore.collection('rules').get().then((QuerySnapshot snapshot) {
-      snapshot.docs.forEach((e) {
+      for (var e in snapshot.docs) {
         allRulesList.add(e.data());
-      });
+      }
     });
     String sourceType = '';
     String nextSourceType = '';
@@ -133,10 +135,9 @@ class RuleSourceRemoteDatasourceImp implements RuleSourceRemoteDatasource {
     List<RuleSourceModel> ruleSources = [];
     final _firestore = FirebaseFirestore.instance;
     await _firestore.collection(user).get().then((QuerySnapshot snapshot) {
-      snapshot.docs.forEach(
-        // add data to the list
-        (f) => sourceItems.add(f.data()),
-      );
+      for (var f in snapshot.docs) {
+        sourceItems.add(f.data());
+      }
     });
     bool sourceActive;
     for (var i = 0; i < sourceItems.length; i++) {
@@ -174,9 +175,9 @@ class RuleSourceRemoteDatasourceImp implements RuleSourceRemoteDatasource {
     List<RuleModel> rulesList = [];
     final _firestore = FirebaseFirestore.instance;
     await _firestore.collection('rules').get().then((QuerySnapshot snapshot) {
-      snapshot.docs.forEach((e) {
+      for (var e in snapshot.docs) {
         allRulesList.add(e.data());
-      });
+      }
     });
     for (var rule in allRulesList) {
       String ruleName = rule['ruleName'];

@@ -108,8 +108,7 @@ class SelectionsBloc extends Bloc<SelectionsEvent, SelectionsState> {
       ActivateSelection event, Emitter<SelectionsState> emit) async {
     // Below the event.data is passed directly to the method.
     GenButtonStyler styleButton = GenButtonStyler();
-    List<RuleSource> buttonStyled =
-        styleButton.styleButton(event.currentSource, event.currentSources);
+    styleButton.styleButton(event.currentSource, event.currentSources);
     GenNextSave save = GenNextSave(repository: repository);
     if (event.currentSource.sourceActive == true) {
       List<RuleSource> recordId = await save(

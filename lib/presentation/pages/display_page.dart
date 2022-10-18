@@ -6,15 +6,15 @@ import '../../presentation/widgets/alert_dialogue.dart';
 // It is the "final" page, and navigating from it clears the user's save data
 // and returns the user to the first selection page to start a new list.
 class DisplayPage extends StatelessWidget {
-  DisplayPage(this.rules, this.user);
-  List<Rule> rules;
+  const DisplayPage(this.rules, this.user);
+  final List<Rule> rules;
   final String user;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             vertical: 30.0,
             horizontal: 0,
           ),
@@ -37,11 +37,33 @@ class DisplayPage extends StatelessWidget {
                 var ruleText = rules[index].ruleText;
                 // At this point items should be:
                 // [{sourceName: 'WoodAelves'}, {sourceName: 'Sylvaneth'}]
-                // Or work with "consolidated rulesList"
-                return Text(
-                  '$ruleName: $ruleText',
-                  style: Theme.of(context).textTheme.bodySmall,
-                );
+                // Below is some presentation logic to format the display.
+                // It checks for the phase labels and styles them accordingly.
+                if (ruleName == 'Out of Phase' ||
+                    ruleName == 'Hero Phase' ||
+                    ruleName == 'Movement Phase' ||
+                    ruleName == 'Shooting Phase' ||
+                    ruleName == 'Charge Phase' ||
+                    ruleName == 'Combat Phase' ||
+                    ruleName == 'Battleshock Phase') {
+                  return Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 0, vertical: 20.0),
+                    child: Text(
+                      '$ruleName: $ruleText',
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
+                  );
+                } else {
+                  return Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 5.0, vertical: 10.0),
+                    child: Text(
+                      '$ruleName: $ruleText',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  );
+                }
               },
             ),
           )),
@@ -65,7 +87,7 @@ class DisplayPage extends StatelessWidget {
   }
 }
 
-// TODO refactor back button from display page.
+// TODO refactor back button from display page?
 // Currently it loads the hardcoded initial sources.
 // It verifies that the user wants to delete project.
 // It clears the user's collection.

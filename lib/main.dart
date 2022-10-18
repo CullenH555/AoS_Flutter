@@ -47,9 +47,13 @@ class MyApp extends StatelessWidget {
               fontSize: 20.0,
               letterSpacing: 1,
             ),
-            headlineSmall: TextStyle(
+            headlineSmall: const TextStyle(
               color: Colors.white,
               fontSize: 20.0,
+            ),
+            labelMedium: const TextStyle(
+              color: Colors.white,
+              fontSize: 30.0,
             ),
           ),
           inputDecorationTheme: InputDecorationTheme(
@@ -58,7 +62,7 @@ class MyApp extends StatelessWidget {
               fontSize: 20.0,
               letterSpacing: 1,
             ),
-            enabledBorder: OutlineInputBorder(
+            enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(
                 color: Colors.blueGrey,
               ),

@@ -13,7 +13,6 @@ class GenNextPage {
     required String direction,
     required String user,
   }) async {
-    //  print('we are inside gen next page');
     List<RuleSource> nextSources = [];
     // Invoke repo to get all Source data and all user's Source data.
     // For use in non GetIt implementation:
@@ -36,12 +35,9 @@ class GenNextPage {
         if (source.sourceType == currentSources[0].nextSourceType &&
             source.sourceFaction == currentFaction) {
           nextSources.add(source);
-          print("nextSources after adding from save: ");
-          print(nextSources);
         }
       }
       // Next, collect all matching ruleSource from rules Db.
-      // TODO Exclude if already added.
       for (var j = 0; j < data.length; j++) {
         // For each datum create a flag that it should be added.
         var shouldAdd = true;
@@ -56,24 +52,18 @@ class GenNextPage {
           if (data[j].sourceType == currentSources[0].nextSourceType &&
               data[j].sourceFaction == currentFaction) {
             nextSources.add(data[j]);
-            print("nextSources after adding from rules Db: ");
-            print(nextSources);
           }
         }
       }
     } else if (direction == 'previous') {
-      print(nextSources);
       // First, collect all matching previously user saved ruleSource.
       for (var source in ruleSources) {
         if (source.nextSourceType == currentSources[0].sourceType &&
             source.sourceFaction == currentFaction) {
           nextSources.add(source);
-          print("nextSources after adding from save: ");
-          print(nextSources);
         }
       }
       // Next, collect all matching ruleSource from rules Db.
-      // TODO Exclude if already added.
       for (var x = 0; x < data.length; x++) {
         // For each datum create a flag that it should be added.
         var shouldAdd = true;
@@ -88,8 +78,6 @@ class GenNextPage {
           if (data[x].nextSourceType == currentSources[0].sourceType &&
               data[x].sourceFaction == currentFaction) {
             nextSources.add(data[x]);
-            print("nextSources after adding from save: ");
-            print(nextSources);
           }
         }
       }

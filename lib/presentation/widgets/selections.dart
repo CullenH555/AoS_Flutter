@@ -4,9 +4,9 @@ import '../../blocs/selections/selections_bloc.dart';
 import '../../domain/entities/rule_source.dart';
 
 class Selections extends StatelessWidget {
-  Selections(this.sources, this.user);
-  List<RuleSource> sources;
-  String user;
+  const Selections(this.sources, this.user);
+  final List<RuleSource> sources;
+  final String user;
   @override
   Widget build(BuildContext context) {
     String category = sources.isNotEmpty
@@ -75,8 +75,8 @@ class Selections extends StatelessWidget {
                   heroTag: null,
                   child: const Icon(Icons.arrow_back),
                   onPressed: () {
+                    // If user made an error, go back to initial.
                     if (sources.isEmpty) {
-                      //   print('We try to go back to initial page');
                       context
                           .read<SelectionsBloc>()
                           .add(LoadInitialSelections(user: user));
@@ -91,34 +91,40 @@ class Selections extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 0,
-                  horizontal: 40.0,
-                ),
-                child: FloatingActionButton(
-                  heroTag: null,
-                  child: const Icon(Icons.add),
-                  onPressed: () {
-                    //  print(sources[0].sourceType);
-                    if (sources[0].sourceType == 'battalion') {
-                      context
-                          .read<SelectionsBloc>()
-                          .add(DisplayOutput(user: user));
-                    } else {
-                      // Comment out below for initRulesToDb
-                      context.read<SelectionsBloc>().add(LoadNextSelections(
-                            currentSources: sources,
-                            direction: 'next',
-                            user: user,
-                          ));
-                      // Uncomment below for initRulesToDb
-                      //   context
-                      //      .read<SelectionsBloc>()
-                      //      .add(ActivateSelection(currentSources: sources));
-                    }
-                  },
-                ),
-              ),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 0,
+                    horizontal: 40.0,
+                  ),
+                  // Below is a ternary for getting rid of the add button
+                  // if the sources are empty. This helps direct the user
+                  // to select a faction before continuing.
+                  child: sources.isNotEmpty
+                      ? FloatingActionButton(
+                          heroTag: null,
+                          child: const Icon(Icons.add),
+                          onPressed: () {
+                            //  print(sources[0].sourceType);
+                            if (sources[0].sourceType == 'battalion') {
+                              context
+                                  .read<SelectionsBloc>()
+                                  .add(DisplayOutput(user: user));
+                            } else {
+                              // Comment out below for initRulesToDb
+                              context
+                                  .read<SelectionsBloc>()
+                                  .add(LoadNextSelections(
+                                    currentSources: sources,
+                                    direction: 'next',
+                                    user: user,
+                                  ));
+                              // Uncomment below for initRulesToDb
+                              //   context
+                              //      .read<SelectionsBloc>()
+                              //      .add(ActivateSelection(currentSources: sources));
+                            }
+                          },
+                        )
+                      : null),
             ],
           ),
         ),

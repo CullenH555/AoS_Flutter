@@ -22,7 +22,7 @@ class AOSWelcomePage extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               vertical: 40,
               horizontal: 15.0,
             ),
