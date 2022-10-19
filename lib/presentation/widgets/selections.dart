@@ -42,7 +42,7 @@ class Selections extends StatelessWidget {
                       sources[index].sourceName,
                       style: TextStyle(
                         color: sources[index].sourceActive == true
-                            ? Colors.blueGrey
+                            ? Colors.brown
                             : Colors.blueGrey.shade200,
                         fontSize: 35.0,
                         fontWeight: FontWeight.bold,
