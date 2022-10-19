@@ -1,11 +1,11 @@
-import 'package:aos/blocs/selections/selections_bloc.dart';
-import 'package:aos/presentation/pages/welcome_page.dart';
+import 'package:aos_playmat_builder_flutter/blocs/selections/selections_bloc.dart';
+import 'package:aos_playmat_builder_flutter/presentation/pages/welcome_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'blocs/login/login_bloc.dart';
-import 'package:aos/injection_container.dart' as di;
-import 'package:aos/injection_container.dart';
+import 'package:aos_playmat_builder_flutter/blocs/login/login_bloc.dart';
+import 'package:aos_playmat_builder_flutter/injection_container.dart' as di;
+import 'package:aos_playmat_builder_flutter/injection_container.dart';
 
 void main() async {
   di.init();
@@ -70,8 +70,6 @@ class MyApp extends StatelessWidget {
           ),
         ),
         home: AOSWelcomePage(),
-        //   SelectionsPage(
-        //       []), // working on firstPage -- should be: AOSWelcomePage(),
       ),
     );
   }

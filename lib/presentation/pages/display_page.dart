@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../domain/entities/rule.dart';
-import '../../presentation/widgets/alert_dialogue.dart';
+import 'package:aos_playmat_builder_flutter/domain/entities/rule.dart';
+import 'package:aos_playmat_builder_flutter/presentation/widgets/alert_dialogue.dart';
 
 // Page for displaying rules list of user choices, ordered by game phase.
 // It is the "final" page, and navigating from it clears the user's save data

@@ -1,5 +1,5 @@
-import 'package:aos/data/repositories/repository.dart';
-import '../entities/rule_source.dart';
+import 'package:aos_playmat_builder_flutter/data/repositories/repository.dart';
+import 'package:aos_playmat_builder_flutter/domain/entities/rule_source.dart';
 
 // GenNextPage combines the user's data with all available data in order
 // to generate the list of RuleSource for the next page's selection buttons.

@@ -1,7 +1,7 @@
-import 'package:aos/presentation/pages/selections_page.dart';
+import 'package:aos_playmat_builder_flutter/presentation/pages/selections_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../blocs/login/login_bloc.dart';
+import 'package:aos_playmat_builder_flutter/blocs/login/login_bloc.dart';
 
 // AOSLoginPage takes in the user's credentials to sign in to
 // firebase firestore and the app.

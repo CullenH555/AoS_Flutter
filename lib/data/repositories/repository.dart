@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
-import 'package:aos/data/datasources/rule_source_remote_datasource.dart';
-import '../../domain/entities/rule.dart';
-import '../../domain/entities/rule_source.dart';
+import 'package:aos_playmat_builder_flutter/data/datasources/rule_source_remote_datasource.dart';
+import 'package:aos_playmat_builder_flutter/domain/entities/rule.dart';
+import 'package:aos_playmat_builder_flutter/domain/entities/rule_source.dart';
 
 // The RuleRepository contains the contract and implementation
 // for the application's organized rule data from datasources for eventual

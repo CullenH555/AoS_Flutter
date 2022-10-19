@@ -1,10 +1,10 @@
-import 'package:aos/blocs/selections/selections_bloc.dart';
+import 'package:aos_playmat_builder_flutter/blocs/selections/selections_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../blocs/login/login_bloc.dart';
-import '../../domain/entities/rule_source.dart';
-import '../widgets/selections.dart';
-import 'display_page.dart';
+import 'package:aos_playmat_builder_flutter/blocs/login/login_bloc.dart';
+import 'package:aos_playmat_builder_flutter/domain/entities/rule_source.dart';
+import 'package:aos_playmat_builder_flutter/presentation/widgets/selections.dart';
+import 'package:aos_playmat_builder_flutter/presentation/pages/display_page.dart';
 
 // SelectionsPage is shown after the user successfully logs in.
 // It displays the selection options in the form of toggleable buttons.

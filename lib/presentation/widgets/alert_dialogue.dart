@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../blocs/selections/selections_bloc.dart';
+import 'package:aos_playmat_builder_flutter/blocs/selections/selections_bloc.dart';
 
 // AlertDialogue provides a popup for the user to advise them that to restart
 // their project, they will delete the currently displayed project.

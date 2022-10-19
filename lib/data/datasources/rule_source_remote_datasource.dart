@@ -1,8 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/rule_model.dart';
-import '../models/rule_source_model.dart';
+import 'package:aos_playmat_builder_flutter/data/models/rule_model.dart';
+import 'package:aos_playmat_builder_flutter/data/models/rule_source_model.dart';
 
 // The RuleSourceRemoteDatasource contains the contract and implementation
 // for the application's interface to the outside, ie firebase firestore db.

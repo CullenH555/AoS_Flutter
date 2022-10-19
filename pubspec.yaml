@@ -1,5 +1,5 @@
-name: aos
-description: A new Flutter project.
+name: aos_playmat_builder_flutter
+description: An app to help new players learn Age of Sigmar. Built in Flutter.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
