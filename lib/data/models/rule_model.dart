@@ -1,4 +1,4 @@
-import '../../domain/entities/rule.dart';
+import 'package:aos_playmat_builder_flutter/domain/entities/rule.dart';
 
 // RuleModel is returned by the Datasource
 // It is used by the repository to ensure rule entity

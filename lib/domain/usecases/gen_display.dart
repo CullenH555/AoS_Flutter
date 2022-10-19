@@ -1,6 +1,6 @@
-import '../../data/repositories/repository.dart';
-import '../entities/rule.dart';
-import '../entities/rule_source.dart';
+import 'package:aos_playmat_builder_flutter/data/repositories/repository.dart';
+import 'package:aos_playmat_builder_flutter/domain/entities/rule.dart';
+import 'package:aos_playmat_builder_flutter/domain/entities/rule_source.dart';
 
 //  GenDisplay retrieves the rule data from the db based on the user's
 //  save collection and returns an ordered list of Rule entities.

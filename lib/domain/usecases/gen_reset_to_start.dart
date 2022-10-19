@@ -1,4 +1,4 @@
-import '../../data/repositories/repository.dart';
+import 'package:aos_playmat_builder_flutter/data/repositories/repository.dart';
 
 // GenResetToStart takes the current user and deletes the user's save
 // collection in order to reset it.

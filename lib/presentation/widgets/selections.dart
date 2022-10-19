@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../blocs/selections/selections_bloc.dart';
-import '../../domain/entities/rule_source.dart';
+import 'package:aos_playmat_builder_flutter/blocs/selections/selections_bloc.dart';
+import 'package:aos_playmat_builder_flutter/domain/entities/rule_source.dart';
 
 class Selections extends StatelessWidget {
   const Selections(this.sources, this.user);

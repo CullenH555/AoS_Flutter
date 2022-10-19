@@ -1,4 +1,4 @@
-import 'package:aos/data/repositories/repository.dart';
+import 'package:aos_playmat_builder_flutter/data/repositories/repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import '../../domain/entities/rule.dart';

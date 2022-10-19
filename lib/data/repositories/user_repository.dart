@@ -4,11 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 // The UserRepository organizes user data for credentials, saving etc.
+// Perhaps refactor methods into user usecases?
 
 abstract class UserRepository {
   final String email;
   final String password;
-  generateRegisteredUser(emal, password);
+  generateRegisteredUser(email, password);
   generateUserCollection(email);
   generateLoggedInUser(email, password);
   generateLoggedOutUser();

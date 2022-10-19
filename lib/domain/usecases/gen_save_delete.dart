@@ -1,5 +1,5 @@
-import '../../data/repositories/repository.dart';
-import '../entities/rule_source.dart';
+import 'package:aos_playmat_builder_flutter/data/repositories/repository.dart';
+import 'package:aos_playmat_builder_flutter/domain/entities/rule_source.dart';
 
 // GenNextSave saves/deletes the currently selected/deselected button's
 // data to the user's save collection.

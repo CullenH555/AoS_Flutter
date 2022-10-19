@@ -1,6 +1,6 @@
-import 'package:aos/presentation/pages/registration_page.dart';
+import 'package:aos_playmat_builder_flutter/presentation/pages/registration_page.dart';
 import 'package:flutter/material.dart';
-import 'login_page.dart';
+import 'package:aos_playmat_builder_flutter/presentation/pages/login_page.dart';
 
 // AOSWelcomePage gives the user an option to log in if they have an account
 // or to register their credentials.

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../entities/rule_source.dart';
+import 'package:aos_playmat_builder_flutter/domain/entities/rule_source.dart';
 
 // GenButtonStyler changes the activity property of the selected/ deselected
 // user selection button. It is essentially a toggle.
